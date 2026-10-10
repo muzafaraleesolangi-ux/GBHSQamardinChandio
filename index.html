@@ -7292,3 +7292,33 @@ window.addEventListener('hashchange',()=>{ resetTransientProfileEditState(); if(
  .hero-education-v2 .edu-art,.hero-education-v2 .edu-dust,.hero-education-v2 .badge-wrap,.hero-education-v2 .eyebrow,.hero-education-v2 h1,.hero-education-v2 .sub,.hero-education-v2 .rule,.hero-education-v2 .msg,.hero-education-v2 .stats,.hero-education-v2 .hint{animation:none!important}
 }
 </style>
+
+<style id="compact-home-hero-v1">
+/* Compact homepage introduction so employee sign-in is reached sooner. */
+#screen-login .hero-education-v2{min-height:0!important;margin-bottom:12px!important}
+#screen-login .hero-education-v2 .inner{position:relative;padding:18px 24px 16px 120px!important}
+#screen-login .hero-education-v2 .badge-wrap{position:absolute!important;left:24px!important;top:24px!important;width:74px!important;height:74px!important;margin:0!important}
+#screen-login .hero-education-v2 .badge-wrap svg{width:100%!important;height:100%!important}
+#screen-login .hero-education-v2 .eyebrow{margin-top:0!important}
+#screen-login .hero-education-v2 h1{font-size:clamp(24px,3.2vw,36px)!important;max-width:none!important;line-height:1.15!important;margin-top:6px!important}
+#screen-login .hero-education-v2 .sub{margin-top:7px!important;font-size:12px!important;letter-spacing:.8px!important}
+#screen-login .hero-education-v2 .rule{margin:9px auto!important}
+#screen-login .hero-education-v2 .msg{margin:6px auto!important;font-size:13px!important;line-height:1.4!important}
+#screen-login .hero-education-v2 .stats{margin:12px auto 0!important;gap:8px!important;max-width:540px!important}
+#screen-login .hero-education-v2 .stats div{min-height:48px!important;padding:7px 10px!important}
+#screen-login .hero-education-v2 .stats b{font-size:24px!important}
+#screen-login .hero-education-v2 .stats span{font-size:9px!important;letter-spacing:1px!important}
+#screen-login .hero-education-v2 .hint{margin-top:8px!important;font-size:11px!important}
+#screen-login>.section-head{margin:14px 0 10px!important}
+@media(max-width:560px){
+ #screen-login .hero-education-v2 .inner{padding:14px 12px 12px 66px!important}
+ #screen-login .hero-education-v2 .badge-wrap{left:12px!important;top:20px!important;width:42px!important;height:42px!important}
+ #screen-login .hero-education-v2 h1{font-size:23px!important}
+ #screen-login .hero-education-v2 .sub{font-size:10px!important;letter-spacing:0!important}
+ #screen-login .hero-education-v2 .msg{font-size:11px!important}
+ #screen-login .hero-education-v2 .stats{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:5px!important}
+ #screen-login .hero-education-v2 .stats div{min-width:0!important;min-height:42px!important;padding:5px 3px!important}
+ #screen-login .hero-education-v2 .stats b{font-size:20px!important}
+ #screen-login .hero-education-v2 .stats span{font-size:7px!important;letter-spacing:0!important}
+}
+</style>
