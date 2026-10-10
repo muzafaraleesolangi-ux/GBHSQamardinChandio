@@ -7322,3 +7322,27 @@ window.addEventListener('hashchange',()=>{ resetTransientProfileEditState(); if(
  #screen-login .hero-education-v2 .stats span{font-size:7px!important;letter-spacing:0!important}
 }
 </style>
+
+<style id="static-homepage-v1">
+/* Keep the homepage still while preserving login and disclosure states. */
+header,header *,header::before,header::after,header *::before,header *::after,
+.ticker,.ticker *,#screen-login,#screen-login *,#screen-login::before,#screen-login::after,#screen-login *::before,#screen-login *::after,
+footer,footer *,footer *::before,footer *::after,.credit,.credit::after,.wa-card,.wa-orbit,.wa-icon{
+ animation:none!important;transition:none!important;scroll-behavior:auto!important;
+}
+header .eyebrowh,header .headtext .l2,header .headtext .l3,header .verbadge,
+#screen-login .hero,#screen-login .hero .badge-wrap,#screen-login .hero .eyebrow,
+#screen-login .hero h1,#screen-login .hero .sub,#screen-login .hero .rule,
+#screen-login .hero .msg,#screen-login .hero .stats,#screen-login .hero .hint,
+#screen-login .balloon-in{opacity:1!important;transform:none!important;filter:none!important}
+#screen-login .hero h1::after{opacity:1!important;transform:none!important}
+.ticker .run{display:block!important;white-space:normal!important;padding:8px 16px!important;transform:none!important;text-align:center}
+#screen-login .hero .stats div:hover,#screen-login .cellcard:hover,
+#screen-login .step .stepbody:hover,#screen-login .titlerow:hover .ticon,
+#screen-login .feat:hover,#screen-login .feat:hover .ficonx,
+#screen-login .btn:hover,#screen-login .btn:hover .barrow,
+#screen-login .field:hover,#screen-login .cellcard:hover .detailsbtn,
+#screen-login .cellcard:hover .gp,header .hbookicon:hover,.credit:hover{
+ transform:none!important;
+}
+</style>
