@@ -2700,6 +2700,25 @@ h1,h2,h3,h4{font-family:'Manrope','DM Sans',system-ui,sans-serif;letter-spacing:
   <button class="btn ghost" id="btn-sc-close" style="margin-top:14px">CLOSE</button>
 </div></div>
 
+<div class="modal hidden" id="m-profile-guide" aria-hidden="true">
+  <div class="box qdc-profile-flyer" role="dialog" aria-modal="true" aria-labelledby="qdc-flyer-title">
+    <div class="qdc-flyer-orbit qdc-flyer-orbit-a"></div><div class="qdc-flyer-orbit qdc-flyer-orbit-b"></div>
+    <button type="button" class="qdc-flyer-close" id="btn-profile-guide-close" aria-label="Close profile guide">×</button>
+    <div class="qdc-flyer-brand"><span class="qdc-flyer-crest">GB<small>✦</small></span><span><b>CLUSTER HUB SCHOOL</b><small>GBHS QAMARDIN CHANDIO</small></span></div>
+    <div class="qdc-flyer-kicker">EMPLOYEE PROFILE · QUICK GUIDE</div>
+    <h3 id="qdc-flyer-title">Keep your record complete</h3>
+    <p class="qdc-flyer-lead">Update your profile and photo together. Admin approval completes your final verification.</p>
+    <div class="qdc-flyer-steps">
+      <article style="--flyer-i:0"><i>01</i><span class="qdc-flyer-stepicon">✎</span><div><b>Edit your profile</b><small>Review your service details and change your photo in the same form.</small></div><em>EDIT</em></article>
+      <article style="--flyer-i:1"><i>02</i><span class="qdc-flyer-stepicon">▣</span><div><b>Save a draft</b><small>Keep your work and return to it before submitting.</small></div><em>DRAFT</em></article>
+      <article style="--flyer-i:2"><i>03</i><span class="qdc-flyer-stepicon">➤</span><div><b>Send for verification</b><small>Send all profile changes and your photo together.</small></div><em>SUBMIT</em></article>
+      <article style="--flyer-i:3"><i>04</i><span class="qdc-flyer-stepicon">✓</span><div><b>Admin approves</b><small>Admin approval marks your profile verified.</small></div><em>VERIFIED</em></article>
+    </div>
+    <div class="qdc-flyer-foot"><span class="qdc-flyer-live-dot"></span><span>No second employee verification step is needed after Admin approval.</span></div>
+    <div class="qdc-flyer-actions"><button type="button" class="btn ghost" data-profile-guide-close>BACK TO PROFILE</button><button type="button" class="btn primary" id="btn-profile-guide-edit">EDIT / UPDATE PROFILE <span>→</span></button></div>
+  </div>
+</div>
+
 <div class="modal hidden" id="m-msg"><div class="box" style="text-align:center;max-width:430px">
   <div id="msg-icon" style="font-size:40px;line-height:1">&#10003;</div>
   <h3 id="msg-title" style="margin:8px 0">Done</h3>
@@ -4319,15 +4338,15 @@ $("#btn-pw-continue").addEventListener("click", async ()=>{
   try{
     const r=await api.employeeSignup(pid,cnic,dob,pass,mobile); netOff();
     if(!r || r.ok!==true){ showErr("#pwerr", r && r.message ? r.message : "Account could not be created."); return; }
-    /* Creating an employee account must NEVER inherit or retain an Admin session. */
-    try{ localStorage.removeItem("qdc_token"); }catch(e){}
-    TOKEN=null; OFFICER=null; IS_MASTER=false; CAN_ADMIN=false;
-    const signed=await api.employeeLogin(pid||cnic,pass);
-    if(!signed||!signed.ok||!signed.employee){netOff();showErr('#pwerr','Account created. Please use Sign In to open your existing profile.');return;}
-    const sessionKey=signed.session_key;
-    try{ localStorage.setItem("qdc_employee_session", JSON.stringify({key:sessionKey})); }catch(e){}
-    openRecordFrom(signed,sessionKey,false,null);
-    msg("Account created","Your employee account has been created successfully. Your existing profile, approved photo and verification are retained. Sign in with your PID or CNIC and new password.","✔");
+    /* Account creation ends at the employee login form. Never auto-login or retain
+       an Admin/old employee session after a new account is registered. */
+    try{ localStorage.removeItem("qdc_token"); localStorage.removeItem("qdc_employee_session"); }catch(e){}
+    TOKEN=null; OFFICER=null; IS_MASTER=false; CAN_ADMIN=false; CUR=null; CUR_KEY=null;
+    $("#empid").value=pid||cnic;
+    $("#emp-pass").value="";
+    showLoginStep1();
+    renderContinueBanner();
+    msg("Registration successful","Your employee account has been created. Please sign in with your PID or CNIC and password to open your profile.","✔");
   }catch(e){ netFail("Sign up failed. Please check your details and try again."); }
 });
 $("#btn-reset-request").addEventListener("click", async ()=>{
@@ -6961,6 +6980,19 @@ $('#btn-inline-edit').addEventListener('click',()=>enterInlineEdit());
 $('#btn-inline-cancel').addEventListener('click',()=>{ resetTransientProfileEditState(); renderRecordUI(); });
 $('#btn-inline-save').addEventListener('click',()=>saveInlineChanges(false));
 $('#btn-inline-submit').addEventListener('click',()=>saveInlineChanges(true));
+document.addEventListener('click',ev=>{
+ const open=ev.target.closest('[data-profile-flyer-open]');
+ if(open){const m=$('#m-profile-guide');m.setAttribute('aria-hidden','false');openModal('#m-profile-guide');return;}
+ if(ev.target.closest('#btn-profile-guide-close,[data-profile-guide-close]')||ev.target.id==='m-profile-guide'){
+  const m=$('#m-profile-guide');if(m)m.setAttribute('aria-hidden','true');closeModal('#m-profile-guide');return;
+ }
+ if(ev.target.closest('#btn-profile-guide-edit')){
+  const m=$('#m-profile-guide');if(m)m.setAttribute('aria-hidden','true');closeModal('#m-profile-guide');
+  if(INLINE_EDIT_MODE){const first=$('#r-fields [data-field]');if(first){first.focus();first.scrollIntoView({behavior:'smooth',block:'center'});}return;}
+  enterInlineEdit();
+ }
+});
+document.addEventListener('keydown',ev=>{if(ev.key==='Escape'&&$('#m-profile-guide')?.classList.contains('show')){const m=$('#m-profile-guide');m.setAttribute('aria-hidden','true');closeModal('#m-profile-guide');}});
 document.addEventListener('input',ev=>{
   const t=ev.target; if(!t||!INLINE_EDIT_MODE||!t.closest('#r-fields')) return;
   PROFILE_UNSAVED=true;const v=$('#btn-verify');if(v)v.disabled=true;
@@ -7269,7 +7301,7 @@ function renderUnifiedWorkspace(){
  $('#qdc-draft-note').classList.toggle('hidden',!INLINE_EDIT_MODE||fromAdmin);if(INLINE_EDIT_MODE)$('#qdc-note').value=DRAFT_NOTE;
  const old=$('#qdc-editor-banner');if(old)old.remove();
  const status=verified?'<span class="qdc-status-chip verified">✓ VERIFIED BY ADMIN</span>':pending?'<span class="qdc-status-chip pending">◷ WITH ADMIN FOR FINAL VERIFICATION</span>':'<span class="qdc-status-chip draft">FINAL ADMIN VERIFICATION REQUIRED</span>';
- const banner='<section id="qdc-editor-banner" class="qdc-editor-banner '+(INLINE_EDIT_MODE?'editing':'')+'"><div class="qdc-editor-banner-top"><div><span class="qdc-eyebrow">EMPLOYEE PROFILE WORKSPACE</span><h3>'+(INLINE_EDIT_MODE?'Update your complete profile':'Your complete profile')+'</h3><p>'+(verified?'Your latest approved profile is verified by Admin.':pending?'Your submitted profile is waiting for Admin final verification.':'Edit your details and profile photo together, then send the complete profile to Admin for final verification.')+'</p></div>'+status+'</div><div class="qdc-guide-flow"><div class="qdc-guide-step '+(INLINE_EDIT_MODE?'active':'done')+'"><i>1</i><b>Edit photo & details</b></div><span>›</span><div class="qdc-guide-step '+(INLINE_EDIT_MODE?'active':'')+'"><i>2</i><b>Save draft / confirm</b></div><span>›</span><div class="qdc-guide-step '+(pending?'active':verified?'done':'')+'"><i>3</i><b>Admin verifies</b></div></div>'+(INLINE_EDIT_MODE?'<div class="qdc-editor-photo-row"><label class="qdc-photo-pick" for="file-photo" title="Choose a profile photo"><span class="qdc-avatar-ring">'+(DRAFT_PHOTO||CUR.photo_url?'<img src="'+esc(DRAFT_PHOTO||CUR.photo_url)+'" alt="Profile photo">':esc(initials(CUR.employee_name)))+'<i>＋</i></span></label><div><b>Profile photo</b><small>Tap your photo to choose or replace it. It will be sent with all your profile details in the same request.</small><em>'+(DRAFT_PHOTO?'New photo ready to save with your draft':CUR.photo_url?'Current photo will stay until Admin approves your update':'A profile photo is required')+'</em></div></div>':'')+'</section>';
+ const banner='<section id="qdc-editor-banner" class="qdc-editor-banner '+(INLINE_EDIT_MODE?'editing':'')+'"><div class="qdc-editor-banner-top"><div><span class="qdc-eyebrow">EMPLOYEE PROFILE WORKSPACE</span><h3>'+(INLINE_EDIT_MODE?'Update your complete profile':'Your complete profile')+'</h3><p>'+(verified?'Your latest approved profile is verified by Admin.':pending?'Your submitted profile is waiting for Admin final verification.':'Edit your details and profile photo together, then send the complete profile to Admin for final verification.')+'</p></div>'+status+'</div><div class="qdc-guide-flow"><div class="qdc-guide-step '+(INLINE_EDIT_MODE?'active':'done')+'"><i>1</i><b>Edit photo & details</b></div><span>›</span><div class="qdc-guide-step '+(INLINE_EDIT_MODE?'active':'')+'"><i>2</i><b>Save draft / confirm</b></div><span>›</span><div class="qdc-guide-step '+(pending?'active':verified?'done':'')+'"><i>3</i><b>Admin verifies</b></div></div><button type="button" class="qdc-flyer-launch" data-profile-flyer-open aria-haspopup="dialog"><span class="qdc-flyer-launch-mark">✦</span><span><b>OPEN PROFILE GUIDE</b><small>Animated steps · photo, draft &amp; Admin approval</small></span><i>↗</i></button>'+(INLINE_EDIT_MODE?'<div class="qdc-editor-photo-row"><label class="qdc-photo-pick" for="file-photo" title="Choose a profile photo"><span class="qdc-avatar-ring">'+(DRAFT_PHOTO||CUR.photo_url?'<img src="'+esc(DRAFT_PHOTO||CUR.photo_url)+'" alt="Profile photo">':esc(initials(CUR.employee_name)))+'<i>＋</i></span></label><div><b>Profile photo</b><small>Tap your photo to choose or replace it. It will be sent with all your profile details in the same request.</small><em>'+(DRAFT_PHOTO?'New photo ready to save with your draft':CUR.photo_url?'Current photo will stay until Admin approves your update':'A profile photo is required')+'</em></div></div>':'')+'</section>';
  $('#r-fields').insertAdjacentHTML('afterbegin',banner);
  ['btn-inline-save','btn-inline-submit','btn-inline-cancel'].forEach(id=>$("#"+id).disabled=PROFILE_BUSY);
  $('#btn-inline-submit').innerHTML='<span class="bicon" data-ic="paperplane"></span>&nbsp; CONFIRM &amp; SEND FOR FINAL VERIFICATION';
@@ -7463,4 +7495,67 @@ if('IntersectionObserver' in window){const observer=new IntersectionObserver(ent
 .cell-popup-guide{display:flex;gap:7px;margin:10px 0 13px}.cell-popup-guide>span{flex:1;display:flex;align-items:center;gap:5px;padding:7px 6px;border:1px solid #deece3;border-radius:9px;background:#f3f9f5;font-size:9px;font-weight:750;color:#46735c}.cell-popup-guide i{font-style:normal;width:17px;height:17px;background:#e1f1e6;border-radius:50%;display:grid;place-items:center;color:#176747;flex:0 0 auto;font-size:8px}
 #cd-body .whatsapp-link svg{height:13px;width:13px}
 @media(max-width:420px){.cell-popup-guide>span{font-size:8px;gap:3px;padding:6px 4px}}
+</style>
+
+<style id="employee-profile-royal-flyers-v1">
+#screen-record .qdc-editor-banner{border-color:#c9a94c!important;background:radial-gradient(circle at 97% 3%,#d7b75624 0 50px,transparent 51px),linear-gradient(120deg,#fffdf4 0%,#fff 55%,#eff6f1 100%)!important;box-shadow:0 13px 32px #103d2a12,0 0 0 1px #ffffff inset!important}
+#screen-record .qdc-editor-banner:after{content:"✦";position:absolute;right:17px;top:14px;color:#c8a746;font-size:17px;text-shadow:0 0 12px #f2dfa5;animation:qdcCrestGlint 3.8s ease-in-out infinite;pointer-events:none}
+#screen-record .qdc-editor-banner h3{font-family:Georgia,"Times New Roman",serif!important;color:#083f2b!important;letter-spacing:.15px!important}
+#screen-record .qdc-guide-step{border-color:#e4d9b3!important;background:linear-gradient(145deg,#fffefa,#f8f5e8)!important;box-shadow:inset 0 1px #fff,0 4px 10px #7f6a2b08!important}
+#screen-record .qdc-guide-step i{background:linear-gradient(145deg,#e8d38a,#bd9634)!important;color:#4d3a0c!important;box-shadow:0 3px 8px #805f1522!important}
+#screen-record .qdc-guide-step.active{border-color:#b79a48!important;background:linear-gradient(145deg,#fff9df,#f5ecd0)!important;box-shadow:0 0 0 3px #c9a22718,0 7px 17px #583e100e!important;animation:qdcStepGlow 2.6s ease-in-out infinite}
+#screen-record .qdc-guide-flow>span{color:#b09037!important}
+#screen-record #r-fields .field{position:relative;border-color:#e0d9bd!important;box-shadow:0 7px 20px #153c2a0b, inset 0 1px #fff!important;transition:transform .24s ease,box-shadow .24s ease,border-color .24s ease!important}
+#screen-record #r-fields .field:after{background:linear-gradient(180deg,#d7b64c,#0f6446)!important}
+#screen-record #r-fields .field:hover{transform:translateY(-3px)!important;border-color:#c9ad56!important;box-shadow:0 13px 26px #183f2d18!important}
+.qdc-flyer-launch{position:relative;display:flex;align-items:center;gap:10px;width:100%;margin:13px 0 0;padding:10px 13px;border:1px solid #d2bb70;border-radius:14px;background:linear-gradient(115deg,#fff9e6,#ffffff 48%,#eef6f0);color:#163b2d;text-align:left;box-shadow:0 8px 20px #78612412;cursor:pointer;overflow:hidden;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+.qdc-flyer-launch:before{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 25%,#ffffffc9 48%,transparent 69%);transform:translateX(-120%);animation:qdcFlyerSweep 4.4s ease-in-out infinite;pointer-events:none}
+.qdc-flyer-launch:hover{transform:translateY(-2px);border-color:#b1943a;box-shadow:0 12px 26px #78612420}
+.qdc-flyer-launch-mark{position:relative;z-index:1;width:35px;height:35px;display:grid;place-items:center;flex:none;border-radius:11px;background:linear-gradient(145deg,#f4e5ab,#cfaa48);color:#4d3a0b;font-size:18px;box-shadow:inset 0 1px #fff,0 5px 12px #7e5d1825;animation:qdcMarkFloat 2.8s ease-in-out infinite}
+.qdc-flyer-launch>span:nth-child(2){position:relative;z-index:1;display:grid;gap:3px;min-width:0}
+.qdc-flyer-launch b{font-size:9px;letter-spacing:.8px;color:#194d37}
+.qdc-flyer-launch small{font-size:9px;color:#728277;line-height:1.4}
+.qdc-flyer-launch>i{position:relative;z-index:1;margin-left:auto;font-style:normal;color:#987a28;font-size:17px;font-weight:900;animation:qdcArrow 1.5s ease-in-out infinite}
+#m-profile-guide{z-index:120!important;padding:clamp(12px,3vw,26px)!important;overflow:auto!important}
+#m-profile-guide .qdc-profile-flyer{position:relative;width:min(590px,calc(100vw - 28px));max-width:590px!important;max-height:min(90dvh,820px)!important;overflow:auto!important;padding:27px 28px 23px!important;border:1px solid #c6a64a!important;border-radius:25px!important;background:radial-gradient(circle at 93% 4%,#d5b44a20 0 95px,transparent 96px),linear-gradient(145deg,#fffef8 0%,#ffffff 53%,#f0f7f2 100%)!important;box-shadow:0 32px 90px #041e16a6,0 0 0 1px #fff inset!important;transform-style:preserve-3d}
+#m-profile-guide.show .qdc-profile-flyer{animation:qdcFlyerPop .52s cubic-bezier(.18,1.2,.28,1) both!important}
+.qdc-flyer-orbit{position:absolute;right:-64px;top:-74px;border:1px solid #c9a22744;border-radius:50%;pointer-events:none;animation:qdcOrbit 14s linear infinite}
+.qdc-flyer-orbit-a{width:190px;height:190px}.qdc-flyer-orbit-b{width:250px;height:250px;right:-94px;top:-104px;border-color:#0f644626;animation-direction:reverse;animation-duration:19s}
+.qdc-flyer-close{position:absolute;z-index:4;top:15px;right:15px;width:34px;height:34px;border:1px solid #e6dab1;border-radius:11px;background:#fffdf5;color:#6c581c;font-size:22px;line-height:1;transition:transform .18s ease,background .18s ease}
+.qdc-flyer-close:hover{transform:rotate(90deg);background:#f7edcf}
+.qdc-flyer-brand,.qdc-flyer-kicker,.qdc-profile-flyer h3,.qdc-flyer-lead,.qdc-flyer-steps,.qdc-flyer-foot,.qdc-flyer-actions{position:relative;z-index:2}
+.qdc-flyer-brand{display:flex;align-items:center;gap:9px;margin-bottom:18px;color:#174833}
+.qdc-flyer-brand>span:last-child{display:grid;gap:3px}.qdc-flyer-brand b{font-size:9px;letter-spacing:1.1px}.qdc-flyer-brand small{font-size:8px;letter-spacing:.7px;color:#728779}
+.qdc-flyer-crest{position:relative;width:41px;height:45px;display:grid;place-items:center;clip-path:polygon(50% 0,91% 15%,87% 66%,50% 100%,13% 66%,9% 15%);background:linear-gradient(145deg,#0f6748,#063c29);color:#f1dda0;border:1px solid #c8a849;font:900 11px Georgia,serif;filter:drop-shadow(0 4px 7px #163d2a24)}
+.qdc-flyer-crest small{position:absolute;right:3px;top:4px;font-size:7px;color:#fff1bd}
+.qdc-flyer-kicker{font-size:8px;font-weight:950;letter-spacing:1.65px;color:#a48224}
+#m-profile-guide .qdc-profile-flyer h3{margin:5px 0 5px!important;color:#073d29!important;font:800 25px/1.18 Georgia,"Times New Roman",serif!important;letter-spacing:.1px!important}
+.qdc-flyer-lead{margin:0 30px 16px 0!important;color:#607469;font-size:11px!important;line-height:1.55}
+.qdc-flyer-steps{display:grid;gap:8px}
+.qdc-flyer-steps article{position:relative;display:grid;grid-template-columns:35px 36px minmax(0,1fr) auto;align-items:center;gap:9px;min-height:64px;padding:9px 11px;border:1px solid #e0d8bb;border-radius:15px;background:linear-gradient(110deg,#fffdf5,#ffffff 58%,#f2f7f2);box-shadow:0 5px 13px #233f2e09;animation:qdcFlyerStep .45s cubic-bezier(.18,.8,.3,1) both;animation-delay:calc(var(--flyer-i)*100ms)}
+.qdc-flyer-steps article:before{content:"";position:absolute;left:28px;top:100%;height:8px;border-left:1px dashed #c4a547;opacity:.7}
+.qdc-flyer-steps article:last-child:before{display:none}
+.qdc-flyer-steps article>i{font-size:8px;font-style:normal;font-weight:950;letter-spacing:.5px;color:#a7872c}
+.qdc-flyer-stepicon{width:34px;height:34px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(145deg,#f2e4ae,#d4b457);color:#59440d;font-size:15px;font-weight:950;box-shadow:inset 0 1px #fff,0 4px 10px #8d6b1b1b}
+.qdc-flyer-steps article div{display:grid;gap:3px;min-width:0}.qdc-flyer-steps article b{font-size:10px;color:#1d4d37}.qdc-flyer-steps article small{font-size:9px;line-height:1.4;color:#75857b}
+.qdc-flyer-steps article em{font-size:7px;font-style:normal;font-weight:950;letter-spacing:.6px;color:#8b7027;background:#f9f1d6;border:1px solid #e9d99e;border-radius:99px;padding:5px 7px;white-space:nowrap}
+.qdc-flyer-steps article:nth-child(2) .qdc-flyer-stepicon{animation:qdcMarkFloat 3s .25s ease-in-out infinite}.qdc-flyer-steps article:nth-child(3) .qdc-flyer-stepicon{animation:qdcFlyerSend 2.1s .3s ease-in-out infinite}.qdc-flyer-steps article:nth-child(4) .qdc-flyer-stepicon{background:linear-gradient(145deg,#d8f0df,#a9d9b4);color:#135c37;animation:qdcVerifiedPop 3s .6s ease-in-out infinite}
+.qdc-flyer-foot{display:flex;align-items:flex-start;gap:9px;margin:13px 0 15px;padding:10px 12px;border:1px solid #c9dfce;border-radius:12px;background:linear-gradient(105deg,#edf8ef,#fffdf3);color:#41634c;font-size:9px;font-weight:700;line-height:1.45}
+.qdc-flyer-live-dot{position:relative;width:8px;height:8px;flex:none;margin:2px 0 0 2px;border-radius:50%;background:#258351;box-shadow:0 0 0 4px #d5efdc}.qdc-flyer-live-dot:after{content:"";position:absolute;inset:-5px;border:1px solid #35a568;border-radius:50%;animation:qdcLiveRing 1.7s ease-out infinite}
+.qdc-flyer-actions{display:flex;justify-content:flex-end;gap:8px;flex-wrap:wrap}.qdc-flyer-actions .btn{min-height:42px;border-radius:12px!important;font-size:9px!important;font-weight:950!important;letter-spacing:.5px}
+#btn-profile-guide-edit{position:relative;overflow:hidden;background:linear-gradient(110deg,#07543a,#0e7650,#07543a)!important;background-size:220% 100%!important;box-shadow:0 8px 18px #083f2b28!important}
+#btn-profile-guide-edit:after{content:"";position:absolute;top:-40%;bottom:-40%;left:-60%;width:35%;background:linear-gradient(90deg,transparent,#ffffff90,transparent);transform:skewX(-18deg);animation:qdcFlyerSweep 3.2s ease-in-out infinite}
+#btn-profile-guide-edit span{position:relative;z-index:1;margin-left:5px}
+@keyframes qdcCrestGlint{0%,100%{opacity:.5;transform:rotate(0) scale(.9)}50%{opacity:1;transform:rotate(45deg) scale(1.1)}}
+@keyframes qdcFlyerSweep{0%,58%{transform:translateX(-120%)}78%,100%{transform:translateX(140%)}}
+@keyframes qdcMarkFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes qdcFlyerPop{0%{opacity:0;transform:translateY(22px) scale(.9) rotateX(7deg)}70%{opacity:1;transform:translateY(-3px) scale(1.01) rotateX(0)}100%{opacity:1;transform:none}}
+@keyframes qdcOrbit{to{transform:rotate(360deg)}}
+@keyframes qdcFlyerStep{from{opacity:0;transform:translateY(9px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes qdcFlyerSend{0%,100%{transform:translateX(0)}50%{transform:translateX(3px)}}
+@keyframes qdcVerifiedPop{0%,100%{box-shadow:0 0 0 0 #39a75e00}50%{box-shadow:0 0 0 5px #39a75e24}}
+@keyframes qdcLiveRing{to{transform:scale(1.7);opacity:0}}
+@keyframes qdcArrow{0%,100%{transform:translateX(0);opacity:.65}50%{transform:translateX(3px);opacity:1}}
+@media(max-width:600px){#m-profile-guide .qdc-profile-flyer{padding:23px 16px 17px!important;border-radius:21px!important}#m-profile-guide .qdc-profile-flyer h3{font-size:22px!important}.qdc-flyer-steps article{grid-template-columns:25px 31px minmax(0,1fr);gap:7px;padding:8px}.qdc-flyer-stepicon{width:30px;height:30px}.qdc-flyer-steps article em{grid-column:3;justify-self:start}.qdc-flyer-actions{display:grid;grid-template-columns:1fr}.qdc-flyer-actions .btn{width:100%}.qdc-flyer-launch small{font-size:8px}}
+@media(prefers-reduced-motion:reduce){#screen-record .qdc-editor-banner:after,.qdc-flyer-launch:before,.qdc-flyer-launch-mark,.qdc-flyer-launch>i,.qdc-flyer-orbit,.qdc-flyer-steps article,#btn-profile-guide-edit:after,.qdc-flyer-steps article .qdc-flyer-stepicon,.qdc-flyer-live-dot:after{animation:none!important;transition:none!important}.qdc-flyer-steps article{opacity:1!important;transform:none!important}}
 </style>
