@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <title>Cluster Hub GBHS Qamar Din Chandio — Employee Data Portal (Online)</title>
 <style>
 /* ==========================================================================
@@ -1373,6 +1374,26 @@ footer{background:linear-gradient(140deg,var(--deep),#08422d);color:#c1dccf;
 .field-optional{font-size:10px;font-weight:800;letter-spacing:.7px;color:#7c8e87;margin-left:4px;opacity:.9}
 #login-step2 input{transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease,background .22s ease}
 #login-step2 input:focus{transform:translateY(-2px) scale(1.01);box-shadow:0 12px 28px rgba(8,63,43,.14),0 0 0 3px rgba(201,162,39,.13);}
+
+/* Approved premium homepage refresh */
+
+:root{--page:1240px;--radius:20px}
+body,button,input,select,textarea{font-family:'Manrope','DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif}
+h1,h2,h3,h4{font-family:'Manrope','DM Sans',system-ui,sans-serif;letter-spacing:-.025em}
+.headtext .l1{font-family:'Manrope',sans-serif;letter-spacing:1.5px;font-weight:800}
+.headtext .l2{font-family:'Manrope',sans-serif;font-weight:800;letter-spacing:-.025em}
+.headrow{gap:11px}.hwho{min-width:0}.card-head-contact{display:block;margin-top:6px}
+.headcontact{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:11px;font-weight:750;color:#315c48}
+.headcontact.missing{color:#84948a;font-weight:600}.whatsapp-link{display:inline-flex;align-items:center;gap:4px;padding:4px 8px;border-radius:999px;background:#e6f7ed;color:#087b48;text-decoration:none;font-size:10px;font-weight:800;transition:transform .18s,background .18s}
+.whatsapp-link:hover{transform:translateY(-1px);background:#c9f0d8}.whatsapp-link span{font-size:13px}
+.cell-modal-head{display:flex;align-items:center;gap:14px;padding:14px;border:1px solid #d6e6dc;border-radius:17px;background:linear-gradient(135deg,#f2f8f4,#fff 72%);margin-bottom:13px}
+.cell-modal-head>.havatar{width:58px;height:58px;flex:0 0 58px;border-radius:50%;overflow:hidden;background:#dcebe2;color:#145739;display:grid;place-items:center;font-weight:850;font-size:17px;border:2px solid #fff;box-shadow:0 0 0 2px #bad7c5}
+.cell-modal-head img,.cell-staff-avatar img{width:100%;height:100%;object-fit:cover}.cell-modal-who{min-width:0;display:grid;gap:3px}.cell-modal-kicker{font-size:9px;color:#9a7a20;font-weight:850;letter-spacing:.13em}.cell-modal-who>b{font-size:15px;color:#123c2b}.cell-modal-who>span:not(.cell-modal-kicker){font-size:11px;color:#61776b}
+.cell-modal-stats{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 15px}.cell-modal-stats>span{padding:7px 11px;background:#f1f6f3;border:1px solid #e1ebe4;border-radius:10px;font-size:11px;color:#587064}.cell-modal-stats b{color:#124b34;margin-right:4px}
+.cell-staff-heading{margin-top:10px}.cell-school-group{margin:10px 0 14px;padding:12px;border:1px solid #e2ebe5;border-radius:15px;background:#fff}.cell-school-group>h4{display:flex;justify-content:space-between;gap:10px;color:#174530;font-size:13px;margin-bottom:10px}.cell-school-group>h4 span{font:700 10px 'Manrope',sans-serif;color:#75877c;white-space:nowrap}
+.cell-staff-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.cell-staff-row{display:flex;align-items:center;gap:9px;min-width:0;padding:8px;background:#f7faf8;border-radius:11px}.cell-staff-avatar{width:34px;height:34px;flex:0 0 34px;border-radius:50%;overflow:hidden;background:#e2eee6;color:#276347;display:grid;place-items:center;font-size:11px;font-weight:800}.cell-staff-row>div:last-child{min-width:0;display:grid;gap:2px}.cell-staff-row b{font-size:11px;color:#233e30;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cell-staff-row span{font-size:9.5px;color:#78877e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:560px){.cell-staff-grid{grid-template-columns:1fr}.cell-modal-head{align-items:flex-start}.headcontact{gap:5px}.card-head-contact .headcontact{font-size:10px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 
 <style id="admin-premium-redesign">
@@ -3737,48 +3758,30 @@ async function loadPublic(){
 }
 function renderHomePublic(){
   if(!PUB) return;
-  const totalSchools = (PUB.cells||[]).reduce((a,c)=>a+(c.schools||0),0);
+  const totalSchools=(PUB.cells||[]).reduce((a,c)=>a+(c.schools||0),0);
   $("#hero-stats").innerHTML=
     '<button type="button" class="stat-employees stat-action" id="stat-employees"><div class="ring"></div><span class="stat-icon">👥</span><b>'+(PUB.total||0)+'</b><span>Employees</span><small>VIEW ALL</small></button>'+
     '<button type="button" class="stat-action" id="stat-cells"><span class="stat-icon">🏫</span><b>'+((PUB.cells||[]).length)+'</b><span>Cells</span><small>VIEW ALL</small></button>'+
     '<button type="button" class="stat-action" id="stat-schools"><span class="stat-icon">🎓</span><b>'+totalSchools+'</b><span>Schools</span><small>VIEW ALL</small></button>';
-  $("#cell-cards").innerHTML = (PUB.cells||[]).map((c)=>{
-    const hub = c.head_school===SETTINGS.hubName;
-    const sample = (c.sample_staff||[]).map(s=>
-      '<div class="samp"><span class="micro">'+ICON.person+'</span><b>'+esc(s.name)+'</b><span>'+esc(s.designation||"Staff")+'</span></div>').join("");
-    const headAvatar = c.head_teacher ?
-      '<div class="headrow">'+
-        '<div class="havatar-wrap"><div class="hring"></div><div class="havatar'+(c.head_photo_url?'':' initials')+'">'+
-          (c.head_photo_url?'<img src="'+c.head_photo_url+'" alt="">':esc(initials(c.head_teacher)))+
-        '</div></div>'+
-        '<div class="hwho"><b>'+esc(c.head_teacher)+'</b>'+
-          '<span class="htag">'+ICON.idcard+' Cell Head</span>'+
-          (c.head_designation?'<span class="hdesig">'+esc(c.head_designation)+'</span>':'')+
-        '</div>'+
-        '<span class="hbps'+(c.head_bps?'':' missing')+'">'+(c.head_bps?('BPS-'+esc(c.head_bps)):'BPS n/a')+'</span>'+
-      '</div>' : '';
-    return '<button class="cellcard'+(hub?' hub':'')+'" data-cell="'+c.code+'">'+
-      '<div class="cc-top">'+
-        '<span class="tag'+(hub?' hub':'')+'">'+ICON.school+' '+c.code+' '+ICON.chevron+'</span>'+
-        (hub?'<span class="hubchip">HUB SCHOOL</span>':'')+
-      '</div>'+
-      '<h3>'+esc(c.head_school)+'</h3>'+
-      headAvatar+
+  $("#cell-cards").innerHTML=(PUB.cells||[]).map(c=>{
+    const hub=c.head_school===SETTINGS.hubName;
+    const headAvatar=c.head_teacher?
+      '<div class="headrow"><div class="havatar-wrap"><div class="hring"></div><div class="havatar'+(c.head_photo_url?'':' initials')+'">'+(c.head_photo_url?'<img src="'+esc(c.head_photo_url)+'" alt="">':esc(initials(c.head_teacher)))+'</div></div>'+
+      '<div class="hwho"><b>'+esc(c.head_teacher)+'</b><span class="htag">'+ICON.idcard+' Cell Head</span>'+
+      (c.head_designation?'<span class="hdesig">'+esc(c.head_designation)+'</span>':'')+
+      '<span class="card-head-contact">'+headMobileMarkup(c.head_mobile)+'</span></div>'+
+      '<span class="hbps'+(c.head_bps?'':' missing')+'">'+(c.head_bps?'BPS-'+esc(c.head_bps):'BPS n/a')+'</span></div>':'';
+    return '<button class="cellcard'+(hub?' hub':'')+'" data-cell="'+esc(c.code)+'"><div class="cc-top">'+
+      '<span class="tag'+(hub?' hub':'')+'">'+ICON.school+' '+esc(c.code)+' '+ICON.chevron+'</span>'+(hub?'<span class="hubchip">HUB SCHOOL</span>':'')+
+      '</div><h3>'+esc(c.head_school)+'</h3>'+headAvatar+
       (c.semis?'<div class="semline">'+ICON.pin+' SEMIS '+esc(c.semis)+'</div>':'')+
-      '<div class="genderpills">'+
-        '<span class="gp gp-m">'+ICON.male+'Male<b>'+(c.male||0)+'</b></span>'+
-        '<span class="gp gp-f">'+ICON.female+'Female<b>'+(c.female||0)+'</b></span>'+
-        (c.unknown?'<span class="gp gp-u">'+ICON.unknown+'Not recorded<b>'+c.unknown+'</b></span>':'')+
-        (c.teaching?'<span class="gp gp-t">'+ICON.check+'Teaching<b>'+c.teaching+'</b></span>':'')+
-        (c.non_teaching?'<span class="gp gp-nt">'+ICON.people+'Non-Teaching<b>'+c.non_teaching+'</b></span>':'')+
-      '</div>'+
-      (sample?'<div class="samp-wrap"><div class="samp-label">'+ICON.people+' Staff on record</div>'+sample+'</div>':'')+
-      '<div class="cc-bottom">'+
-        '<div class="cc-stat">'+ICON.school+'<b>'+(c.schools||0)+'</b><span>Schools</span></div>'+
-        '<div class="cc-stat">'+ICON.people+'<b>'+(c.staff||0)+'</b><span>Staff</span></div>'+
-        '<div class="cc-stat">'+ICON.check+'<b>'+(c.verified||0)+'</b><span>Verified</span></div>'+
-        '<span class="detailsbtn">DETAILS '+ICON.arrow+'</span>'+
-      '</div></button>';
+      '<div class="genderpills"><span class="gp gp-m">'+ICON.male+'Male<b>'+(c.male||0)+'</b></span><span class="gp gp-f">'+ICON.female+'Female<b>'+(c.female||0)+'</b></span>'+
+      (c.unknown?'<span class="gp gp-u">'+ICON.unknown+'Not recorded<b>'+c.unknown+'</b></span>':'')+
+      (c.teaching?'<span class="gp gp-t">'+ICON.check+'Teaching<b>'+(c.teaching||0)+'</b></span>':'')+
+      (c.non_teaching?'<span class="gp gp-nt">'+ICON.people+'Non-Teaching<b>'+(c.non_teaching||0)+'</b></span>':'')+'</div>'+
+      '<div class="cc-bottom"><div class="cc-stat">'+ICON.school+'<b>'+(c.schools||0)+'</b><span>Schools</span></div>'+
+      '<div class="cc-stat">'+ICON.people+'<b>'+(c.staff||0)+'</b><span>Staff</span></div><div class="cc-stat">'+ICON.check+'<b>'+(c.verified||0)+'</b><span>Verified</span></div>'+
+      '<span class="detailsbtn">DETAILS '+ICON.arrow+'</span></div></button>';
   }).join("");
   $$("#cell-cards .cellcard").forEach(b=>b.addEventListener("click",()=>openCellPublic(b.dataset.cell)));
   bindHeroStatShowcase();
@@ -3842,36 +3845,38 @@ function bindHeroStatShowcase(){
   schools.addEventListener("click",()=>open("schools"));
 }
 
+function headMobileMarkup(raw){
+  const mobile=String(raw||"").trim();
+  if(!mobile) return '<span class="headcontact missing">Mobile not listed</span>';
+  const digits=mobile.replace(/\\D/g,"");
+  let intl=digits;
+  if(digits.length===11 && digits.startsWith("0")) intl="92"+digits.slice(1);
+  else if(digits.length===10 && digits.startsWith("3")) intl="92"+digits;
+  const valid=/^\\d{11,15}$/.test(intl);
+  return '<span class="headcontact"><span class="headphone">'+esc(mobile)+'</span>'+
+    (valid?'<a class="whatsapp-link" href="https://wa.me/'+intl+'" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp cell head"><span aria-hidden="true">◉</span> WhatsApp</a>':'')+
+    '</span>';
+}
 function openCellPublic(code){
   const c=(PUB.cells||[]).find(x=>x.code===code); if(!c) return;
   $("#cd-title").textContent = "Cell "+c.code;
-  $("#cd-sub").innerHTML = "<b>"+esc(c.head_school)+"</b><br>Cell Head: "+esc(c.head_teacher||"")+
-                           (c.semis?' &middot; SEMIS '+esc(c.semis):'');
-  $("#cd-body").innerHTML =
-    '<div class="hd">At a glance</div>'+
-    '<div class="row"><span>Schools in this cell</span><b>'+(c.schools||0)+'</b></div>'+
-    '<div class="row"><span>Total staff</span><b>'+(c.staff||0)+'</b></div>'+
-    '<div class="row"><span>Male</span><b>'+(c.male||0)+'</b></div>'+
-    '<div class="row"><span>Female</span><b>'+(c.female||0)+'</b></div>'+
-    (c.unknown?'<div class="row"><span>Gender not on record</span><b>'+c.unknown+'</b></div>':'')+
-    '<div class="row"><span>Teaching</span><b>'+(c.teaching||0)+'</b></div>'+
-    '<div class="row"><span>Non-Teaching</span><b>'+(c.non_teaching||0)+'</b></div>'+
-    '<div class="row"><span>Verified so far</span><b>'+(c.verified||0)+' of '+(c.staff||0)+'</b></div>'+
-    ((c.sample_staff||[]).length?'<div class="hd">Staff on Record (by seniority)</div>'+
-      c.sample_staff.map(s=>'<div class="row"><span>'+esc(s.name)+'</span><b style="font-size:11.5px;font-weight:700">'+esc(s.designation||"Staff")+'</b></div>').join(""):'')+
-    '<div class="hd"><span>Schools</span><span style="font-weight:700;text-transform:none;letter-spacing:0;font-size:10.5px;color:#5b7a6a">Tap a school to view its staff</span></div>'+
-    (c.school_list||[]).map((s,i)=>
-      '<button type="button" class="row cd-school" data-si="'+i+'">'+
-        '<span>'+esc(s.name)+(s.semis?' <small style="color:var(--muted);font-weight:700">&middot; SEMIS '+esc(s.semis)+'</small>':'')+'</span>'+
-        '<span style="display:flex;align-items:center;gap:2px"><b>'+s.staff+'</b><span class="go">VIEW &rarr;</span></span>'+
-      '</button>'
-    ).join("");
-  $$("#cd-body .cd-school").forEach(b=>b.addEventListener("click",()=>{
-    const s=(c.school_list||[])[+b.dataset.si]; if(!s) return;
-    openRoster(s.name,
-      'Cell '+esc(c.code)+' &middot; '+(s.semis?'SEMIS '+esc(s.semis):'No SEMIS on record')+' &middot; '+s.staff+' staff on record',
-      s.staff_list||[]);
-  }));
+  $("#cd-sub").innerHTML = "<b>"+esc(c.head_school)+"</b><br>Cell Head: "+esc(c.head_teacher||"")+(c.semis?' &middot; SEMIS '+esc(c.semis):'');
+  const head='<article class="cell-modal-head">'+
+    '<div class="havatar'+(c.head_photo_url?'':' initials')+'">'+(c.head_photo_url?'<img src="'+esc(c.head_photo_url)+'" alt="">':esc(initials(c.head_teacher||"Cell Head")))+'</div>'+
+    '<div class="cell-modal-who"><span class="cell-modal-kicker">CELL HEAD</span><b>'+esc(c.head_teacher||"Head not listed")+'</b>'+
+    '<span>'+esc(c.head_designation||"School Head")+(c.head_bps?' · BPS-'+esc(c.head_bps):'')+'</span>'+headMobileMarkup(c.head_mobile)+'</div></article>';
+  const staff=(c.school_list||[]).flatMap(s=>(s.staff_list||[]).map(x=>({...x,school_name:s.name})));
+  const grouped=(c.school_list||[]).map(s=>
+    '<section class="cell-school-group"><h4>'+esc(s.name)+'<span>'+Number(s.staff||0)+' staff</span></h4>'+
+    ((s.staff_list||[]).length?'<div class="cell-staff-grid">'+s.staff_list.map(x=>
+      '<div class="cell-staff-row"><div class="cell-staff-avatar'+(x.photo_url?'':' initials')+'">'+(x.photo_url?'<img src="'+esc(x.photo_url)+'" alt="">':esc(initials(x.name||"")))+'</div>'+
+      '<div><b>'+esc(x.name||"Employee")+'</b><span>'+esc(x.designation||"Staff")+(x.bps?' · BPS-'+esc(x.bps):'')+'</span></div></div>'
+    ).join("")+'</div>':'<div class="empty">No staff on record for this school.</div>')+'</section>'
+  ).join("");
+  $("#cd-body").innerHTML=head+
+    '<div class="cell-modal-stats"><span><b>'+(c.schools||0)+'</b> Schools</span><span><b>'+(c.staff||staff.length)+'</b> Employees</span><span><b>'+(c.verified||0)+'</b> Verified</span></div>'+
+    '<div class="hd cell-staff-heading">Employees in this cell</div>'+
+    (grouped||'<div class="empty">No school or employee records yet.</div>');
   openModal("#m-cell");
 }
 $("#btn-cd-close").addEventListener("click",()=>closeModal("#m-cell"));
