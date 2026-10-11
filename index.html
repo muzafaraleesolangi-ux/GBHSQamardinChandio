@@ -3780,11 +3780,11 @@ function bindHeroStatShowcase(){
 function headMobileMarkup(raw){
   const mobile=String(raw||"").trim();
   if(!mobile) return '<span class="headcontact missing">Mobile not listed</span>';
-  const digits=mobile.replace(/\\D/g,"");
+  const digits=mobile.replace(/\D/g,"");
   let intl=digits;
   if(digits.length===11 && digits.startsWith("0")) intl="92"+digits.slice(1);
   else if(digits.length===10 && digits.startsWith("3")) intl="92"+digits;
-  const valid=/^\\d{11,15}$/.test(intl);
+  const valid=/^\d{11,15}$/.test(intl);
   return '<span class="headcontact"><span class="headphone">'+esc(mobile)+'</span>'+
     (valid?'<a class="whatsapp-link" href="https://wa.me/'+intl+'" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp cell head"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.5 3.5A11.8 11.8 0 0 0 2 17.7L.5 23.5l6-1.6A11.8 11.8 0 0 0 20.5 3.5ZM12 21a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.5.9.9-3.4-.2-.4A9.8 9.8 0 1 1 12 21Zm5.4-7.3c-.3-.2-1.7-.9-2-.9s-.5-.2-.7.2-.8.9-1 1.1-.4.2-.7.1a8.1 8.1 0 0 1-2.4-1.5 9 9 0 0 1-1.7-2.1c-.2-.4 0-.5.2-.7l.5-.6c.2-.2.2-.4.3-.6.1-.2 0-.5 0-.6s-.7-1.7-1-2.3c-.2-.5-.5-.4-.7-.4H7.6c-.2 0-.6.1-.9.4s-1.2 1.2-1.2 2.8 1.2 3.2 1.4 3.4a12.5 12.5 0 0 0 4.8 4.2c.7.3 1.3.5 1.8.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4s-.2-.3-.5-.4Z"/></svg> WhatsApp</a>':'')+
     '</span>';
@@ -3796,16 +3796,17 @@ function openCellPublic(code){
   const head='<article class="cell-modal-head">'+
     '<div class="havatar'+(c.head_photo_url?'':' initials')+'">'+(c.head_photo_url?'<img src="'+esc(c.head_photo_url)+'" alt="">':esc(initials(c.head_teacher||"Cell Head")))+'</div>'+
     '<div class="cell-modal-who"><span class="cell-modal-kicker">CELL HEAD</span><b>'+esc(c.head_teacher||"Head not listed")+'</b>'+
-    '<span>'+esc(c.head_designation||"School Head")+(c.head_bps?' · BPS-'+esc(c.head_bps):'')+'</span>'+headMobileMarkup(c.head_mobile)+'</div></article>';
+    '<span>'+esc(c.head_designation||"School Head")+(c.head_bps?' · BPS-'+esc(String(c.head_bps).replace(/^bps-?/i,"")):'')+'</span>'+headMobileMarkup(c.head_mobile)+'</div></article>';
   const staff=(c.school_list||[]).flatMap(s=>(s.staff_list||[]).map(x=>({...x,school_name:s.name})));
   const grouped=(c.school_list||[]).map(s=>
     '<section class="cell-school-group"><h4>'+esc(s.name)+'<span>'+Number(s.staff||0)+' staff</span></h4>'+
     ((s.staff_list||[]).length?'<div class="cell-staff-grid">'+s.staff_list.map(x=>
       '<div class="cell-staff-row"><div class="cell-staff-avatar'+(x.photo_url?'':' initials')+'">'+(x.photo_url?'<img src="'+esc(x.photo_url)+'" alt="">':esc(initials(x.name||"")))+'</div>'+
-      '<div><b>'+esc(x.name||"Employee")+'</b><span>'+esc(x.designation||"Staff")+(x.bps?' · BPS-'+esc(x.bps):'')+'</span></div></div>'
+      '<div><b>'+esc(x.name||"Employee")+'</b><span>'+esc(x.designation||"Staff")+(x.bps?' · BPS-'+esc(String(x.bps).replace(/^bps-?/i,"")):'')+'</span></div></div>'
     ).join("")+'</div>':'<div class="empty">No staff on record for this school.</div>')+'</section>'
   ).join("");
   $("#cd-body").innerHTML=head+
+    '<div class="cell-popup-guide"><span><i>1</i>Head profile</span><span><i>2</i>Employees</span><span><i>3</i>WhatsApp if listed</span></div>'+
     '<div class="cell-modal-stats"><span><b>'+(c.schools||0)+'</b> Schools</span><span><b>'+(c.staff||staff.length)+'</b> Employees</span><span><b>'+(c.verified||0)+'</b> Verified</span></div>'+
     '<div class="hd cell-staff-heading">Employees in this cell</div>'+
     (grouped||'<div class="empty">No school or employee records yet.</div>');
@@ -4197,7 +4198,7 @@ function showLoginStep1(){
 }
 function showSignup(){
   $("#login-step1").classList.add("hidden"); $("#login-step2").classList.remove("hidden"); $("#login-step3").classList.add("hidden");
-  hideErr("#pwerr"); $("#login-step2 .grid2>div").forEach(x=>x.classList.remove("flow-active","flow-done"));
+  hideErr("#pwerr"); $$("#login-step2 .grid2>div").forEach(x=>x.classList.remove("flow-active","flow-done"));
   sizeLoginFlip(); setTimeout(signupInitFlow,80);
 }
 function showForgot(){
@@ -7336,4 +7337,10 @@ document.querySelectorAll('#screen-login [data-jump]').forEach(button=>button.ad
   if(target) target.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'start'});
 }));
 if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('auth-scroll-in');observer.unobserve(entry.target);}}),{threshold:.2});observer.observe(document.querySelector('#home-auth'));}
-</script>
+</script><style id="premium-cell-popup-fonts">
+#m-cell,#m-cell button{font-family:'Manrope',system-ui,sans-serif!important}
+#m-cell h3,#m-cell h4{font-family:'Manrope',system-ui,sans-serif!important}
+.cell-popup-guide{display:flex;gap:7px;margin:10px 0 13px}.cell-popup-guide>span{flex:1;display:flex;align-items:center;gap:5px;padding:7px 6px;border:1px solid #deece3;border-radius:9px;background:#f3f9f5;font-size:9px;font-weight:750;color:#46735c}.cell-popup-guide i{font-style:normal;width:17px;height:17px;background:#e1f1e6;border-radius:50%;display:grid;place-items:center;color:#176747;flex:0 0 auto;font-size:8px}
+#cd-body .whatsapp-link svg{height:13px;width:13px}
+@media(max-width:420px){.cell-popup-guide>span{font-size:8px;gap:3px;padding:6px 4px}}
+</style>
