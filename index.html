@@ -3806,7 +3806,6 @@ function openCellPublic(code){
     ).join("")+'</div>':'<div class="empty">No staff on record for this school.</div>')+'</section>'
   ).join("");
   $("#cd-body").innerHTML=head+
-    '<div class="cell-popup-guide"><span><i>1</i>Head profile</span><span><i>2</i>Employees</span><span><i>3</i>WhatsApp if listed</span></div>'+
     '<div class="cell-modal-stats"><span><b>'+(c.schools||0)+'</b> Schools</span><span><b>'+(c.staff||staff.length)+'</b> Employees</span><span><b>'+(c.verified||0)+'</b> Verified</span></div>'+
     '<div class="hd cell-staff-heading">Employees in this cell</div>'+
     (grouped||'<div class="empty">No school or employee records yet.</div>');
