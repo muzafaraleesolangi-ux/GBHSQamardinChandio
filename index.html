@@ -2178,8 +2178,8 @@ h1,h2,h3,h4{font-family:'Manrope','DM Sans',system-ui,sans-serif;letter-spacing:
     </div>
 
     <div class="inline-edit-launch-wrap">
-        <button type="button" class="inline-edit-launch" id="btn-inline-edit" title="Edit your profile fields">
-          <span data-ic="pen"></span><span class="ielabel">EDIT / UPDATE</span>
+        <button type="button" class="inline-edit-launch" id="btn-inline-edit" title="Edit or update your complete employee profile">
+          <span data-ic="pen"></span><span class="ielabel">EDIT / UPDATE PROFILE</span>
         </button>
       </div>
       <div class="notifwrap" id="ralertwrap">
@@ -2221,7 +2221,7 @@ h1,h2,h3,h4{font-family:'Manrope','DM Sans',system-ui,sans-serif;letter-spacing:
           </div>
           <div class="guide-art"><div class="cube"></div><div class="ring"></div><div class="dot"></div></div>
         </div>
-<section class="qdc-profile-photo noprint" id="qdc-profile-photo"><div><span class="qdc-eyebrow">PROFILE PHOTO</span><h3>Details and photo, one request.</h3><p>Choose a photo here. Save it with your draft and send everything together.</p></div><div class="qdc-photo-preview" id="qdc-draft-photo"></div><div><button type="button" class="btn ghost" id="qdc-choose-photo">UPLOAD / CHANGE PHOTO</button><button type="button" class="btn ghost" id="qdc-undo-photo">UNDO PHOTO CHANGE</button><small id="qdc-photo-state"></small></div></section>
+<section class="qdc-profile-photo noprint hidden" id="qdc-profile-photo" aria-hidden="true"></section>
 <section class="qdc-workflow-progress noprint" id="qdc-workflow-progress"></section>
         <div class="fields" id="r-fields" data-anchor="rs-top rs-fields"></div>
         <div class="inline-edit-bar hidden noprint" id="inline-edit-bar">
@@ -2229,7 +2229,7 @@ h1,h2,h3,h4{font-family:'Manrope','DM Sans',system-ui,sans-serif;letter-spacing:
           <div class="inline-edit-actions">
             <button type="button" class="btn ghost" id="btn-inline-cancel">CANCEL</button>
             <button type="button" class="btn ghost" id="btn-inline-save"><span class="bicon" data-ic="save"></span>&nbsp; SAVE DRAFT</button>
-            <button type="button" class="btn primary" id="btn-inline-submit"><span class="bicon" data-ic="paperplane"></span>&nbsp; SEND DATA + PHOTO FOR APPROVAL</button>
+            <button type="button" class="btn primary" id="btn-inline-submit"><span class="bicon" data-ic="paperplane"></span>&nbsp; CONFIRM &amp; SEND FOR FINAL VERIFICATION</button>
           </div>
         </div>
 <label class="qdc-draft-note hidden noprint" id="qdc-draft-note">Note for office (optional)<textarea id="qdc-note" maxlength="1500" rows="2" placeholder="Explain your corrections"></textarea></label>
@@ -2259,7 +2259,7 @@ h1,h2,h3,h4{font-family:'Manrope','DM Sans',system-ui,sans-serif;letter-spacing:
           <div class="rgrid-side" id="rs-side">
             <div class="qa-title"><span data-ic="bolt"></span>Quick Actions</div>
             <input type="file" id="file-photo" accept="image/*" class="hidden">
-            <button type="button" class="qa-card noprint" id="btn-photo">
+            <button type="button" class="qa-card noprint hidden" id="btn-photo" inert aria-hidden="true">
               <span class="qaicon g1" data-ic="camera"></span>
               <span class="qatext"><b>Upload / Change Photo</b><span>Update your profile photo</span></span>
               <span class="qaarrow" data-ic="chevronr"></span>
@@ -2285,7 +2285,7 @@ h1,h2,h3,h4{font-family:'Manrope','DM Sans',system-ui,sans-serif;letter-spacing:
               <span class="qaarrow" data-ic="chevronr"></span>
             </button>
 
-            <div class="certbox2">
+            <div class="certbox2 hidden" aria-hidden="true">
               <div class="cert-head"><span class="cicon" data-ic="shield"></span><b>Certification</b></div>
               <p>I have carefully verified my personal and service particulars displayed above and certify that all information is correct as per my official record.</p>
               <label class="cert-agree"><input type="checkbox" id="chk-agree"> I Agree</label>
@@ -2295,7 +2295,7 @@ h1,h2,h3,h4{font-family:'Manrope','DM Sans',system-ui,sans-serif;letter-spacing:
               <p>You are editing this record directly as Master Admin. Changes save immediately &mdash; no approval needed.</p>
             </div>
             <button class="btn primary hidden" id="btn-admin-save"><span class="bicon" data-ic="check"></span>&nbsp; SAVE DRAFT</button>
-            <button class="btn primary" id="btn-verify" disabled><span class="bicon" data-ic="check"></span>&nbsp; VERIFY &amp; SUBMIT</button>
+            <button class="btn primary hidden" id="btn-verify" disabled inert aria-hidden="true"><span class="bicon" data-ic="check"></span>&nbsp; VERIFY &amp; SUBMIT</button>
             <button class="btn ghost" id="btn-back"><span class="bicon" data-ic="arrowleft"></span>&nbsp; BACK</button>
             <button class="btn ghost" id="btn-emp-logout">LOGOUT</button>
           </div>
@@ -2400,6 +2400,10 @@ h1,h2,h3,h4{font-family:'Manrope','DM Sans',system-ui,sans-serif;letter-spacing:
   </div>
 
   <div id="tab-requests" class="tabpane hidden">
+    <section id="master-delete-queue" class="hmcard hidden" style="margin-bottom:14px">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:10px"><div><h4 style="margin:0">Hub Admin deletion requests</h4><p class="lead" style="margin:4px 0 0">Only Master Admin can approve and permanently delete an employee record.</p></div><button class="btn sm ghost" id="btn-delete-queue-refresh">↻ REFRESH</button></div>
+      <div class="tablewrap" style="margin-top:10px"><table><thead><tr><th>Employee</th><th>PID</th><th>Cell</th><th>Requested by</th><th>Reason</th><th>Submitted</th><th>Decision</th></tr></thead><tbody id="t-delete-requests"></tbody></table></div>
+    </section>
     <div class="tablewrap"><table><thead><tr>
       <th>Employee</th><th>Cell</th><th>Fields requested</th><th>Note</th><th>Submitted</th><th>Status</th><th>Action</th>
     </tr></thead><tbody id="t-req"></tbody></table></div>
@@ -3563,6 +3567,9 @@ const api = {
   publicSummary:   ()             => callFn("sv_public_summary", {}),
   addEmployee:     (t,data)       => callFn("sv_admin_add_employee",    {p_token:t, p_data:data}),
   removeEmployee:  (t,emp)        => callFn("sv_admin_remove_employee", {p_token:t, p_emp:emp}),
+  requestEmployeeDeletion:(t,emp,reason)=>callFn("sv_hub_request_employee_deletion",{p_token:t,p_emp:emp,p_reason:reason}),
+  deletionRequests:t=>callFn("sv_master_deletion_requests",{p_token:t}),
+  decideEmployeeDeletion:(t,id,decision,reason)=>callFn("sv_master_decide_employee_deletion",{p_token:t,p_id:id,p_decision:decision,p_reason:reason||null}),
   restoreEmployee: (t,emp)        => callFn("sv_admin_restore_employee",{p_token:t, p_emp:emp}),
   submitPhoto:     (key,url)      => callFn("sv_submit_photo",  {p_key:key, p_data_url:url}),
   decidePhoto:     (t,emp,d)      => callFn("sv_decide_photo",  {p_token:t, p_emp:emp, p_decision:d}),
@@ -3592,7 +3599,7 @@ let PUB=null;             // public cluster summary (no names) — shown before 
 let TOKEN=null, OFFICER=null, IS_MASTER=false, CAN_ADMIN=false; // IS_MASTER: strictly the Master Admin login (kept for anything that should stay Muzafar-only in future).
 // CAN_ADMIN: Master Admin OR the Cluster Hub HM role — full-cluster visibility, Add/Edit/Remove/Restore employees, decide any cell's requests,
 // the top-search direct-edit-and-save bar, and the notification bell (both now shared with the Cluster Hub HM role, per his "han kro").
-let BOARD=null, STAFF=[], REQUESTS=[], RESET_REQUESTS=[], VERIFIED_MAP=new Map(), HISTORY=[];
+let BOARD=null, STAFF=[], REQUESTS=[], DELETION_REQUESTS=[], RESET_REQUESTS=[], VERIFIED_MAP=new Map(), HISTORY=[];
 let INLINE_EDIT_MODE=false, INLINE_DRAFT=[], DRAFT_PHOTO=null, DRAFT_NOTE="", PROFILE_BUSY=false, PROFILE_UNSAVED=false;
 let CUR=null, CUR_KEY=null, CUR_STATUS=null, CUR_HISTORY=[], CUR_FROMDASH=false, CUR_DOB=null;
 let PW_KEY=null, PW_PREFETCHED=null;
@@ -4731,7 +4738,7 @@ async function loadBoardAndShow(keepTab){
     BOARD = await api.board(TOKEN); netOff();
     if(!BOARD){ msg("Session ended","Please sign in again.","⚠"); $("#btn-logout").click(); return; }
     OFFICER = BOARD.officer; IS_MASTER = OFFICER.role==="MASTER"; CAN_ADMIN = (OFFICER.role==="MASTER"||OFFICER.role==="HUBHM");
-    STAFF = BOARD.employees||[]; REQUESTS = BOARD.requests||[]; HISTORY = BOARD.history||[];
+    STAFF = BOARD.employees||[]; REQUESTS = BOARD.requests||[]; HISTORY = BOARD.history||[]; DELETION_REQUESTS=[]; if(IS_MASTER){try{await refreshDeletionRequests();}catch(delErr){DELETION_REQUESTS=[];}}
     VERIFIED_MAP = new Map((BOARD.verified||[]).map(v=>[v.employee_id,v]));
     $("#btn-addemp").classList.toggle("hidden", !CAN_ADMIN);
     $("#notifwrap").classList.toggle("hidden", !CAN_ADMIN);
@@ -5125,7 +5132,7 @@ function renderDash(){
       '<td><div class="pcell"><div class="progress"><i style="width:'+p+'%"></i></div><span class="pnum">'+p+'%</span></div></td></tr>';
   }).join("");
 
-  renderSchools(); renderStaff(); renderReq(); renderPhotos(); renderLog(); paintFoot();
+  renderSchools(); renderStaff(); renderReq(); renderDeletionRequests(); renderPhotos(); renderLog(); paintFoot();
 }
 function pager(el,total,page,go){
   const pages=Math.max(1,Math.ceil(total/PER));
@@ -5178,9 +5185,9 @@ function renderStaff(){
     '<td style="font-size:11.5px;color:#6a7d74">'+(lu?dNice(lu.at)+'<br>'+esc(KIND[lu.kind]||""):'—')+'</td>'+
     '<td><button class="btn sm ghost" data-view="'+e.id+'" style="margin-right:5px">View</button>'+
         '<button class="btn sm" data-edit="'+e.id+'" style="background:var(--editbg);color:var(--edit);margin-right:5px">Edit</button>'+
-        (CAN_ADMIN ? (e.is_active
+        (IS_MASTER ? (e.is_active
           ? '<button class="btn sm" data-delete="'+e.id+'" style="background:var(--dangerbg);color:var(--danger)">Delete</button>'
-          : '') : '')+
+          : '') : CAN_ADMIN && e.is_active ? '<button class="btn sm" data-delete-request="'+e.id+'" style="background:#fff7df;color:#8b6b09">Request Delete</button>' : '')+
     '</td></tr>';
   }).join("") : '<tr><td colspan="9"><div class="empty">No staff match.</div></td></tr>';
   $$("#t-staff button[data-view]").forEach(b=>b.addEventListener("click",()=>{ const e=byId(+b.dataset.view); if(e){ ADMIN_EDIT_MODE=false; lookupAndRender(empKey(e),true); } }));
@@ -5195,6 +5202,12 @@ function renderStaff(){
       await loadBoardAndShow(true);
       msg("Employee permanently deleted",e.employee_name+" and linked records were permanently removed.","✓");
     }catch(err){ netFail(friendlyErr(err)); }
+  }));
+  $$("#t-staff button[data-delete-request]").forEach(b=>b.addEventListener("click",async ()=>{
+    const e=byId(+b.dataset.deleteRequest);if(!e||OFFICER?.role!=="HUBHM")return;
+    const reason=prompt("Why should this employee record be deleted? The Master Admin will review this request.");
+    if(reason===null)return;if(reason.trim().length<5){msg("Add a reason","Please provide at least five characters for the Master Admin.","⚠");return;}
+    netOn("Sending request to Master Admin…");try{const r=await api.requestEmployeeDeletion(TOKEN,e.id,reason.trim());netOff();if(!r||r.ok!==true){msg("Request not sent",r?.status||"Please try again.","⚠");return;}await loadBoardAndShow(true);msg("Deletion request sent",e.employee_name+" is now waiting for Master Admin review.","✓");}catch(err){netFail(friendlyErr(err));}
   }));
 }
 
@@ -5314,6 +5327,23 @@ $("#btn-ae-save").addEventListener("click", async ()=>{
   }catch(err){ netFail(friendlyErr(err)); }
 });
 
+/* ---- Master-only employee deletion queue ---- */
+function renderDeletionRequests(){
+  const box=$("#master-delete-queue"),body=$("#t-delete-requests");if(!box||!body)return;box.classList.toggle("hidden",!IS_MASTER);if(!IS_MASTER)return;
+  body.innerHTML=DELETION_REQUESTS.length?DELETION_REQUESTS.map(r=>'<tr><td><b>'+esc(r.employee_name)+'</b></td><td>'+esc(r.personal_no||"—")+'</td><td>'+esc(r.cell_code||"—")+'</td><td>'+esc(r.requested_by_name||"Hub Admin")+'</td><td>'+esc(r.reason||"—")+'</td><td>'+dOnly(r.requested_at)+'</td><td><button class="btn sm danger" data-del-approve="'+r.id+'">Approve &amp; Delete</button> <button class="btn sm ghost" data-del-return="'+r.id+'">Decline</button></td></tr>').join(""):'<tr><td colspan="7"><div class="empty">No pending Hub deletion requests.</div></td></tr>';
+  $$("#t-delete-requests [data-del-approve]").forEach(b=>b.addEventListener("click",()=>decideEmployeeDeletion(+b.dataset.delApprove,"APPROVED")));
+  $$("#t-delete-requests [data-del-return]").forEach(b=>b.addEventListener("click",()=>decideEmployeeDeletion(+b.dataset.delReturn,"RETURNED")));
+}
+async function refreshDeletionRequests(){if(!IS_MASTER)return;const r=await api.deletionRequests(TOKEN);if(!r||r.ok===false)throw new Error(r?.status||"Could not load deletion requests.");DELETION_REQUESTS=Array.isArray(r)?r:(r.requests||[]);renderDeletionRequests();}
+async function decideEmployeeDeletion(id,decision){
+ const req=DELETION_REQUESTS.find(x=>Number(x.id)===Number(id));if(!req)return;
+ const reason=decision==="RETURNED"?prompt("Optional note for Hub Admin:")||"Request declined by Master Admin.":"";
+ if(decision==="APPROVED"&&!confirm("Permanently delete "+req.employee_name+" and linked employee data? This action cannot be undone."))return;
+ netOn(decision==="APPROVED"?"Deleting employee record…":"Declining request…");
+ try{const r=await api.decideEmployeeDeletion(TOKEN,id,decision,reason);netOff();if(r!=="OK"){msg(decision==="APPROVED"?"Delete not completed":"Request not updated",String(r||"Please try again."),"⚠");return;}await loadBoardAndShow(true);openTab("requests");msg(decision==="APPROVED"?"Employee deleted":"Request declined",decision==="APPROVED"?req.employee_name+" and linked records were deleted by Master Admin.":"Hub Admin's request was declined.","✓");}catch(e){netFail(friendlyErr(e));}
+}
+$("#btn-delete-queue-refresh").addEventListener("click",async()=>{try{await refreshDeletionRequests();msg("Queue refreshed","Hub deletion requests are up to date.");}catch(e){netFail(friendlyErr(e));}});
+
 /* ---- correction requests ---- */
 function renderReq(){
   const list=REQUESTS.slice();
@@ -5339,13 +5369,16 @@ function openRequest(id){
   const r=REQUESTS.find(x=>x.id===id); if(!r) return;
   const e=byId(r.employee_id);
   const done=r.status!=="PENDING", allowed=CAN_ADMIN || r.cell_code===OFFICER.cell;
+  const proposed=Object.assign({},e||{});(r.changes||[]).forEach(c=>{proposed[c.field]=c.to;});
+  const allProfile=FIELD_DEFS.map(([k,l])=>'<tr><td>'+esc(l)+'</td><td><b>'+esc(proposed[k]||'—')+'</b></td></tr>').join('');
   $("#rq-body").innerHTML =
     '<div class="note" style="margin-top:0"><b>'+esc(e?e.employee_name:"—")+'</b> &middot; '+esc(e?e.designation:"")+' &middot; '+esc(e?empKey(e):"")+
     '<br><span style="font-size:12px;color:var(--muted)">'+esc(e?e.place_of_posting:"")+' &middot; Cell '+(r.cell_code||"—")+
     ' &middot; submitted '+dOnly(r.submitted_at)+' &middot; '+(r.changes||[]).length+' field(s) in one request</span></div>'+
     '<div class="tablewrap" style="margin-top:11px;max-height:none"><table><thead><tr><th>Field</th><th>Current entry</th><th>Requested value</th></tr></thead><tbody>'+
-    (r.changes||[]).map(c=>'<tr><td><b>'+esc(c.label||c.field)+'</b></td><td style="color:#7b8d85">'+(c.from?esc(c.from):"—")+'</td><td><b style="color:var(--edit)">'+esc(c.to)+'</b></td></tr>').join("")+
+    (r.changes||[]).length?(r.changes||[]).map(c=>'<tr><td><b>'+esc(c.label||c.field)+'</b></td><td style="color:#7b8d85">'+(c.from?esc(c.from):"—")+'</td><td><b style="color:var(--edit)">'+esc(c.to)+'</b></td></tr>').join(""): '<tr><td colspan="3"><span style="color:#7b8d85">No field edits; employee submitted their current full profile for final verification.</span></td></tr>'+
     '</tbody></table></div>'+
+    '<details class="note" style="margin-top:10px"><summary><b>Review complete profile for final verification</b></summary><div class="tablewrap" style="margin-top:8px;max-height:360px;overflow:auto"><table><tbody>'+allProfile+'</tbody></table></div></details>'+
     (r.photo_data?'<div class="qdc-request-photos"><div><b>Current approved photo</b>'+(e&&e.photo_url?'<img src="'+esc(e.photo_url)+'" alt="Current approved photo">':'<span>No photo</span>')+'</div><div><b>Requested photo</b><img src="'+esc(r.photo_data)+'" alt="Photo in this approval request"></div></div>':'')+
     (r.note?'<div class="note"><b>Note from the employee:</b><br>'+esc(r.note)+'</div>':'')+
     (done?'<div class="'+(r.status==="APPROVED"?"okbox":"err")+'">'+(r.status==="APPROVED"?"Approved and applied":"Returned")+
@@ -5368,7 +5401,7 @@ $("#btn-rq-approve").addEventListener("click", async ()=>{
     if(r==="DUPLICATE_HEAD"){ showErr("#rq-err","Cannot approve: this school already has a Head (HM). Remove the existing Head first, or Return this request."); return; }
     if(r!=="OK"){ showErr("#rq-err","Could not approve: "+String(r)); return; }
     closeModal("#m-req"); await loadBoardAndShow(true); openTab("requests");
-    msg("Approved","The submitted details and photo were applied together. The employee can now review the official profile and verify it.");
+    msg("Approved","The submitted details and photo were applied together. The official profile is now verified by Admin.");
   }catch(e){ netFail(friendlyErr(e)); }
 });
 $("#btn-rq-return").addEventListener("click", async ()=>{
@@ -6921,7 +6954,7 @@ async function saveInlineChanges(alsoSubmit){
     if(!alsoSubmit){netOff();renderRecordUI();msg('Draft saved','Your details and photo are saved in the system. Continue editing, or send one approval request when ready.','✓');return;}
     netOn('Sending one combined request…');const r=await api.submitCorrectionDraft(CUR_KEY,DRAFT_NOTE);
     if(!r||!r.ok)throw new Error(r&&r.status==='INCOMPLETE'?'Complete '+r.missing+' before submitting.':r&&r.status==='DUPLICATE'?'The requested PID/CNIC already belongs to another employee.':r&&r.status==='EMPTY'?'There are no changes to send.':r&&r.status==='ALREADY_PENDING'?'Your request is already waiting for approval.':(r&&r.status)||'Submission failed. Your draft is saved.');
-    resetTransientProfileEditState();await lookupAndRender(CUR_KEY,false,null);msg('Data + photo submitted','One request is with your office. After approval, review your updated official profile and use Verify & Submit.','✓');
+    resetTransientProfileEditState();await lookupAndRender(CUR_KEY,false,null);msg('Sent for final verification','Your photo and complete profile are with Admin. Admin approval will mark your profile verified.','✓');
   }catch(e){netFail(e.message||friendlyErr(e));}finally{PROFILE_BUSY=false;netOff();renderUnifiedWorkspace();}
 }
 $('#btn-inline-edit').addEventListener('click',()=>enterInlineEdit());
@@ -7185,23 +7218,65 @@ window.addEventListener('hashchange',()=>{ resetTransientProfileEditState(); if(
 @media(max-width:900px){#screen-record .fields{grid-template-columns:repeat(2,minmax(0,1fr))!important}.qdc-profile-photo{grid-template-columns:1fr 86px}.qdc-profile-photo>div:last-child{grid-column:1/-1}.qdc-workflow-progress{gap:5px}.qdc-workflow-progress>div{font-size:9px;padding:8px;flex-direction:column;align-items:flex-start}.qdc-profile-photo h3{font-size:16px}}
 @media(max-width:560px){#screen-record .recmain{padding:13px!important}#screen-record .fields{grid-template-columns:1fr!important}.qdc-profile-photo{padding:13px;gap:10px}.qdc-field-section b{font-size:15px}#screen-record .inline-edit-bar{bottom:4px}.inline-edit-actions{display:flex;width:100%}.inline-edit-actions .btn{min-width:0!important;flex:1;padding:8px!important;font-size:9px!important}.qdc-workflow-progress b{line-height:1.4}}
 @media print{.qdc-profile-photo,.qdc-workflow-progress,.qdc-draft-note,.qdc-field-section,.inline-change-summary{display:none!important}}
-</style><script id="unified-profile-workspace-v1-js">
+/* Unified employee profile editor: the avatar itself is the photo field. */
+#screen-record #btn-photo,#screen-record #btn-correct,#screen-record #btn-verify,#screen-record .certbox2{display:none!important}
+#screen-record .qdc-editor-banner{grid-column:1/-1;position:relative;overflow:hidden;margin:2px 0 14px;padding:20px 21px;border:1px solid #cfe3d6;border-radius:19px;background:linear-gradient(120deg,#f6fbf7,#fff 58%,#f8f4e8);box-shadow:0 9px 24px #0b52370c;animation:qdcBannerIn .48s cubic-bezier(.2,.8,.2,1) both}
+#screen-record .qdc-editor-banner:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(#14865e,#d3b55f);transform-origin:top;animation:qdcRailIn .6s ease both}
+#screen-record .qdc-editor-banner-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+#screen-record .qdc-editor-banner h3{margin:4px 0;font-size:21px;letter-spacing:-.025em;color:#133d2b}
+#screen-record .qdc-editor-banner p{margin:0;color:#657b6d;font-size:12px;line-height:1.5}
+#screen-record .qdc-status-chip{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:8px 11px;font-size:9px;font-weight:950;letter-spacing:.055em;white-space:nowrap}
+#screen-record .qdc-status-chip.verified{background:#e6f5e9;color:#16663c;border:1px solid #c3e4cb}
+#screen-record .qdc-status-chip.pending{background:#fff5d9;color:#85620d;border:1px solid #ead99b;animation:qdcPendingPulse 2.2s ease-in-out infinite}
+#screen-record .qdc-status-chip.draft{background:#edf3ef;color:#587163;border:1px solid #dce8df}
+#screen-record .qdc-guide-flow{display:flex;align-items:center;gap:9px;margin-top:17px}
+#screen-record .qdc-guide-flow>span{color:#b69a4f;font-weight:900;font-size:18px;animation:qdcArrow 1.6s ease-in-out infinite}
+#screen-record .qdc-guide-step{display:flex;align-items:center;gap:8px;flex:1;min-width:0;padding:8px 10px;border:1px solid #e0ebe3;border-radius:12px;background:#fff;color:#809287;font-size:10px;transition:.25s ease}
+#screen-record .qdc-guide-step i{width:23px;height:23px;display:grid;place-items:center;flex:none;border-radius:8px;background:#edf3ef;color:#71887a;font-style:normal;font-weight:900}
+#screen-record .qdc-guide-step.active{border-color:#acd1b8;background:#f6fbf7;color:#195b3c;box-shadow:0 0 0 3px #1685570b;animation:qdcStepGlow 2.4s ease-in-out infinite}
+#screen-record .qdc-guide-step.done i{background:#dff1e3;color:#12663f}
+#screen-record .qdc-editor-photo-row{display:flex;align-items:center;gap:15px;margin-top:16px;padding:13px;border:1px solid #dbe9df;border-radius:14px;background:#ffffffd9;animation:qdcPhotoIn .45s .08s both}
+#screen-record .qdc-photo-pick{display:block;flex:none;cursor:pointer;border-radius:50%;outline-offset:4px}
+#screen-record .qdc-avatar-ring{position:relative;width:76px;height:76px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#dcefe2,#fff5d9);border:3px solid white;box-shadow:0 0 0 2px #66a883,0 7px 18px #16482c20;color:#176447;font-size:19px;font-weight:950;transition:transform .2s ease,box-shadow .2s ease;animation:qdcAvatarFloat 3.6s ease-in-out infinite}
+#screen-record .qdc-photo-pick:hover .qdc-avatar-ring{transform:scale(1.06);box-shadow:0 0 0 3px #c5a453,0 10px 23px #16482c25}
+#screen-record .qdc-avatar-ring img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+#screen-record .qdc-avatar-ring i{position:absolute;right:-2px;bottom:0;width:23px;height:23px;display:grid;place-items:center;border:2px solid white;border-radius:50%;background:#0a6b49;color:white;font-style:normal;font-size:15px;box-shadow:0 3px 9px #0c402633}
+#screen-record .qdc-editor-photo-row>div:last-child{display:grid;gap:3px}
+#screen-record .qdc-editor-photo-row b{font-size:12px;color:#204d36}
+#screen-record .qdc-editor-photo-row small{font-size:10px;color:#718479;line-height:1.45}
+#screen-record .qdc-editor-photo-row em{font-style:normal;font-size:9px;font-weight:800;color:#967b36}
+#screen-record .qdc-editor-banner.editing .qdc-status-chip{animation:qdcPendingPulse 2.2s ease-in-out infinite}
+#screen-record #btn-inline-submit{background:linear-gradient(110deg,#0a6245,#16815a,#0a6245)!important;background-size:220% 100%!important;box-shadow:0 7px 18px #09634220!important;animation:qdcButtonGlow 4s ease-in-out infinite}
+#screen-record #btn-inline-submit:hover{background-position:100% 0!important;transform:translateY(-2px)}
+#screen-record #btn-inline-save{border:1px solid #c7ddd0!important}
+@keyframes qdcBannerIn{from{opacity:0;transform:translateY(10px) scale(.99)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes qdcRailIn{from{transform:scaleY(.2);opacity:.3}to{transform:scaleY(1);opacity:1}}
+@keyframes qdcPendingPulse{50%{box-shadow:0 0 0 4px #d0a93d18}}
+@keyframes qdcArrow{50%{transform:translateX(3px);opacity:.6}}
+@keyframes qdcStepGlow{50%{box-shadow:0 0 0 4px #16855710}}
+@keyframes qdcPhotoIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes qdcAvatarFloat{50%{transform:translateY(-2px)}}
+@keyframes qdcButtonGlow{50%{box-shadow:0 9px 23px #09634235!important}}
+@media(max-width:600px){#screen-record .qdc-editor-banner{padding:15px 14px}#screen-record .qdc-editor-banner-top{flex-direction:column}#screen-record .qdc-guide-flow{gap:4px}#screen-record .qdc-guide-step{padding:7px 5px;gap:5px;flex-direction:column;align-items:flex-start;font-size:8px}#screen-record .qdc-editor-photo-row{gap:10px;padding:10px}#screen-record .qdc-avatar-ring{width:65px;height:65px}}
+@media(prefers-reduced-motion:reduce){#screen-record .qdc-editor-banner,#screen-record .qdc-editor-banner:before,#screen-record .qdc-status-chip,#screen-record .qdc-guide-flow>span,#screen-record .qdc-guide-step,#screen-record .qdc-editor-photo-row,#screen-record .qdc-avatar-ring,#screen-record #btn-inline-submit{animation:none!important;transition:none!important}}
+</style><script id="unified-profile-workspace-v2-js">
 function qdcFieldSection(k){const sections={personal_no:['01','Personal & Contact'],staff_type:['02','Current Service'],dob:['03','Dates & Service History'],qualification:['04','Qualifications'],mobile:['05','Contact & Payroll']};const v=sections[k];return v?'<div class="qdc-field-section"><span>'+v[0]+'</span><b>'+v[1]+'</b></div>':'';}
 function renderUnifiedWorkspace(){
- if(!CUR)return;document.querySelectorAll('.qdc-photo-summary').forEach(e=>e.remove());const panel=$('#qdc-profile-photo'),fromAdmin=CUR_FROMDASH,pending=CUR_STATUS==='CORRECTION';panel.classList.toggle('hidden',fromAdmin);$('#btn-photo').classList.toggle('hidden',fromAdmin);$('#btn-inline-edit').classList.toggle('hidden',fromAdmin||INLINE_EDIT_MODE||pending);$('#qdc-draft-note').classList.toggle('hidden',!INLINE_EDIT_MODE||fromAdmin);if(INLINE_EDIT_MODE)$('#qdc-note').value=DRAFT_NOTE;
- const photo=pending?(CUR_PENDING_REQUEST&&CUR_PENDING_REQUEST.photo_data):DRAFT_PHOTO;
- $('#qdc-draft-photo').innerHTML=(photo||CUR.photo_url)?'<img src="'+esc(photo||CUR.photo_url)+'" alt="'+(photo?'Draft / requested':'Approved')+' profile photo">':'<span>'+esc(initials(CUR.employee_name))+'</span>';
- $('#qdc-photo-state').textContent=pending?'Included in your submitted request':DRAFT_PHOTO?'Photo in draft — save and submit with your details':'Your approved photo stays unchanged until approval';
- ['qdc-choose-photo','qdc-undo-photo'].forEach(id=>$("#"+id).disabled=pending||PROFILE_BUSY);
+ if(!CUR)return;document.querySelectorAll('.qdc-photo-summary').forEach(e=>e.remove());
+ const panel=$('#qdc-profile-photo'),fromAdmin=CUR_FROMDASH,pending=CUR_STATUS==='CORRECTION',verified=CUR_STATUS==='VERIFIED';
+ panel.classList.add('hidden');$('#btn-photo').classList.add('hidden');$('#btn-verify').classList.add('hidden');$('.certbox2').classList.add('hidden');
+ $('#btn-inline-edit').classList.toggle('hidden',fromAdmin||INLINE_EDIT_MODE||pending);
+ $('#qdc-draft-note').classList.toggle('hidden',!INLINE_EDIT_MODE||fromAdmin);if(INLINE_EDIT_MODE)$('#qdc-note').value=DRAFT_NOTE;
+ const old=$('#qdc-editor-banner');if(old)old.remove();
+ const status=verified?'<span class="qdc-status-chip verified">✓ VERIFIED BY ADMIN</span>':pending?'<span class="qdc-status-chip pending">◷ WITH ADMIN FOR FINAL VERIFICATION</span>':'<span class="qdc-status-chip draft">FINAL ADMIN VERIFICATION REQUIRED</span>';
+ const banner='<section id="qdc-editor-banner" class="qdc-editor-banner '+(INLINE_EDIT_MODE?'editing':'')+'"><div class="qdc-editor-banner-top"><div><span class="qdc-eyebrow">EMPLOYEE PROFILE WORKSPACE</span><h3>'+(INLINE_EDIT_MODE?'Update your complete profile':'Your complete profile')+'</h3><p>'+(verified?'Your latest approved profile is verified by Admin.':pending?'Your submitted profile is waiting for Admin final verification.':'Edit your details and profile photo together, then send the complete profile to Admin for final verification.')+'</p></div>'+status+'</div><div class="qdc-guide-flow"><div class="qdc-guide-step '+(INLINE_EDIT_MODE?'active':'done')+'"><i>1</i><b>Edit photo & details</b></div><span>›</span><div class="qdc-guide-step '+(INLINE_EDIT_MODE?'active':'')+'"><i>2</i><b>Save draft / confirm</b></div><span>›</span><div class="qdc-guide-step '+(pending?'active':verified?'done':'')+'"><i>3</i><b>Admin verifies</b></div></div>'+(INLINE_EDIT_MODE?'<div class="qdc-editor-photo-row"><label class="qdc-photo-pick" for="file-photo" title="Choose a profile photo"><span class="qdc-avatar-ring">'+(DRAFT_PHOTO||CUR.photo_url?'<img src="'+esc(DRAFT_PHOTO||CUR.photo_url)+'" alt="Profile photo">':esc(initials(CUR.employee_name)))+'<i>＋</i></span></label><div><b>Profile photo</b><small>Tap your photo to choose or replace it. It will be sent with all your profile details in the same request.</small><em>'+(DRAFT_PHOTO?'New photo ready to save with your draft':CUR.photo_url?'Current photo will stay until Admin approves your update':'A profile photo is required')+'</em></div></div>':'')+'</section>';
+ $('#r-fields').insertAdjacentHTML('afterbegin',banner);
  ['btn-inline-save','btn-inline-submit','btn-inline-cancel'].forEach(id=>$("#"+id).disabled=PROFILE_BUSY);
- const draft=INLINE_DRAFT.length||DRAFT_PHOTO||INLINE_EDIT_MODE,verified=CUR_STATUS==='VERIFIED',stage=pending?1:verified?3:draft?0:2;
- $('#qdc-workflow-progress').innerHTML=['Save Draft','One Admin Approval','Review Approved Profile','Verify & Submit'].map((t,i)=>'<div class="'+(i===stage?'active':'')+'"><i>'+(i+1)+'</i><b>'+t+'</b></div>').join('');
- const agree=$('#chk-agree'),verify=$('#btn-verify');if(agree)agree.disabled=!!pending||!!draft||verified||fromAdmin;if(verify)verify.disabled=!!pending||!!draft||verified||fromAdmin||!agree.checked;
- if(verified&&verify)verify.innerHTML='✓ VERIFIED & SUBMITTED';else if(verify)verify.innerHTML='VERIFY & SUBMIT';
- if(photo){const box=$('#inline-change-summary');box.classList.remove('hidden');box.insertAdjacentHTML('beforeend','<div class="ics-row qdc-photo-summary"><span>Profile photo</span><b>'+ (pending?'Submitted with profile':'Saved / selected in draft')+'</b><em>'+(pending?'WAITING FOR APPROVAL':'DRAFT')+'</em></div>');}
+ $('#btn-inline-submit').innerHTML='<span class="bicon" data-ic="paperplane"></span>&nbsp; CONFIRM &amp; SEND FOR FINAL VERIFICATION';
+ $('#qdc-workflow-progress').innerHTML='';
+ const agree=$('#chk-agree'),verify=$('#btn-verify');if(agree)agree.disabled=true;if(verify)verify.disabled=true;
 }
-$('#qdc-choose-photo').addEventListener('click',()=>$('#file-photo').click());
-$('#qdc-undo-photo').addEventListener('click',()=>{DRAFT_PHOTO=null;PROFILE_UNSAVED=true;renderUnifiedWorkspace();});
+$('#qdc-choose-photo')?.remove();$('#qdc-undo-photo')?.remove();
 $('#qdc-note').addEventListener('input',e=>{DRAFT_NOTE=e.target.value;PROFILE_UNSAVED=true;});
 </script></body>
 </html>
