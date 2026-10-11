@@ -1394,6 +1394,10 @@ h1,h2,h3,h4{font-family:'Manrope','DM Sans',system-ui,sans-serif;letter-spacing:
 .cell-staff-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.cell-staff-row{display:flex;align-items:center;gap:9px;min-width:0;padding:8px;background:#f7faf8;border-radius:11px}.cell-staff-avatar{width:34px;height:34px;flex:0 0 34px;border-radius:50%;overflow:hidden;background:#e2eee6;color:#276347;display:grid;place-items:center;font-size:11px;font-weight:800}.cell-staff-row>div:last-child{min-width:0;display:grid;gap:2px}.cell-staff-row b{font-size:11px;color:#233e30;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cell-staff-row span{font-size:9.5px;color:#78877e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 @media(max-width:560px){.cell-staff-grid{grid-template-columns:1fr}.cell-modal-head{align-items:flex-start}.headcontact{gap:5px}.card-head-contact .headcontact{font-size:10px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* Keep the inactive login face out of the 3D compositor and keyboard order. */
+#loginflipcard:not(.flipped) #loginface-back,
+#loginflipcard.flipped #loginface-front{visibility:hidden;pointer-events:none}
 </style>
 
 <style id="admin-premium-redesign">
@@ -1983,7 +1987,7 @@ h1,h2,h3,h4{font-family:'Manrope','DM Sans',system-ui,sans-serif;letter-spacing:
     <div class="flipwrap" id="loginflipwrap">
       <div class="flipcard" id="loginflipcard">
 
-        <div class="face front card loginside" id="loginface-front">
+        <div class="face front card loginside" id="loginface-front" aria-hidden="false">
           <div class="lshead-graphic" aria-hidden="true">
             <span class="lgdot"></span><span class="lgdot"></span><span class="lgdot"></span><span class="lgdot"></span><span class="lgdot"></span><span class="lgdot"></span>
             <div class="lgcard">
@@ -2083,7 +2087,7 @@ h1,h2,h3,h4{font-family:'Manrope','DM Sans',system-ui,sans-serif;letter-spacing:
           </div>
         </div>
 
-        <div class="face back card loginside" id="loginface-back">
+        <div class="face back card loginside" id="loginface-back" aria-hidden="true" inert>
           <span class="pill adm">&#9679;&nbsp; OFFICIALS ONLY</span>
           <div class="titlerow">
             <div class="ticon adm">
@@ -2123,7 +2127,7 @@ h1,h2,h3,h4{font-family:'Manrope','DM Sans',system-ui,sans-serif;letter-spacing:
 
       </div>
     </div>
-  <button class="explore-directory" type="button" data-jump="cells"><span class="explore-copy"><small>EXPLORE THE CLUSTER</small><b>Browse all five cells</b></span><span class="explore-arrow" aria-hidden="true">↓</span></button></div>
+  </div>
 </div><div class="continuebar hidden" id="continue-banner">
     <span class="cicon2" data-ic="user"></span>
     <span class="ctext">You're still signed in as <b id="continue-name"></b>.</span>
@@ -4666,7 +4670,14 @@ function setLoginTab(face){
   tAdm.classList.toggle("active", face==="back");
   tEmp.setAttribute("aria-selected", face==="front");
   tAdm.setAttribute("aria-selected", face==="back");
-  card.classList.toggle("flipped", face==="back");
+  const isAdmin = face === "back";
+  const frontFace = document.getElementById("loginface-front");
+  const backFace = document.getElementById("loginface-back");
+  frontFace.inert = isAdmin;
+  backFace.inert = !isAdmin;
+  frontFace.setAttribute("aria-hidden", String(isAdmin));
+  backFace.setAttribute("aria-hidden", String(!isAdmin));
+  card.classList.toggle("flipped", isAdmin);
   sizeLoginFlip();
   if(face==="back"){
     $("#a-user").value=""; $("#a-pass").value=""; hideErr("#a-err");
