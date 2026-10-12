@@ -1943,6 +1943,64 @@ h1,h2,h3,h4{font-family:'Manrope','DM Sans',system-ui,sans-serif;letter-spacing:
    this only stops animations from looping forever afterwards. */
 *, *::before, *::after{ animation-iteration-count:1 !important; }
 </style>
+<style id="qdc-midnight-dashboard-theme">
+#screen-dash{--green:#10264a;--green2:#285eb5;--green3:#e9f1fc;--deep:#08162f;--gold:#57c2d0;--gold2:#a8e7e8;--goldline:#37aebc;--ink:#192d49;--muted:#6b7f98;--bg:#eef3fa;--card:#fff;--line:#d7e2ef;--ok:#138358;--okbg:#e7f7ef;--warn:#916514;--warnbg:#fff5df;--danger:#ad4f49;--dangerbg:#fff0ee;--edit:#2863b5;--editbg:#ebf2fc}
+#screen-dash .dashribbon{background:linear-gradient(100deg,#0b1730,#183969 64%,#2860a5);border-bottom-color:#55c2d0;color:#e9f5ff}
+#screen-dash .dashhero{background:radial-gradient(circle at 90% 12%,#70d8e02e,transparent 28%),linear-gradient(115deg,#0e1d3b,#1c3d70 62%,#2b67ac);border:1px solid #315d97;box-shadow:0 16px 36px #11294a24}
+#screen-dash .dashhero .who2,#screen-dash .dashhero .who2 small{color:#fff}
+#screen-dash .bar{border:1px solid #d4e1f0;border-radius:16px;background:linear-gradient(100deg,#f8fbff,#fff)!important;box-shadow:0 9px 24px #10284c10}
+#screen-dash .tabs{border:1px solid #18365e;border-radius:14px;padding:5px;background:linear-gradient(95deg,#101d39,#193764);box-shadow:0 9px 22px #10284c1f;gap:4px}
+#screen-dash .tabs .tab{color:#dceaff;border-radius:10px!important;font-weight:850}
+#screen-dash .tabs .tab:hover{background:#ffffff12;color:#fff}
+#screen-dash .tabs .tab.on{background:linear-gradient(120deg,#a8e7e8,#57c2d0)!important;color:#102b49!important;box-shadow:0 4px 12px #0002}
+#screen-dash .stats2>.stat{border:1px solid #d5e2f0!important;border-radius:15px!important;background:linear-gradient(145deg,#fff,#f4f8fd)!important;box-shadow:0 8px 21px #10284c0c!important}
+#screen-dash .stat::before{background:#3978c9}#screen-dash .stat.g::before{background:#22a071}#screen-dash .stat.w::before{background:#d0a646}#screen-dash .stat.d::before{background:#d27670}#screen-dash .stat.b::before{background:#55c2d0}
+#screen-dash .stat .n{color:#17375f}
+#screen-dash .tabpane{border-color:#d7e2ef;border-radius:17px;box-shadow:0 9px 26px #10284c0b}
+#screen-dash table thead th{background:#142d52!important;color:#e9f7ff!important}
+#screen-dash table tbody tr:hover{background:#edf5fd!important}
+#screen-dash .notifpanel{border-color:#57c2d0;background:linear-gradient(155deg,#f9fdff,#eff7fd);box-shadow:0 26px 55px #10284c3d,0 0 0 4px #fff}
+#screen-dash .notif-head b,#screen-dash .notif-foot button{color:#285eb5}
+#screen-dash #tab-photos,#screen-dash #master-delete-queue,#screen-dash #pwreset-admin-box{display:none!important}
+#screen-dash .qdc-analytics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 14px}
+#screen-dash .qdc-analytics-card{min-width:0;padding:15px;border:1px solid #d9e4f0;border-radius:16px;background:linear-gradient(145deg,#fff,#f7faff);box-shadow:0 7px 21px #10284c0c}
+#screen-dash .qdc-analytics-card h3{font:850 12px/1.3 Manrope,system-ui,sans-serif;color:#1a3b67;margin:0 0 3px}
+#screen-dash .qdc-analytics-card p{margin:0 0 12px;color:#75869a;font-size:10px}
+#screen-dash .qdc-chart-row{display:grid;grid-template-columns:65px minmax(0,1fr) 32px;gap:7px;align-items:center;margin:9px 0}
+#screen-dash .qdc-chart-row>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#61748c;font-size:10px;font-weight:750}
+#screen-dash .qdc-track{height:8px;border-radius:99px;overflow:hidden;background:#e8eef6}
+#screen-dash .qdc-track i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,#2864b7,#57c2d0)}
+#screen-dash .qdc-chart-row>strong{color:#284e7e;font-size:10px;text-align:right}
+#screen-dash .qdc-dual-track{height:10px;display:flex;overflow:hidden;border-radius:99px;background:#edf2f8;margin:10px 0}
+#screen-dash .qdc-dual-track i:first-child{background:linear-gradient(90deg,#285eb5,#55c2d0)}
+#screen-dash .qdc-dual-track i:last-child{background:linear-gradient(90deg,#d2b05d,#f0d996)}
+#screen-dash .qdc-legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:9px;color:#657890;font-size:9px;font-weight:750}
+#screen-dash .qdc-legend i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:4px;background:#3473c2}
+#screen-dash .qdc-legend .nonteach{background:#d5b052}
+#screen-dash .qdc-queue-table{min-width:850px}
+#screen-dash .qdc-review-type{display:inline-flex;padding:4px 7px;border-radius:99px;background:#e9f2fc;color:#2b5f9a;font-size:9px;font-weight:900;white-space:nowrap}
+#screen-dash .qdc-review-type.photo{background:#e8f7f1;color:#16724f}
+#screen-dash .qdc-review-type.reset{background:#fff4dc;color:#866318}
+#screen-dash .qdc-review-type.delete{background:#fff0ed;color:#a24840}
+#screen-dash .qdc-review-actions{display:flex;gap:5px;flex-wrap:wrap}
+@media(max-width:900px){#screen-dash .qdc-analytics{grid-template-columns:repeat(2,minmax(0,1fr))}#screen-dash .qdc-analytics-card:last-child{grid-column:1/-1}}
+@media(max-width:600px){#screen-dash .qdc-analytics{grid-template-columns:1fr}#screen-dash .qdc-analytics-card:last-child{grid-column:auto}#screen-dash .tabs{overflow:auto;flex-wrap:nowrap}#screen-dash .tabs .tab{flex:0 0 auto}}
+@media(prefers-reduced-motion:reduce){#screen-dash .tabs .tab,#screen-dash .stat{transition:none!important}}
+.support-launch{position:fixed;right:20px;bottom:20px;z-index:90;display:flex;align-items:center;gap:9px;padding:9px 14px;border:1px solid #b9dcc6;border-radius:999px;background:linear-gradient(135deg,#fff,#f1faf4);color:#124b35;box-shadow:0 12px 30px #082d1e24;font:800 12px Manrope,system-ui,sans-serif;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.support-launch:hover{transform:translateY(-3px);box-shadow:0 16px 34px #082d1e30}
+.support-wa-icon{width:29px;height:29px;display:grid;place-items:center;border-radius:50%;background:#18a357;color:#fff}
+.support-wa-icon svg{width:17px;height:17px}
+.support-panel{position:fixed;right:20px;bottom:73px;z-index:91;width:min(310px,calc(100vw - 28px));padding:17px;border:1px solid #d4e6da;border-radius:17px;background:#fff;box-shadow:0 20px 50px #092f202b;display:none}
+.support-panel.open{display:block;animation:qdcSupportIn .2s ease both}
+.support-panel small{display:block;color:#9d8040;font-size:9px;font-weight:900;letter-spacing:.12em}
+.support-panel h3{margin:6px 0 2px;color:#173f2e;font:850 16px/1.3 Manrope,system-ui,sans-serif}
+.support-panel p{margin:0;color:#698074;font-size:11px;line-height:1.55}
+.support-number{margin-top:12px;padding:9px 11px;border-radius:10px;background:#f4f8f5;color:#375c49;font-size:12px;font-weight:800}
+.support-wa-link{display:flex;justify-content:center;align-items:center;gap:7px;margin-top:10px;padding:10px;border-radius:10px;background:#159b58;color:white;text-decoration:none;font-size:11px;font-weight:850}
+.support-wa-link:hover{background:#12884c}
+@keyframes qdcSupportIn{from{opacity:0;transform:translateY(8px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:600px){.support-launch{right:12px;bottom:12px;padding:8px 12px}.support-panel{right:12px;bottom:64px}}
+</style>
 </head>
 <body>
 <div class="netbar" id="netbar"></div>
@@ -2316,8 +2374,7 @@ h1,h2,h3,h4{font-family:'Manrope','DM Sans',system-ui,sans-serif;letter-spacing:
     <button class="tab on" data-tab="cells">Cells</button>
     <button class="tab" data-tab="schools">Schools</button>
     <button class="tab" data-tab="staff">Staff &amp; Status</button>
-    <button class="tab" data-tab="requests">Correction Requests <span id="d-reqcount"></span></button>
-    <button class="tab" data-tab="photos">Photo Approvals <span id="d-photocount"></span></button>
+    <button class="tab" data-tab="requests">Unified Review Queue <span id="d-reqcount"></span></button>
     <button class="tab" data-tab="log">Activity Log</button>
     <button class="tab hidden" id="tab-btn-hmdata" data-tab="hmdata" inert aria-hidden="true">HM Data Collection</button>
   </div>
@@ -2343,7 +2400,7 @@ h1,h2,h3,h4{font-family:'Manrope','DM Sans',system-ui,sans-serif;letter-spacing:
         </button>
         <div class="notifpanel" id="notif-panel">
           <div class="notifpanel-in">
-            <div class="notif-head"><b>Recent Requests</b><span>Last 5</span></div>
+            <div class="notif-head"><b>All requests &amp; approvals</b><span>Unified queue</span></div>
             <div class="notif-list" id="notif-list"></div>
             <div id="pwreset-admin-box" class="hidden" style="margin-top:8px;padding-top:8px;border-top:1px solid #dfe9e4">
               <button type="button" class="notifrow" id="btn-pwreset-admin"><span class="nicon">🔑</span><span class="ntext"><b>Password Reset Requests</b><span id="pwreset-admin-sub">No pending reset requests</span></span></button>
@@ -2360,6 +2417,7 @@ h1,h2,h3,h4{font-family:'Manrope','DM Sans',system-ui,sans-serif;letter-spacing:
   </div>
 
   <div class="stats2" id="d-stats"></div>
+  <section class="qdc-analytics" id="qdc-service-analytics" aria-label="Employee service overview"></section>
 
   <div id="tab-cells" class="tabpane">
     <div class="tablewrap"><table><thead><tr>
@@ -2404,8 +2462,8 @@ h1,h2,h3,h4{font-family:'Manrope','DM Sans',system-ui,sans-serif;letter-spacing:
       <div style="display:flex;align-items:center;justify-content:space-between;gap:10px"><div><h4 style="margin:0">Hub Admin deletion requests</h4><p class="lead" style="margin:4px 0 0">Only Master Admin can approve and permanently delete an employee record.</p></div><button class="btn sm ghost" id="btn-delete-queue-refresh">↻ REFRESH</button></div>
       <div class="tablewrap" style="margin-top:10px"><table><thead><tr><th>Employee</th><th>PID</th><th>Cell</th><th>Requested by</th><th>Reason</th><th>Submitted</th><th>Decision</th></tr></thead><tbody id="t-delete-requests"></tbody></table></div>
     </section>
-    <div class="tablewrap"><table><thead><tr>
-      <th>Employee</th><th>Cell</th><th>Fields requested</th><th>Note</th><th>Submitted</th><th>Status</th><th>Action</th>
+    <div class="tablewrap"><table class="qdc-queue-table"><thead><tr>
+      <th>Employee</th><th>Cell</th><th>Request</th><th>Details</th><th>Submitted</th><th>Status</th><th>Action</th>
     </tr></thead><tbody id="t-req"></tbody></table></div>
   </div>
 
@@ -4847,9 +4905,9 @@ async function loadPasswordResetRequests(){
   try{ const r=await api.passwordResetBoard(TOKEN); RESET_REQUESTS=(r&&r.ok&&Array.isArray(r.requests))?r.requests:[]; renderPasswordResetNotice(); }catch(e){ RESET_REQUESTS=[]; renderPasswordResetNotice(); }
 }
 function renderPasswordResetNotice(){
-  const box=$("#pwreset-admin-box"), sub=$("#pwreset-admin-sub"); if(!box) return;
-  box.classList.toggle("hidden", !CAN_ADMIN);
-  if(CAN_ADMIN) sub.textContent=RESET_REQUESTS.length ? (RESET_REQUESTS.length+" pending request"+(RESET_REQUESTS.length===1?"":"s")+" — Master/Hub approval only") : "No pending reset requests";
+  const box=$("#pwreset-admin-box"); if(box) box.classList.add("hidden");
+  if(typeof renderReq==="function") renderReq();
+  if(typeof updateNotifBadge==="function") updateNotifBadge();
 }
 function openPasswordResetRequest(id){
   const r=RESET_REQUESTS.find(x=>x.id===id); if(!r) return;
@@ -4881,13 +4939,15 @@ function notifItems(){
       employee_name:e?e.employee_name:"—",
       sub:(r.changes||[]).length+" field(s) · correction request"+(r.cell_code?(" · Cell "+r.cell_code):"")});
   });
+  const bundledPhotos=new Set(REQUESTS.filter(r=>r.status==="PENDING"&&r.photo_data).map(r=>String(r.employee_id)));
   STAFF.forEach(e=>{
-    if(e.is_active && e.pending_photo){
+    if(e.is_active && e.pending_photo && !bundledPhotos.has(String(e.id))){
       const h=HISTORY.find(x=>x.employee_id===e.id && x.kind==="PHOTO_REQUESTED");
       items.push({type:"photo", id:e.id, at:(h&&h.at)||0,
         employee_name:e.employee_name, sub:"Photo update"+(e.cell_code?(" · Cell "+e.cell_code):"")});
     }
   });
+  if(IS_MASTER) DELETION_REQUESTS.forEach(r=>items.push({type:"deletion",id:r.id,employee_name:r.employee_name||"Employee",sub:"Master Admin deletion decision"+(r.cell_code?(" · Cell "+r.cell_code):""),at:r.requested_at||null}));
   items.sort((a,b)=> new Date(b.at||0) - new Date(a.at||0));
   return items;
 }
@@ -4898,7 +4958,7 @@ function renderNotifPanel(){
   else badge.classList.add("hidden");
   $("#notif-list").innerHTML = top5.length ? top5.map((it,i)=>
     '<button type="button" class="notifrow" style="animation-delay:'+(i*55)+'ms" data-ntype="'+it.type+'" data-nid="'+it.id+'">'+
-    '<span class="nicon">'+ricon(it.type==="photo"?"camera":(it.type==="password_reset"?"key":"pen"))+'</span>'+
+    '<span class="nicon">'+ricon(it.type==="photo"?"camera":(it.type==="password_reset"?"key":(it.type==="deletion"?"trash":"pen")))+'</span>'+
     '<span class="ntext"><b>'+esc(it.employee_name)+'</b><span>'+esc(it.sub)+'</span></span>'+
     '<span class="ntime">'+timeAgo(it.at)+'</span></button>'
   ).join("") : '<div class="notif-empty">No pending requests right now.</div>';
@@ -5052,7 +5112,7 @@ $("#notif-list").addEventListener("click", (ev)=>{
   if(!row) return;
   const id=+row.dataset.nid, type=row.dataset.ntype;
   $("#notif-panel").classList.remove("show");
-  if(type==="correction") openRequest(id); else if(type==="password_reset") openPasswordResetRequest(id); else openPhotoDecide(id);
+  if(type==="correction") openRequest(id); else if(type==="password_reset") openPasswordResetRequest(id); else if(type==="photo") openPhotoDecide(id); else {openTab("requests");const row=document.querySelector('#t-req [data-del-approve="'+id+'"]');if(row)row.scrollIntoView({behavior:"smooth",block:"center"});}
 });
 $("#notif-viewall").addEventListener("click", ()=>{
   $("#notif-panel").classList.remove("show");
@@ -5118,6 +5178,20 @@ function paintFoot(){
   $("#foot-status").textContent = OFFICER ? (v+" of "+active.length+" verified · "+p+" request(s) awaiting approval") : " ";
 }
 
+function renderServiceAnalytics(){
+  const active=STAFF.filter(e=>e.is_active);
+  const cells=scopedCellsList().map(c=>{const rows=active.filter(e=>String(e.cell_code||"").toUpperCase()===String(c.code||"").toUpperCase());const f=cellFiguresFromStaff(c.code);return {code:c.code,total:rows.length,verified:f.verified,pending:Math.max(0,rows.length-f.verified)};});
+  const max=Math.max(1,...cells.map(c=>c.total));
+  const teaching=active.filter(e=>e.staff_type==="TEACHING").length;
+  const nonTeaching=active.filter(e=>e.staff_type==="NON_TEACHING").length;
+  const total=Math.max(1,teaching+nonTeaching);
+  const teachPct=Math.round(teaching/total*100), nonPct=100-teachPct;
+  const bar=(label,value,limit)=>'<div class="qdc-chart-row"><span>'+esc(label)+'</span><div class="qdc-track"><i style="width:'+Math.round(value/Math.max(1,limit)*100)+'%"></i></div><strong>'+value+'</strong></div>';
+  $("#qdc-service-analytics").innerHTML=
+    '<article class="qdc-analytics-card"><h3>Employees across five cells</h3><p>Active employee records · live dashboard data</p>'+cells.map(c=>bar(c.code,c.total,max)).join("")+'</article>'+
+    '<article class="qdc-analytics-card"><h3>Service classification</h3><p>Teaching and non-teaching staff mix</p><div class="qdc-dual-track" role="img" aria-label="'+teaching+' teaching and '+nonTeaching+' non-teaching employees"><i style="width:'+teachPct+'%"></i><i style="width:'+nonPct+'%"></i></div><div class="qdc-legend"><span><i></i>Teaching · '+teaching+'</span><span><i class="nonteach"></i>Non-teaching · '+nonTeaching+'</span></div></article>'+
+    '<article class="qdc-analytics-card"><h3>Verification by cell</h3><p>Verified records against active staff</p>'+cells.map(c=>bar(c.code+' verified',c.verified,Math.max(1,c.total))).join("")+'</article>';
+}
 function renderDash(){
   if(!OFFICER) return;
   $("#d-who").innerHTML = esc(OFFICER.name)+" <small>"+esc(OFFICER.title||"")+"</small>";
@@ -5131,14 +5205,16 @@ function renderDash(){
   const teaching=active.filter(e=>e.staff_type==="TEACHING").length;
   const nonTeaching=active.filter(e=>e.staff_type==="NON_TEACHING").length;
   const pct=active.length?Math.round(ver/active.length*100):0;
+  const queueCount=notifItems().length;
   $("#d-stats").innerHTML=[
-    ["",scopedCellsList().length,"Cells"],["",schools,"Schools"],["",active.length,"Staff"],
+    ["",scopedCellsList().length,"Cells"],["",schools,"Schools"],["",active.length,"Employees"],
     ["",teaching,"Teaching"],["",nonTeaching,"Non-Teaching"],
-    ["g",ver,"Verified"],["w",pend,"Pending"],["d",open,"Awaiting approval"],
-    ["b",photos,"Photos to review"],["g",pct+"%","Completion"]
+    ["g",ver,"Verified"],["w",pend,"Pending"],["d",queueCount,"Unified review queue"],
+    ["g",pct+"%","Completion"]
   ].map(([c,n,l])=>'<div class="stat '+c+'"><div class="n">'+n+'</div><div class="l">'+l+'</div></div>').join("");
-  $("#d-reqcount").textContent = open?"("+open+")":"";
-  $("#d-photocount").textContent = photos?"("+photos+")":"";
+  $("#d-reqcount").textContent = queueCount?"("+queueCount+")":"";
+  if($("#d-photocount")) $("#d-photocount").textContent="";
+  renderServiceAnalytics();
 
   const opts='<option value="">All Cells</option>'+scopedCellsList().map(c=>'<option>'+c.code+'</option>').join("");
   $("#s-cell").innerHTML=opts; $("#e-cell").innerHTML=opts;
@@ -5365,22 +5441,29 @@ $("#btn-delete-queue-refresh").addEventListener("click",async()=>{try{await refr
 
 /* ---- correction requests ---- */
 function renderReq(){
-  const list=REQUESTS.slice();
-  $("#t-req").innerHTML = list.length ? list.map(r=>{
+  const rows=[];
+  REQUESTS.forEach(r=>{
     const e=byId(r.employee_id);
-    const chip=r.status==="PENDING"?'<span class="chip corr">Awaiting approval</span>'
-             :r.status==="APPROVED"?'<span class="chip ok">Approved &amp; applied</span>'
-             :'<span class="chip ret">Returned</span>';
-    return '<tr><td><b>'+esc(e?e.employee_name:"—")+'</b><br><span style="font-size:11px;color:#7b8d85">'+esc(e?empKey(e):"")+'</span></td>'+
-      '<td>'+(r.cell_code||'—')+'</td>'+
-      '<td><b>'+(r.changes||[]).length+'</b> field(s)<br><span style="font-size:11px;color:#7b8d85">'+
-        (r.changes||[]).map(c=>esc(c.label||c.field)).concat(r.photo_data?["Profile photo"]:[]).join(", ")+'</span></td>'+
-      '<td style="max-width:180px;font-size:11.5px">'+esc(r.note||"—")+
-        (r.reason?'<br><span style="color:var(--danger)">Returned: '+esc(r.reason)+'</span>':'')+'</td>'+
-      '<td style="font-size:11.5px">'+dOnly(r.submitted_at)+'</td><td>'+chip+'</td>'+
-      '<td><button class="btn sm ghost" data-open="'+r.id+'">Open</button></td></tr>';
-  }).join("") : '<tr><td colspan="7"><div class="empty">No correction requests yet.</div></td></tr>';
-  $$("#t-req button[data-open]").forEach(b=>b.addEventListener("click",()=>openRequest(+b.dataset.open)));
+    const changes=(r.changes||[]).map(c=>esc(c.label||c.field));
+    if(r.photo_data) changes.push("Profile photo");
+    const kind=r.photo_data?"Profile + photo update · verification":"Profile correction · verification";
+    const status=r.status==="PENDING"?'<span class="chip corr">Awaiting review</span>':r.status==="APPROVED"?'<span class="chip ok">Approved</span>':'<span class="chip ret">Returned</span>';
+    rows.push({date:r.submitted_at||0,html:'<tr><td><b>'+esc(e?e.employee_name:"—")+'</b><br><span style="font-size:11px;color:#7b8d85">'+esc(e?empKey(e):"")+'</span></td><td>'+esc(r.cell_code||"—")+'</td><td><span class="qdc-review-type">Profile &amp; verification</span></td><td><b>'+((r.changes||[]).length+(r.photo_data?1:0))+'</b> item(s)<br><span style="font-size:11px;color:#71849a">'+(changes.join(", ")||"Final profile verification")+'</span><br><span style="font-size:11px;color:#71849a">'+esc(r.note||"")+'</span></td><td style="font-size:11.5px">'+dOnly(r.submitted_at)+'</td><td>'+status+'</td><td><button class="btn sm ghost" data-open="'+r.id+'">Review</button></td></tr>'});
+  });
+  const bundledPhotos=new Set(REQUESTS.filter(r=>r.status==="PENDING"&&r.photo_data).map(r=>String(r.employee_id)));
+  STAFF.filter(e=>e.is_active&&e.pending_photo&&!bundledPhotos.has(String(e.id))).forEach(e=>{
+    const h=HISTORY.find(x=>x.employee_id===e.id&&x.kind==="PHOTO_REQUESTED");
+    rows.push({date:(h&&h.at)||0,html:'<tr><td><b>'+esc(e.employee_name)+'</b><br><span style="font-size:11px;color:#7b8d85">'+esc(empKey(e))+'</span></td><td>'+esc(e.cell_code||"—")+'</td><td><span class="qdc-review-type photo">Photo update</span></td><td><img src="'+e.pending_photo+'" alt="Pending photo for '+esc(e.employee_name)+'" style="width:42px;height:42px;object-fit:cover;border-radius:50%;vertical-align:middle"> &nbsp; Photo approval</td><td style="font-size:11.5px">'+dOnly(h&&h.at)+'</td><td><span class="chip corr">Awaiting review</span></td><td><button class="btn sm ghost" data-open-photo="'+e.id+'">Review</button></td></tr>'});
+  });
+  if(CAN_ADMIN) RESET_REQUESTS.forEach(r=>rows.push({date:r.requested_at||0,html:'<tr><td><b>'+esc(r.employee_name||"Employee")+'</b><br><span style="font-size:11px;color:#7b8d85">'+esc(r.pid||"")+'</span></td><td>'+esc(r.cell_code||"—")+'</td><td><span class="qdc-review-type reset">Password reset</span></td><td>Restore account access; keep profile data intact.</td><td style="font-size:11.5px">'+dOnly(r.requested_at)+'</td><td><span class="chip pend">Awaiting review</span></td><td><button class="btn sm ghost" data-open-reset="'+r.id+'">Review</button></td></tr>'}));
+  if(IS_MASTER) DELETION_REQUESTS.forEach(r=>rows.push({date:r.requested_at||0,html:'<tr><td><b>'+esc(r.employee_name||"Employee")+'</b><br><span style="font-size:11px;color:#7b8d85">'+esc(r.personal_no||"")+'</span></td><td>'+esc(r.cell_code||"—")+'</td><td><span class="qdc-review-type delete">Deletion decision</span></td><td>Requested by '+esc(r.requested_by_name||"Hub Admin")+' · '+esc(r.reason||"No reason provided")+'</td><td style="font-size:11.5px">'+dOnly(r.requested_at)+'</td><td><span class="chip pend">Awaiting Master Admin</span></td><td><span class="qdc-review-actions"><button class="btn sm danger" data-del-approve="'+r.id+'">Delete</button><button class="btn sm ghost" data-del-return="'+r.id+'">Decline</button></span></td></tr>'}));
+  rows.sort((a,b)=>new Date(b.date||0)-new Date(a.date||0));
+  $("#t-req").innerHTML=rows.length?rows.map(x=>x.html).join(""):'<tr><td colspan="7"><div class="empty">No requests or approvals are waiting for review.</div></td></tr>';
+  $$("#t-req [data-open]").forEach(b=>b.addEventListener("click",()=>openRequest(+b.dataset.open)));
+  $$("#t-req [data-open-photo]").forEach(b=>b.addEventListener("click",()=>openPhotoDecide(+b.dataset.openPhoto)));
+  $$("#t-req [data-open-reset]").forEach(b=>b.addEventListener("click",()=>openPasswordResetRequest(+b.dataset.openReset)));
+  $$("#t-req [data-del-approve]").forEach(b=>b.addEventListener("click",()=>decideEmployeeDeletion(+b.dataset.delApprove,"APPROVED")));
+  $$("#t-req [data-del-return]").forEach(b=>b.addEventListener("click",()=>decideEmployeeDeletion(+b.dataset.delReturn,"RETURNED")));
 }
 let REQ_ID=null;
 function openRequest(id){
@@ -5448,7 +5531,7 @@ function renderPhotos(){
 }
 async function decidePhotoUI(id,decision){
   netOn(decision==="APPROVED"?"Approving…":"Returning…");
-  try{ await api.decidePhoto(TOKEN, id, decision); netOff(); await loadBoardAndShow(true); openTab("photos"); }
+  try{ await api.decidePhoto(TOKEN, id, decision); netOff(); await loadBoardAndShow(true); openTab("requests"); }
   catch(e){ netFail(friendlyErr(e)); }
 }
 
@@ -7310,7 +7393,8 @@ function renderUnifiedWorkspace(){
 }
 $('#qdc-choose-photo')?.remove();$('#qdc-undo-photo')?.remove();
 $('#qdc-note').addEventListener('input',e=>{DRAFT_NOTE=e.target.value;PROFILE_UNSAVED=true;});
-</script></body>
+</script><aside class="support-panel" id="support-panel" aria-hidden="true"><small>PORTAL SUPPORT</small><h3>Muzafar Ali Solangi</h3><p>IT Focal Person · Cluster Hub School GBHS Qamar Din Chandio</p><div class="support-number">0300 0357397</div><a class="support-wa-link" href="https://wa.me/923000357397?text=Assalam%20o%20Alaikum%2C%20I%20need%20portal%20support" target="_blank" rel="noopener noreferrer"><span aria-hidden="true">◉</span> Chat on WhatsApp</a></aside><button class="support-launch" id="support-launch" type="button" aria-expanded="false" aria-controls="support-panel"><span class="support-wa-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.52 3.48A11.85 11.85 0 0 0 12.08 0C5.53 0 .2 5.33.2 11.9c0 2.1.55 4.15 1.6 5.96L.1 24l6.3-1.65a11.9 11.9 0 0 0 5.68 1.45h.01c6.55 0 11.88-5.33 11.88-11.9 0-3.18-1.24-6.17-3.45-8.42ZM12.1 21.8a9.93 9.93 0 0 1-5.06-1.39l-.36-.21-3.74.98 1-3.65-.24-.38a9.9 9.9 0 0 1-1.52-5.25c0-5.48 4.45-9.94 9.92-9.94a9.86 9.86 0 0 1 7.02 2.91 9.9 9.9 0 0 1 2.9 7.03c0 5.48-4.45 9.94-9.92 9.94Zm5.45-7.44c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.78-1.68-2.08-.17-.3-.02-.47.13-.62.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.48-.5-.67-.5h-.57c-.2 0-.52.08-.79.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.89 1.22 3.09c.15.2 2.1 3.2 5.08 4.49.71.31 1.27.5 1.7.64.72.23 1.38.2 1.9.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.13-.27-.2-.57-.35Z"/></svg></span><span>Support / Helpline</span></button><script>(function(){const b=document.getElementById("support-launch"),p=document.getElementById("support-panel"),home=document.getElementById("screen-login");if(!b||!p||!home)return;const close=()=>{p.classList.remove("open");p.setAttribute("aria-hidden","true");b.setAttribute("aria-expanded","false")};const sync=()=>{const active=!home.classList.contains("hidden");b.hidden=!active;if(!active)close()};sync();new MutationObserver(sync).observe(home,{attributes:true,attributeFilter:["class"]});b.addEventListener("click",()=>{const open=!p.classList.contains("open");p.classList.toggle("open",open);p.setAttribute("aria-hidden",String(!open));b.setAttribute("aria-expanded",String(open))});document.addEventListener("click",e=>{if(!e.target.closest(".support-panel")&&!e.target.closest(".support-launch"))close()});document.addEventListener("keydown",e=>{if(e.key==="Escape")close()})})();</script>
+</body>
 </html>
 
 
