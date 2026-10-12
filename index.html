@@ -2364,20 +2364,20 @@ h1,h2,h3,h4{font-family:'Manrope','DM Sans',system-ui,sans-serif;letter-spacing:
 </section>
 
 <!-- ==================== OFFICER DASHBOARD ==================== -->
-<section id="screen-dash" class="hidden">
+<section id="screen-dash" class="hidden"><div class="qdc-admin-layout"><aside class="qdc-admin-side"><div class="qdc-admin-brand"><span>GB</span><div><b>CLUSTER HUB SCHOOL</b><small>GBHS QAMARDIN CHANDIO</small></div></div><div class="qdc-admin-nav-label">ADMIN WORKSPACE</div>  <div class="tabs">
+    <button class="tab on" data-tab="cells">Overview &amp; Cells</button>
+    <button class="tab" data-tab="schools">Schools</button>
+    <button class="tab" data-tab="staff">Employee Records</button>
+    <button class="tab" data-tab="requests">Unified Review Queue <span id="d-reqcount"></span></button>
+    <button class="tab" data-tab="log">Activity Log</button>
+    <button class="tab hidden" id="tab-btn-hmdata" data-tab="hmdata" inert aria-hidden="true">HM Data Collection</button>
+  </div><div class="qdc-admin-side-foot">Employee Data Verification Portal<br>UC Khairwah · Taluka Moro</div></aside><div class="qdc-admin-main">
   <div class="dashribbon" id="dash-ribbon">
     <span>Government of Sindh &middot; School Education &amp; Literacy Department</span>
     <span id="ribbon-role">&nbsp;</span>
   </div>
 
-  <div class="tabs">
-    <button class="tab on" data-tab="cells">Cells</button>
-    <button class="tab" data-tab="schools">Schools</button>
-    <button class="tab" data-tab="staff">Staff &amp; Status</button>
-    <button class="tab" data-tab="requests">Unified Review Queue <span id="d-reqcount"></span></button>
-    <button class="tab" data-tab="log">Activity Log</button>
-    <button class="tab hidden" id="tab-btn-hmdata" data-tab="hmdata" inert aria-hidden="true">HM Data Collection</button>
-  </div>
+
 
   <div class="dashhero" id="dash-hero">
     <img class="dashhero-crest" id="hero-crest-img" alt="">
@@ -2553,7 +2553,7 @@ h1,h2,h3,h4{font-family:'Manrope','DM Sans',system-ui,sans-serif;letter-spacing:
         <div class="tablewrap" style="margin-top:10px"><table><thead id="hm-compiled-head"></thead><tbody id="hm-compiled-body"></tbody></table></div><div id="hm-compiled-footer" style="margin-top:10px"></div>
       </div>
     </div>
-  </div>
+  </div></div></div>
 </section>
 
 </div>
@@ -4818,7 +4818,7 @@ async function loadBoardAndShow(keepTab){
     STAFF = BOARD.employees||[]; REQUESTS = BOARD.requests||[]; HISTORY = BOARD.history||[]; DELETION_REQUESTS=[]; if(IS_MASTER){try{await refreshDeletionRequests();}catch(delErr){DELETION_REQUESTS=[];}}
     VERIFIED_MAP = new Map((BOARD.verified||[]).map(v=>[v.employee_id,v]));
     $("#btn-addemp").classList.toggle("hidden", !CAN_ADMIN);
-    $("#notifwrap").classList.toggle("hidden", !CAN_ADMIN);
+    $("#notifwrap").classList.toggle("hidden", !OFFICER);
     $("#tab-btn-hmdata").classList.remove("hidden");
     $("#hmdata-admin-only").classList.toggle("hidden", !CAN_ADMIN);
     renderDash();
@@ -4931,7 +4931,7 @@ $("#btn-pwreset-return").addEventListener("click", async ()=>{
 
 function notifItems(){
   const items=[];
-  if(CAN_ADMIN){ RESET_REQUESTS.slice(0,20).forEach(r=>items.push({type:"password_reset",id:r.id,employee_name:r.employee_name||"Employee",sub:"Password reset approval required",at:r.requested_at||null})); }
+  if(CAN_ADMIN){ RESET_REQUESTS.forEach(r=>items.push({type:"password_reset",id:r.id,employee_name:r.employee_name||"Employee",sub:"Password reset approval required",at:r.requested_at||null})); }
   REQUESTS.forEach(r=>{
     if(r.status!=="PENDING") return;
     const e=byId(r.employee_id);
@@ -4967,6 +4967,9 @@ function renderNotifPanel(){
 function updateNotifBadge(){
   /* cheap badge-only refresh, used right after board reloads without opening the panel */
   const n=notifItems().length;
+  if($("#d-reqcount")) $("#d-reqcount").textContent=n?"("+n+")":"";
+  const queueStat=Array.from(document.querySelectorAll("#d-stats .stat")).find(s=>s.querySelector(".l")?.textContent==="Unified review queue");
+  if(queueStat) queueStat.querySelector(".n").textContent=String(n);
   const badge=$("#notif-badge");
   if(n){ badge.textContent = n>99?"99+":String(n); badge.classList.remove("hidden"); }
   else badge.classList.add("hidden");
@@ -6847,7 +6850,7 @@ $$(".modal").forEach(m=>m.addEventListener("click",e=>{ if(e.target===m) closeMo
         STAFF=BOARD.employees||[]; REQUESTS=BOARD.requests||[]; HISTORY=BOARD.history||[]; if(CAN_ADMIN) await loadPasswordResetRequests();
         VERIFIED_MAP=new Map((BOARD.verified||[]).map(v=>[v.employee_id,v]));
         $("#btn-addemp").classList.toggle("hidden", !CAN_ADMIN);
-        $("#notifwrap").classList.toggle("hidden", !CAN_ADMIN);
+        $("#notifwrap").classList.toggle("hidden", !OFFICER);
         $("#tab-btn-hmdata").classList.remove("hidden");
         $("#hmdata-admin-only").classList.toggle("hidden", !CAN_ADMIN);
         renderDash(); openTab("cells");
@@ -7642,4 +7645,33 @@ if('IntersectionObserver' in window){const observer=new IntersectionObserver(ent
 @keyframes qdcArrow{0%,100%{transform:translateX(0);opacity:.65}50%{transform:translateX(3px);opacity:1}}
 @media(max-width:600px){#m-profile-guide .qdc-profile-flyer{padding:23px 16px 17px!important;border-radius:21px!important}#m-profile-guide .qdc-profile-flyer h3{font-size:22px!important}.qdc-flyer-steps article{grid-template-columns:25px 31px minmax(0,1fr);gap:7px;padding:8px}.qdc-flyer-stepicon{width:30px;height:30px}.qdc-flyer-steps article em{grid-column:3;justify-self:start}.qdc-flyer-actions{display:grid;grid-template-columns:1fr}.qdc-flyer-actions .btn{width:100%}.qdc-flyer-launch small{font-size:8px}}
 @media(prefers-reduced-motion:reduce){#screen-record .qdc-editor-banner:after,.qdc-flyer-launch:before,.qdc-flyer-launch-mark,.qdc-flyer-launch>i,.qdc-flyer-orbit,.qdc-flyer-steps article,#btn-profile-guide-edit:after,.qdc-flyer-steps article .qdc-flyer-stepicon,.qdc-flyer-live-dot:after{animation:none!important;transition:none!important}.qdc-flyer-steps article{opacity:1!important;transform:none!important}}
+</style>
+
+<style id="qdc-admin-sapphire-final">
+#screen-dash{color:#192d49!important}
+#screen-dash .qdc-admin-layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:20px;align-items:start}
+#screen-dash .qdc-admin-side{min-width:0;position:sticky;top:10px;min-height:calc(100vh - 50px);display:flex;flex-direction:column;padding:20px 13px;border-radius:18px;background:linear-gradient(180deg,#0b1831,#172c50);color:#dceaff;box-shadow:0 14px 32px #10284c21}
+#screen-dash .qdc-admin-brand{display:flex;align-items:center;gap:9px;padding:0 5px 18px;border-bottom:1px solid #ffffff20}
+#screen-dash .qdc-admin-brand>span{width:35px;height:35px;flex:none;display:grid;place-items:center;border-radius:11px;background:linear-gradient(145deg,#a8e7e8,#57c2d0);color:#142b49;font-size:12px;font-weight:900}
+#screen-dash .qdc-admin-brand b{display:block;font-size:9px;color:#fff;letter-spacing:.07em}
+#screen-dash .qdc-admin-brand small{display:block;font-size:8px;margin-top:4px;color:#acc4e2}
+#screen-dash .qdc-admin-nav-label{padding:19px 7px 8px;color:#84a4c9;font-size:8px;letter-spacing:.13em;font-weight:900}
+#screen-dash .qdc-admin-side .tabs{display:flex!important;flex-direction:column!important;gap:5px!important;padding:0!important;margin:0!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;position:static!important;overflow:visible!important}
+#screen-dash .qdc-admin-side .tabs .tab{display:block;min-width:0;width:100%;padding:12px 10px!important;border:0!important;border-radius:10px!important;color:#dceaff!important;background:transparent!important;text-align:left;font-size:11px;white-space:normal}
+#screen-dash .qdc-admin-side .tabs .tab:hover{background:#ffffff12!important}
+#screen-dash .qdc-admin-side .tabs .tab.on{background:linear-gradient(120deg,#a8e7e8,#57c2d0)!important;color:#102b49!important;box-shadow:0 5px 14px #0002!important}
+#screen-dash .qdc-admin-side-foot{margin-top:auto;padding:24px 7px 0;color:#9eb8d8;font-size:9px;line-height:1.7}
+#screen-dash .qdc-admin-main{min-width:0}
+#screen-dash .dashribbon{background:linear-gradient(100deg,#0b1730,#183969)!important;color:#dceaff!important;border-color:#57c2d0!important}
+#screen-dash .dashhero{background:radial-gradient(circle at 90% 12%,#70d8e02e,transparent 28%),linear-gradient(115deg,#0e1d3b,#1c3d70 62%,#2b67ac)!important;border-color:#315d97!important;border-radius:18px!important}
+#screen-dash .dashhero .who2{color:#fff!important}
+#screen-dash .dashhero .who2 small{color:#cbdff5!important}
+#screen-dash .bar{color:#192d49!important;border-color:#d4e1f0!important;background:linear-gradient(100deg,#f8fbff,#fff)!important}
+#screen-dash .stat .n{font-family:Manrope,system-ui,sans-serif!important;color:#17375f!important}
+#screen-dash .stat .l{color:#6b7f98!important}
+#screen-dash .tabpane{background:#fff!important;border-color:#d7e2ef!important}
+#screen-dash .toolbar input,#screen-dash .toolbar select,#screen-dash .dashsearch input{border-color:#d4e1f0!important;background:#fff!important;color:#192d49!important}
+#screen-dash .qdc-review-type{font-family:Manrope,system-ui,sans-serif!important}
+@media(max-width:900px){#screen-dash .qdc-admin-layout{grid-template-columns:180px minmax(0,1fr);gap:12px}#screen-dash .qdc-admin-side{padding:15px 9px}}
+@media(max-width:700px){#screen-dash .qdc-admin-layout{display:block}#screen-dash .qdc-admin-side{position:relative;top:0;min-height:0;padding:12px;margin-bottom:12px;border-radius:14px}#screen-dash .qdc-admin-brand{padding:0 0 9px}#screen-dash .qdc-admin-nav-label,#screen-dash .qdc-admin-side-foot{display:none}#screen-dash .qdc-admin-side .tabs{flex-direction:row!important;overflow-x:auto!important;margin-top:10px!important;padding-bottom:4px!important}#screen-dash .qdc-admin-side .tabs .tab{width:auto;flex:0 0 auto;white-space:nowrap;padding:9px 10px!important;font-size:10px}}
 </style>
