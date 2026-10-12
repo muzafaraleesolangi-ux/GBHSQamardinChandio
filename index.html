@@ -5494,7 +5494,7 @@ function renderReq(){
   $$("#t-req [data-open-photo]").forEach(b=>b.addEventListener("click",()=>openPhotoDecide(+b.dataset.openPhoto)));
   $$("#t-req [data-open-reset]").forEach(b=>b.addEventListener("click",()=>openPasswordResetRequest(+b.dataset.openReset)));
   $$("#t-req [data-del-approve]").forEach(b=>b.addEventListener("click",()=>decideEmployeeDeletion(+b.dataset.delApprove,"APPROVED")));
-  $("#t-req [data-del-return]").forEach(b=>b.addEventListener("click",()=>decideEmployeeDeletion(+b.dataset.delReturn,"RETURNED")));
+  $$("#t-req [data-del-return]").forEach(b=>b.addEventListener("click",()=>decideEmployeeDeletion(+b.dataset.delReturn,"RETURNED")));
   if($("#qdc-queue-search")) $("#qdc-queue-search").oninput=applyQdcQueueFilters;
   if($("#qdc-queue-type")) $("#qdc-queue-type").onchange=applyQdcQueueFilters;
   if($("#qdc-queue-status")) $("#qdc-queue-status").onchange=applyQdcQueueFilters;
