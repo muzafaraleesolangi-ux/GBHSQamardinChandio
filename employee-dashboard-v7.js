@@ -106,7 +106,7 @@ function buildGuide(){
   else if(editor()){setOpen(false);q("#r-fields")?.scrollIntoView({behavior:"smooth",block:"start"});}
   else showTip("Editing not available","This profile may already have a pending correction, or it may be opened by an administrator.");
  });
- qa(".qdc7-guide-step",dock).forEach(step=>step.addEventListener("click",()=>{
+ qa(".qdc7-guide-step",dock).forEach(step=>{step.setAttribute("role","button");step.setAttribute("tabindex","0");step.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();step.click();}});step.addEventListener("click",()=>{
   if(!profileScreen())return;
   const n=Number(step.dataset.stage);
   qa(".qdc7-guide-step",dock).forEach(x=>x.classList.toggle("active",x===step));
@@ -114,7 +114,7 @@ function buildGuide(){
   if(n===2){q("#qdc7-guide-edit")?.click();}
   if(n===3){setOpen(false);(editor()?q("#inline-edit-bar"):q("#qdc7-overview"))?.scrollIntoView({behavior:"smooth",block:"center"});}
   if(n===4){showTip("Final verification","Your changes are submitted to the authorized office for review. Check status notifications and update history for progress.");}
- }));
+ });});
  document.addEventListener("click",ev=>{if(open&&!dock.contains(ev.target))setOpen(false);});
  document.addEventListener("keydown",ev=>{if(open&&ev.key==="Escape")setOpen(false,true);});
  document.addEventListener("scroll",ev=>{
