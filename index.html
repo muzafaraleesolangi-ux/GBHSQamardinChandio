@@ -2763,25 +2763,6 @@ h1,h2,h3,h4{font-family:'Manrope','DM Sans',system-ui,sans-serif;letter-spacing:
   <button class="btn ghost" id="btn-sc-close" style="margin-top:14px">CLOSE</button>
 </div></div>
 
-<div class="modal hidden" id="m-profile-guide" aria-hidden="true">
-  <div class="box qdc-profile-flyer" role="dialog" aria-modal="true" aria-labelledby="qdc-flyer-title">
-    <div class="qdc-flyer-orbit qdc-flyer-orbit-a"></div><div class="qdc-flyer-orbit qdc-flyer-orbit-b"></div>
-    <button type="button" class="qdc-flyer-close" id="btn-profile-guide-close" aria-label="Close profile guide">×</button>
-    <div class="qdc-flyer-brand"><span class="qdc-flyer-crest">GB<small>✦</small></span><span><b>CLUSTER HUB SCHOOL</b><small>GBHS QAMARDIN CHANDIO</small></span></div>
-    <div class="qdc-flyer-kicker">EMPLOYEE PROFILE · QUICK GUIDE</div>
-    <h3 id="qdc-flyer-title">Keep your record complete</h3>
-    <p class="qdc-flyer-lead">Update your profile and photo together. Admin approval completes your final verification.</p>
-    <div class="qdc-flyer-steps">
-      <article style="--flyer-i:0"><i>01</i><span class="qdc-flyer-stepicon">✎</span><div><b>Edit your profile</b><small>Review your service details and change your photo in the same form.</small></div><em>EDIT</em></article>
-      <article style="--flyer-i:1"><i>02</i><span class="qdc-flyer-stepicon">▣</span><div><b>Save a draft</b><small>Keep your work and return to it before submitting.</small></div><em>DRAFT</em></article>
-      <article style="--flyer-i:2"><i>03</i><span class="qdc-flyer-stepicon">➤</span><div><b>Send for verification</b><small>Send all profile changes and your photo together.</small></div><em>SUBMIT</em></article>
-      <article style="--flyer-i:3"><i>04</i><span class="qdc-flyer-stepicon">✓</span><div><b>Admin approves</b><small>Admin approval marks your profile verified.</small></div><em>VERIFIED</em></article>
-    </div>
-    <div class="qdc-flyer-foot"><span class="qdc-flyer-live-dot"></span><span>No second employee verification step is needed after Admin approval.</span></div>
-    <div class="qdc-flyer-actions"><button type="button" class="btn ghost" data-profile-guide-close>BACK TO PROFILE</button><button type="button" class="btn primary" id="btn-profile-guide-edit">EDIT / UPDATE PROFILE <span>→</span></button></div>
-  </div>
-</div>
-
 <div class="modal hidden" id="m-msg"><div class="box" style="text-align:center;max-width:430px">
   <div id="msg-icon" style="font-size:40px;line-height:1">&#10003;</div>
   <h3 id="msg-title" style="margin:8px 0">Done</h3>
@@ -5014,95 +4995,129 @@ function positionRAlertPanel(){ positionFloatPanel($("#ralertwrap"), $("#ralert-
    employee hasn't seen yet (anything newer than their own last "VERIFIED" history entry) ----------
    Each notice gets a stable "sig" so we can remember, per employee (localStorage), which ones the
    employee has already opened the bell and seen -- the badge only counts the ones that aren't. */
-function profileNotices(){
-  if(!CUR) return [];
-  const notices=[];
-  ADMIN_FIELDS.forEach(([k,l])=>{
-    const v=CUR[k];
-    if(v===undefined||v===null||String(v).trim()===""){
-      notices.push({type:"missing", field:k, title:l, sub:"Missing on your record", sig:"missing:"+k});
-    }
-  });
-  const officeKinds={EDIT:1, APPROVED:1};
-  for(const h of (CUR_HISTORY||[])){
-    if(h.kind==="VERIFIED") break; // anything at/older than your last certification is already seen
-    if(officeKinds[h.kind]){
-      const chs=h.changes||[];
-      const keys=chs.map(c=>c.field).filter(Boolean);
-      const labels=chs.map(c=>c.label||c.field).filter(Boolean);
-      const sig="update:"+(h.at||"")+":"+(keys.join(",")||"all");
-      let alreadySeen=false;
-      try{ const raw=localStorage.getItem(notifSeenKey()); const arr=raw?JSON.parse(raw):[]; alreadySeen=Array.isArray(arr)&&arr.includes(sig); }catch(e){}
-      if(!alreadySeen) notices.push({type:"update", field:keys.length===1?keys[0]:null, title:"Record updated by your office",
-        sub: labels.length ? (labels.join(", ")+" &mdash; please review") : "Please review your record", sig:sig});
-    }
-  }
-  return notices;
-}
+/* Employee notices V4 — read receipts per notice. Read items expire 24 h after explicit open.
+   State is per browser and per employee; no sensitive text/record data is persisted locally. */
+const NOTIF_READ_WINDOW_MS=24*60*60*1000;
+const profileNoticeMemory=new Map();
 function notifSeenKey(){
-  const id = CUR ? String(CUR.id!=null ? CUR.id : (CUR_KEY||"")) : "";
-  return "portalNotifSeen:"+id;
+ const id=CUR?String(CUR.id!=null?CUR.id:(CUR_KEY||"")):"";
+ return "portalNotifReadV4:"+id;
 }
-function getSeenNotices(){
-  try{
-    const raw=localStorage.getItem(notifSeenKey());
-    const arr = raw ? JSON.parse(raw) : [];
-    return new Set(Array.isArray(arr) ? arr : []);
-  }catch(err){ return new Set(); }
+function getNoticeReadMap(){
+ const key=notifSeenKey();
+ try{
+   const raw=localStorage.getItem(key);
+   const obj=raw?JSON.parse(raw):null;
+   if(obj&&typeof obj==="object"&&!Array.isArray(obj))return obj;
+ }catch(e){}
+ return profileNoticeMemory.get(key)||Object.create(null);
 }
 function markNoticesSeen(notices){
-  if(!notices || !notices.length) return;
-  try{
-    const seen=getSeenNotices();
-    notices.forEach(n=>{ if(n && n.sig) seen.add(n.sig); });
-    localStorage.setItem(notifSeenKey(), JSON.stringify(Array.from(seen)));
-  }catch(err){}
+ if(!notices?.length)return;
+ const key=notifSeenKey(),map=Object.assign(Object.create(null),getNoticeReadMap()),now=Date.now();
+ notices.forEach(n=>{if(n?.sig&&!Number(map[n.sig]))map[n.sig]=now;});
+ profileNoticeMemory.set(key,map);
+ try{localStorage.setItem(key,JSON.stringify(map));}catch(e){}
+}
+function getSeenNotices(){
+ const m=getNoticeReadMap();return new Set(Object.keys(m).filter(k=>Number(m[k])>0));
+}
+function profileNotices(){
+ if(!CUR)return [];
+ const read=getNoticeReadMap(),now=Date.now(),list=[];
+ ADMIN_FIELDS.forEach(([k,l])=>{
+  const v=CUR[k];
+  if(v===undefined||v===null||String(v).trim()===""){
+   const n={type:"missing",field:k,title:l,sub:"This field is missing from your record.",sig:"missing:"+k};
+   const stamp=Number(read[n.sig])||0;
+   if(!stamp||now-stamp<NOTIF_READ_WINDOW_MS){n.readAt=stamp;list.push(n);}
+  }
+ });
+ for(const h of (CUR_HISTORY||[])){
+  if(h.kind!=="EDIT"&&h.kind!=="APPROVED")continue;
+  const chs=Array.isArray(h.changes)?h.changes:[],keys=chs.map(c=>c.field).filter(Boolean);
+  const labels=chs.map(c=>c.label||c.field).filter(Boolean);
+  const sig="update:"+(h.id??h.at??"unknown")+":"+h.kind+":"+(keys.join(",")||"all");
+  if(list.some(x=>x.sig===sig))continue;
+  const stamp=Number(read[sig])||0;
+  if(stamp&&now-stamp>=NOTIF_READ_WINDOW_MS)continue;
+  list.push({type:"update",field:keys.length===1?keys[0]:null,
+    title:h.kind==="APPROVED"?"Profile change approved":"Record updated by your office",
+    sub:labels.length?labels.join(", ")+" — please review your latest record.":"Please review the latest change to your record.",
+    sig,readAt:stamp,at:h.at||null});
+ }
+ return list;
 }
 function renderAlertPanel(){
-  const wrap=$("#ralertwrap"); if(!wrap) return [];
-  const notices=profileNotices();
-  const seen=getSeenNotices();
-  const unseenCount=notices.filter(n=>!seen.has(n.sig)).length;
-  const bell=$("#btn-ralert"), badge=$("#ralert-badge");
-  bell.classList.remove("hidden");
-  if(unseenCount){ badge.textContent=unseenCount>9?"9+":String(unseenCount); badge.classList.remove("hidden"); }
-  else badge.classList.add("hidden");
-  $("#ralert-sub").textContent = notices.length ? (notices.length+" item"+(notices.length>1?"s":"")) : "All clear";
-  $("#ralert-list").innerHTML = notices.length ? notices.map((n,i)=>
-    '<button type="button" class="notifrow'+(seen.has(n.sig)?"":" unseen")+'" style="animation-delay:'+(i*55)+'ms" data-rfield="'+esc(n.field||"")+'">'+
-      '<span class="nicon">'+ricon(n.type==="missing"?"warn":"info")+'</span>'+
-      '<span class="ntext"><b>'+esc(n.title)+'</b><span>'+n.sub+'</span></span>'+
-      (seen.has(n.sig)?'':'<span class="ndot" aria-hidden="true" title="New"></span>')+
-    '</button>'
-  ).join("") : '<div class="notif-empty">Nothing missing, and no changes since you last certified.</div>';
-  return notices;
+ const wrap=$("#ralertwrap");if(!wrap)return [];
+ const notices=profileNotices(),unread=notices.filter(n=>!n.readAt).length;
+ const readCount=notices.length-unread;
+ const bell=$("#btn-ralert"),badge=$("#ralert-badge");
+ bell.classList.remove("hidden");
+ bell.setAttribute("aria-label",unread?unread+" unread profile notifications":"Profile notifications — none unread");
+ if(unread){badge.textContent=unread>99?"99+":String(unread);badge.classList.remove("hidden");}
+ else badge.classList.add("hidden");
+ $("#ralert-sub").textContent=unread+" unread · "+readCount+" read";
+ const overview='<div class="qdc-v4-alert-stats" aria-label="Notification status"><span class="qdc-v4-unreadcount">● '+unread+' Unread</span><span class="qdc-v4-readcount">✓ '+readCount+' Read</span><small>Read alerts clear after 24 hours</small></div>';
+ $("#ralert-list").innerHTML=overview+(notices.length?notices.map((n,idx)=>
+  '<button type="button" class="notifrow qdc-v4-notice'+(!n.readAt?' unseen':' is-read')+'" data-rsig="'+esc(n.sig)+'" data-rfield="'+esc(n.field||"")+'" style="animation-delay:'+Math.min(idx*35,280)+'ms" aria-label="'+esc(n.title+" — "+(!n.readAt?"unread":"read"))+'">'+
+   '<span class="nicon">'+ricon(n.type==="missing"?"warn":"info")+'</span>'+
+   '<span class="ntext"><b>'+esc(n.title)+'</b><span>'+esc(n.sub)+'</span><em class="qdc-v4-state">'+(n.readAt?"✓ READ":"● UNREAD")+'</em></span>'+
+   (!n.readAt?'<span class="ndot" title="Unread notification" aria-hidden="true"></span>':'<span class="qdc-v4-time">'+timeAgo(new Date(n.readAt).toISOString())+'</span>')+
+  '</button>').join(""):'<div class="notif-empty qdc-v4-empty">✓ All caught up. No active profile notifications.</div>');
+ return notices;
 }
-$("#btn-ralert").addEventListener("click", (ev)=>{
-  ev.stopPropagation();
-  const panel=$("#ralert-panel");
-  const opening = !panel.classList.contains("show");
-  if(opening){
-    const notices=renderAlertPanel();
-    positionRAlertPanel();
-    panel.classList.add("show");
-    if(notices.length) setTimeout(()=>{ markNoticesSeen(notices); renderAlertPanel(); }, 900);
+$("#btn-ralert").addEventListener("click",ev=>{
+ ev.stopPropagation();
+ const panel=$("#ralert-panel"),opening=!panel.classList.contains("show");
+ if(opening){renderAlertPanel();panel.classList.add("show");positionRAlertPanel();}
+ else panel.classList.remove("show");
+});
+document.addEventListener("click",ev=>{
+ const wrap=$("#ralertwrap");if(wrap&&!wrap.contains(ev.target))$("#ralert-panel").classList.remove("show");
+});
+$("#ralert-list").addEventListener("click",ev=>{
+ const row=ev.target.closest(".qdc-v4-notice[data-rsig]");
+ if(!row)return;
+ const notice=profileNotices().find(n=>n.sig===row.dataset.rsig);if(!notice)return;
+ markNoticesSeen([notice]);
+ renderAlertPanel();
+ const list=$("#ralert-list");
+ const detail=document.createElement("section");
+ detail.className="qdc-v4-notice-detail";detail.setAttribute("role","region");
+ detail.setAttribute("aria-label","Read notification details");
+ const eyebrow=document.createElement("small");eyebrow.textContent="✓ READ · DETAILS";
+ const title=document.createElement("strong");title.textContent=notice.title;
+ const sub=document.createElement("p");sub.textContent=notice.sub;
+ const end=document.createElement("p");end.className="qdc-v4-expiry";end.textContent="This notification remains in Read for 24 hours from the time you opened it, then clears automatically.";
+ detail.append(eyebrow,title,sub,end);
+ if(notice.field){
+  const fieldAction=document.createElement("button");fieldAction.type="button";fieldAction.className="qdc-v4-field-action";
+  const canEdit=!CUR_FROMDASH&&!ADMIN_EDIT_MODE&&CUR_STATUS!=="CORRECTION";
+  fieldAction.textContent=canEdit?"Edit this profile field →":"View this profile field →";
+  fieldAction.addEventListener("click",()=>{
+   $("#ralert-panel").classList.remove("show");
+   if(canEdit){enterInlineEdit(notice.field);return;}
+   const el=Array.from(document.querySelectorAll("#r-fields [data-field]")).find(e=>e.dataset.field===notice.field);
+   if(el){el.scrollIntoView({behavior:"smooth",block:"center"});el.closest(".field")?.classList.add("qdc-v4-targeted");}
+  });
+  detail.append(fieldAction);
+ }
+ const stats=list.querySelector(".qdc-v4-alert-stats");
+ if(stats)stats.insertAdjacentElement("afterend",detail);else list.prepend(detail);
+ detail.scrollIntoView({behavior:"smooth",block:"nearest"});positionRAlertPanel();
+});
+$("#btn-ralert-fix").addEventListener("click",()=>{
+ $("#ralert-panel").classList.remove("show");enterInlineEdit();
+});
+setInterval(()=>{
+ const screen=$("#screen-record");if(screen&&!screen.classList.contains("hidden")&&CUR){
+  if($("#ralert-panel").classList.contains("show"))renderAlertPanel();
+  else{const notices=profileNotices(),count=notices.filter(n=>!n.readAt).length;
+    const b=$("#ralert-badge");if(b){b.classList.toggle("hidden",!count);if(count)b.textContent=count>99?"99+":String(count);}
   }
-  else panel.classList.remove("show");
-});
-document.addEventListener("click", (ev)=>{
-  const wrap=$("#ralertwrap");
-  if(wrap && !wrap.contains(ev.target)) $("#ralert-panel").classList.remove("show");
-});
-$("#ralert-list").addEventListener("click", (ev)=>{
-  const row=ev.target.closest(".notifrow[data-rfield]");
-  if(!row) return;
-  $("#ralert-panel").classList.remove("show");
-  enterInlineEdit(row.dataset.rfield || null);
-});
-$("#btn-ralert-fix").addEventListener("click", ()=>{
-  $("#ralert-panel").classList.remove("show");
-  enterInlineEdit();
-});
+ }
+},60000);
 $("#btn-notif").addEventListener("click", (ev)=>{
   ev.stopPropagation();
   const panel=$("#notif-panel");
@@ -7117,19 +7132,6 @@ $('#btn-inline-edit').addEventListener('click',()=>enterInlineEdit());
 $('#btn-inline-cancel').addEventListener('click',()=>{ resetTransientProfileEditState(); renderRecordUI(); });
 $('#btn-inline-save').addEventListener('click',()=>saveInlineChanges(false));
 $('#btn-inline-submit').addEventListener('click',()=>saveInlineChanges(true));
-document.addEventListener('click',ev=>{
- const open=ev.target.closest('[data-profile-flyer-open]');
- if(open){const m=$('#m-profile-guide');m.setAttribute('aria-hidden','false');openModal('#m-profile-guide');return;}
- if(ev.target.closest('#btn-profile-guide-close,[data-profile-guide-close]')||ev.target.id==='m-profile-guide'){
-  const m=$('#m-profile-guide');if(m)m.setAttribute('aria-hidden','true');closeModal('#m-profile-guide');return;
- }
- if(ev.target.closest('#btn-profile-guide-edit')){
-  const m=$('#m-profile-guide');if(m)m.setAttribute('aria-hidden','true');closeModal('#m-profile-guide');
-  if(INLINE_EDIT_MODE){const first=$('#r-fields [data-field]');if(first){first.focus();first.scrollIntoView({behavior:'smooth',block:'center'});}return;}
-  enterInlineEdit();
- }
-});
-document.addEventListener('keydown',ev=>{if(ev.key==='Escape'&&$('#m-profile-guide')?.classList.contains('show')){const m=$('#m-profile-guide');m.setAttribute('aria-hidden','true');closeModal('#m-profile-guide');}});
 document.addEventListener('input',ev=>{
   const t=ev.target; if(!t||!INLINE_EDIT_MODE||!t.closest('#r-fields')) return;
   PROFILE_UNSAVED=true;const v=$('#btn-verify');if(v)v.disabled=true;
@@ -7438,7 +7440,7 @@ function renderUnifiedWorkspace(){
  $('#qdc-draft-note').classList.toggle('hidden',!INLINE_EDIT_MODE||fromAdmin);if(INLINE_EDIT_MODE)$('#qdc-note').value=DRAFT_NOTE;
  const old=$('#qdc-editor-banner');if(old)old.remove();
  const status=verified?'<span class="qdc-status-chip verified">✓ VERIFIED BY ADMIN</span>':pending?'<span class="qdc-status-chip pending">◷ WITH ADMIN FOR FINAL VERIFICATION</span>':'<span class="qdc-status-chip draft">FINAL ADMIN VERIFICATION REQUIRED</span>';
- const banner='<section id="qdc-editor-banner" class="qdc-editor-banner '+(INLINE_EDIT_MODE?'editing':'')+'"><div class="qdc-editor-banner-top"><div><span class="qdc-eyebrow">EMPLOYEE PROFILE WORKSPACE</span><h3>'+(INLINE_EDIT_MODE?'Update your complete profile':'Your complete profile')+'</h3><p>'+(verified?'Your latest approved profile is verified by Admin.':pending?'Your submitted profile is waiting for Admin final verification.':'Edit your details and profile photo together, then send the complete profile to Admin for final verification.')+'</p></div>'+status+'</div><div class="qdc-guide-flow"><div class="qdc-guide-step '+(INLINE_EDIT_MODE?'active':'done')+'"><i>1</i><b>Edit photo & details</b></div><span>›</span><div class="qdc-guide-step '+(INLINE_EDIT_MODE?'active':'')+'"><i>2</i><b>Save draft / confirm</b></div><span>›</span><div class="qdc-guide-step '+(pending?'active':verified?'done':'')+'"><i>3</i><b>Admin verifies</b></div></div><button type="button" class="qdc-flyer-launch" data-profile-flyer-open aria-haspopup="dialog"><span class="qdc-flyer-launch-mark">✦</span><span><b>OPEN PROFILE GUIDE</b><small>Animated steps · photo, draft &amp; Admin approval</small></span><i>↗</i></button>'+(INLINE_EDIT_MODE?'<div class="qdc-editor-photo-row"><label class="qdc-photo-pick" for="file-photo" title="Choose a profile photo"><span class="qdc-avatar-ring">'+(DRAFT_PHOTO||CUR.photo_url?'<img src="'+esc(DRAFT_PHOTO||CUR.photo_url)+'" alt="Profile photo">':esc(initials(CUR.employee_name)))+'<i>＋</i></span></label><div><b>Profile photo</b><small>Tap your photo to choose or replace it. It will be sent with all your profile details in the same request.</small><em>'+(DRAFT_PHOTO?'New photo ready to save with your draft':CUR.photo_url?'Current photo will stay until Admin approves your update':'A profile photo is required')+'</em></div></div>':'')+'</section>';
+ const banner='<section id="qdc-editor-banner" class="qdc-editor-banner '+(INLINE_EDIT_MODE?'editing':'')+'"><div class="qdc-editor-banner-top"><div><span class="qdc-eyebrow">EMPLOYEE PROFILE WORKSPACE</span><h3>'+(INLINE_EDIT_MODE?'Update your complete profile':'Your complete profile')+'</h3><p>'+(verified?'Your latest approved profile is verified by Admin.':pending?'Your submitted profile is waiting for Admin final verification.':'Edit your details and profile photo together, then send the complete profile to Admin for final verification.')+'</p></div>'+status+'</div><div class="qdc-guide-flow"><div class="qdc-guide-step '+(INLINE_EDIT_MODE?'active':'done')+'"><i>1</i><b>Edit photo & details</b></div><span>›</span><div class="qdc-guide-step '+(INLINE_EDIT_MODE?'active':'')+'"><i>2</i><b>Save draft / confirm</b></div><span>›</span><div class="qdc-guide-step '+(pending?'active':verified?'done':'')+'"><i>3</i><b>Admin verifies</b></div></div><div class="qdc-v4-guidance-bar" role="note"><span class="qdc-v4-orb" aria-hidden="true">✦</span><span><b>LIVE FIELD ASSISTANT</b><small>Tap or select any profile field for its own clear instructions. Save a draft and send corrections together.</small></span><span class="qdc-v4-live">FIELD BY FIELD</span></div><div class="qdc-v4-completion" aria-live="polite"><div><span>PROFILE DETAILS COMPLETED</span><strong id="qdc-v4-progress-text">Checking fields…</strong></div><div class="qdc-v4-track"><i id="qdc-v4-progress-fill"></i></div></div>'+(INLINE_EDIT_MODE?'<div class="qdc-editor-photo-row"><label class="qdc-photo-pick" for="file-photo" title="Choose a profile photo"><span class="qdc-avatar-ring">'+(DRAFT_PHOTO||CUR.photo_url?'<img src="'+esc(DRAFT_PHOTO||CUR.photo_url)+'" alt="Profile photo">':esc(initials(CUR.employee_name)))+'<i>＋</i></span></label><div><b>Profile photo</b><small>Tap your photo to choose or replace it. It will be sent with all your profile details in the same request.</small><em>'+(DRAFT_PHOTO?'New photo ready to save with your draft':CUR.photo_url?'Current photo will stay until Admin approves your update':'A profile photo is required')+'</em></div></div>':'')+'</section>';
  $('#r-fields').insertAdjacentHTML('afterbegin',banner);
  ['btn-inline-save','btn-inline-submit','btn-inline-cancel'].forEach(id=>$("#"+id).disabled=PROFILE_BUSY);
  $('#btn-inline-submit').innerHTML='<span class="bicon" data-ic="paperplane"></span>&nbsp; CONFIRM &amp; SEND FOR FINAL VERIFICATION';
@@ -7447,7 +7449,7 @@ function renderUnifiedWorkspace(){
 }
 $('#qdc-choose-photo')?.remove();$('#qdc-undo-photo')?.remove();
 $('#qdc-note').addEventListener('input',e=>{DRAFT_NOTE=e.target.value;PROFILE_UNSAVED=true;});
-</script><script>(function(){const b=document.getElementById("support-launch"),p=document.getElementById("support-panel"),home=document.getElementById("screen-login");if(!b||!p||!home)return;const close=()=>{p.classList.remove("open");p.setAttribute("aria-hidden","true");b.setAttribute("aria-expanded","false")};const sync=()=>{const active=!home.classList.contains("hidden");b.hidden=!active;if(!active)close()};sync();new MutationObserver(sync).observe(home,{attributes:true,attributeFilter:["class"]});b.addEventListener("click",()=>{const open=!p.classList.contains("open");p.classList.toggle("open",open);p.setAttribute("aria-hidden",String(!open));b.setAttribute("aria-expanded",String(open))});document.addEventListener("click",e=>{if(!e.target.closest(".support-panel")&&!e.target.closest(".support-launch"))close()});document.addEventListener("keydown",e=>{if(e.key==="Escape")close()})})();</script>
+</script>
 </body>
 </html>
 
@@ -7932,3 +7934,6 @@ body .support-wa-link{min-height:40px;border-radius:12px!important;background:li
 <!-- Premium authenticated workspaces. Intentionally loaded last to preserve the existing UI and data handlers. -->
 <link rel="stylesheet" href="./premium-workspaces-v3.css?v=20261014">
 <script src="./premium-workspaces-v3.js?v=20261014" defer></script>
+
+<link rel="stylesheet" href="./profile-experience-v4.css?v=20261014">
+<script src="./profile-experience-v4.js?v=20261014" defer></script>
