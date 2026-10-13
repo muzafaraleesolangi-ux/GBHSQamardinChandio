@@ -146,3 +146,12 @@ body #support-panel .qdc-v4-help-close{position:absolute;right:12px;top:10px;bor
 @keyframes qdc-v4-target{20%,70%{box-shadow:0 0 0 5px #42a8ff2a}}
 @media(prefers-reduced-motion:reduce){#screen-record #btn-ralert:before,#screen-record #ralert-badge,#screen-record .qdc-v4-guidance-bar .qdc-v4-orb,#screen-record .qdc-v4-notice,#screen-record .qdc-v4-notice-detail{animation:none!important}body #support-panel{transition:none!important}#screen-record .qdc-v4-track i{transition:none!important}}
 @media print{body .support-dock,#screen-record #ralertwrap,#screen-record .qdc-v4-guidance-bar,#screen-record .qdc-v4-completion{display:none!important}}
+
+
+/* Bell anchored within the profile header: prevents PID/CNIC and edit actions overlapping. */
+#screen-record .recordhead{position:relative!important;padding-right:91px!important}
+#screen-record .recordhead #ralertwrap{position:absolute!important;top:15px!important;right:17px!important;left:auto!important;bottom:auto!important;z-index:120!important;width:auto!important}
+#screen-record .recordhead #ralert-panel{z-index:999!important}
+@media(max-width:700px){#screen-record .recordhead{padding-right:74px!important}#screen-record .recordhead #ralertwrap{top:11px!important;right:11px!important}}
+/* Keep all interactive hidden states authoritative, even with custom button styling. */
+#screen-record .hidden,#screen-dash .hidden,#screen-login .hidden{display:none!important}
