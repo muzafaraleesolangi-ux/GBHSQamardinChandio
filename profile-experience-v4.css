@@ -155,3 +155,14 @@ body #support-panel .qdc-v4-help-close{position:absolute;right:12px;top:10px;bor
 @media(max-width:700px){#screen-record .recordhead{padding-right:74px!important}#screen-record .recordhead #ralertwrap{top:11px!important;right:11px!important}}
 /* Keep all interactive hidden states authoritative, even with custom button styling. */
 #screen-record .hidden,#screen-dash .hidden,#screen-login .hidden{display:none!important}
+
+
+/* Layer/overlap audit: modal dialogs win above floating Help and profile notices. */
+body .modal{z-index:1200!important}
+body:has(.modal.show) .support-dock{visibility:hidden!important;pointer-events:none!important}
+body:has(.modal.show) #screen-record #ralertwrap{visibility:hidden!important;pointer-events:none!important}
+body:has(#screen-record:not(.hidden) #inline-edit-bar:not(.hidden)) .support-dock{bottom:105px!important}
+@media(max-width:700px){
+ body:has(#screen-record:not(.hidden) #inline-edit-bar:not(.hidden)) .support-dock{bottom:120px!important;right:10px!important}
+ #screen-record .recordhead #ralert-panel{max-height:65dvh!important}
+}
