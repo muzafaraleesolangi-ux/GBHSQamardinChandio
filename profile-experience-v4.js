@@ -55,6 +55,9 @@
  }
  function setUpProfile(){
   const screen=q("#screen-record"),fields=q("#r-fields");if(!screen||!fields)return;
+  // Anchor the alert bell inside the profile header so it never collides with other controls.
+  const header=q(".recordhead",screen),bell=q("#ralertwrap",screen);
+  if(header&&bell&&bell.parentNode!==header)header.append(bell);
   fields.addEventListener("focusin",ev=>{
    const field=ev.target.closest(".field");if(!field)return;updateLiveFieldGuide(fieldName(field));
   });
