@@ -177,3 +177,7 @@
 #screen-dash .qdc-v6-last-update{margin:-6px 0 14px;padding:8px 10px;border-radius:8px;background:#eef8f1;color:#668573;font-size:9px;font-weight:750}
 @media(max-width:1000px){#screen-login .qdc-v6-links{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:550px){#screen-login .qdc-v6-links{grid-template-columns:1fr}}
+
+/* Use a professional monogram until a real officer photo is uploaded. */
+#screen-login .qdc-v6-silhouette{font:950 35px/1 Manrope,system-ui,sans-serif!important;letter-spacing:.04em}
+#screen-dash .qdc-v6-preview-photo .qdc-v6-silhouette{font:950 38px/1 Manrope,system-ui,sans-serif!important}
