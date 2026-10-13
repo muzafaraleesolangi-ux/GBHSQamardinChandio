@@ -175,3 +175,74 @@ body:has(#screen-record:not(.hidden) #inline-edit-bar:not(.hidden)) .support-doc
 #screen-record .qdc-v4-section-pill.selected{background:linear-gradient(110deg,#237dd7,#1269b5);color:#fff;border-color:#1873cf;box-shadow:0 7px 16px #1e6bbb34}
 #screen-record .qdc-field-section{scroll-margin-top:36px}
 @media(max-width:620px){#screen-record .qdc-v4-section-nav{flex-wrap:nowrap;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}#screen-record .qdc-v4-section-pill{flex:0 0 auto;white-space:nowrap;scroll-snap-align:start;min-height:33px}}
+
+
+/* Notification Overlay V5: document-level floating layer, not clipped by profile card */
+#screen-record{isolation:auto!important;overflow:visible!important}
+#screen-record .qdc-v5-alert-scrim{
+ display:block;position:fixed;inset:0;z-index:990;
+ background:rgba(6,27,63,.24);backdrop-filter:blur(1.8px);
+ opacity:0;visibility:hidden;pointer-events:none;
+ transition:opacity .23s ease,visibility 0s linear .23s;
+}
+#screen-record .qdc-v5-alert-scrim.open{
+ opacity:1;visibility:visible;pointer-events:auto;
+ transition:opacity .23s ease,visibility 0s;
+}
+#screen-record #ralert-panel{
+ position:fixed!important;z-index:1000!important;
+ margin:0!important;box-sizing:border-box;max-width:calc(100vw - 24px)!important;
+ max-height:calc(100dvh - 24px)!important;
+ overflow:hidden!important;border-radius:18px!important;
+ transform-origin:top right!important;
+ animation:none!important;
+ transition:opacity .2s ease,transform .24s cubic-bezier(.2,.8,.2,1),visibility 0s linear .25s!important;
+}
+#screen-record #ralert-panel:not(.show){
+ opacity:0!important;visibility:hidden!important;pointer-events:none!important;
+ transform:translateY(-12px) scale(.975)!important;
+}
+#screen-record #ralert-panel.show{
+ opacity:1!important;visibility:visible!important;pointer-events:auto!important;
+ transform:translateY(0) scale(1)!important;
+ box-shadow:0 25px 64px rgba(6,29,72,.42),0 0 0 1px rgba(119,170,231,.15)!important;
+ transition:opacity .22s ease,transform .29s cubic-bezier(.16,1,.3,1),visibility 0s!important;
+}
+#screen-record #ralert-panel .notifpanel-in{
+ min-height:0!important;max-height:calc(100dvh - 55px)!important;
+ overflow:hidden!important;padding:16px!important;
+}
+#screen-record #ralert-panel #ralert-list{
+ overflow-y:auto!important;overscroll-behavior:contain!important;scroll-behavior:smooth;
+ min-height:60px!important;max-height:min(52dvh,395px)!important;
+ scrollbar-width:thin;scrollbar-color:#9bbde6 #eef5ff;
+}
+#screen-record #ralert-panel .notif-head{
+ display:flex!important;align-items:center!important;justify-content:space-between!important;gap:9px!important;
+}
+#screen-record #ralert-panel .notif-head>b{flex:1;min-width:0}
+#screen-record .qdc-v5-alert-close{
+ display:grid;place-items:center;flex:0 0 auto;width:29px;height:29px;border-radius:9px;
+ background:#e9f4ff;border:1px solid #c8e2f8;color:#19558b;
+ font-size:19px;font-weight:900;line-height:1;cursor:pointer;transition:background .2s,color .2s,transform .2s;
+}
+#screen-record .qdc-v5-alert-close:hover{background:#dcecff;color:#0f468c;transform:rotate(90deg)}
+#screen-record .qdc-v5-alert-close:focus-visible{outline:3px solid #3a91e6;outline-offset:2px}
+@media(max-width:640px){
+ #screen-record #ralert-panel{
+  left:10px!important;right:10px!important;top:auto!important;
+  bottom:max(10px,env(safe-area-inset-bottom))!important;
+  width:calc(100vw - 20px)!important;max-width:none!important;
+  max-height:min(78dvh,650px)!important;
+  transform-origin:bottom center!important;
+  border-radius:22px 22px 16px 16px!important;
+ }
+ #screen-record #ralert-panel:not(.show){transform:translateY(24px) scale(.965)!important}
+ #screen-record #ralert-panel.show{transform:translateY(0) scale(1)!important}
+ #screen-record #ralert-panel .notifpanel-in{max-height:calc(78dvh - 15px)!important}
+ #screen-record #ralert-panel #ralert-list{max-height:calc(78dvh - 160px)!important}
+}
+@media(prefers-reduced-motion:reduce){
+ #screen-record #ralert-panel,#screen-record .qdc-v5-alert-scrim{animation:none!important;transition:none!important}
+}
+@media print{#screen-record #ralert-panel,#screen-record .qdc-v5-alert-scrim{display:none!important}}
