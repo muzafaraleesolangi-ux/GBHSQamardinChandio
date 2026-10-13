@@ -1,0 +1,122 @@
+/* GBHS Qamardin Chandio · Emerald institutional workspaces v6.
+ * Refinements to existing Admin/Employee UI: NO changes to field IDs, permissions or data handling. */
+#screen-dash,#screen-record{
+ --v3-ink:#163f35!important;--v3-muted:#647e71!important;
+ --v3-border:#d8e8db!important;--v3-bg:#f3f8f4!important;
+ --v3-shadow:0 8px 25px #0b4b2615!important;
+ background:#f4f9f6!important;color:#163e34!important;
+}
+#screen-dash .qdc-admin-side{
+ background:linear-gradient(180deg,#064c37 0%,#053e30 60%,#022b26 100%)!important;
+ border-color:#226f53!important;box-shadow:0 18px 42px #0b4d3342!important;
+}
+#screen-dash .qdc-admin-brand>span{background:transparent!important}
+#screen-dash .qdc-admin-side .tabs .tab{color:#e4f4ea!important}
+#screen-dash .qdc-admin-side .tabs .tab.on{
+ background:linear-gradient(110deg,#0a9b67,#0c7354)!important;
+ border-color:#27b68b!important;box-shadow:0 7px 20px #003e2e55!important;
+}
+#screen-dash .qdc-admin-side .tabs .tab:hover{background:#ffffff24!important}
+#screen-dash .bar{border-color:#d9e9df!important;box-shadow:0 6px 20px #0a472313!important}
+#screen-dash .dashsearch input{background:#f2f9f5!important;border-color:#d9eadf!important;color:#184b3d!important}
+#screen-dash .dashhero{
+ background:linear-gradient(115deg,#044a37,#066d4d 67%,#17a47b)!important;
+ border-color:#13875e!important;box-shadow:0 17px 34px #08714a33!important;
+}
+#screen-dash .dashhero:before{background:radial-gradient(circle at 86% 13%,#dcfff148,transparent 40%)!important}
+#screen-dash .dashhero-text:before{color:#fff1ba!important}
+#screen-dash .dashribbon,#screen-dash .dashribbon *{color:#2c7755!important}
+#screen-dash .tabpane{background:#fff!important;border-color:#ddebe0!important;box-shadow:0 8px 28px #19432613!important}
+#screen-dash .qdc-overview-head h2,#screen-dash .qdc-cell-register-head h3{
+ color:#163c38!important;
+}
+#screen-dash .qdc-overview-eyebrow{color:#1a956b!important}
+#screen-dash .qdc-kpi-face{border-color:#d7e9de!important;box-shadow:0 6px 16px #1a562814!important}
+#screen-dash .qdc-kpi:nth-child(1) .qdc-kpi-face{background:linear-gradient(135deg,#fff,#edf9f2)!important}
+#screen-dash .qdc-kpi:nth-child(2) .qdc-kpi-face{background:linear-gradient(135deg,#fff,#f2f8ff)!important}
+#screen-dash .qdc-kpi:nth-child(3) .qdc-kpi-face{background:linear-gradient(135deg,#fff,#f7f0ff)!important}
+#screen-dash .qdc-kpi:nth-child(4) .qdc-kpi-face{background:linear-gradient(135deg,#fff,#fff8e6)!important}
+#screen-dash .qdc-kpi-icon{background:linear-gradient(135deg,#047958,#0ebc84)!important}
+#screen-dash .qdc-kpi:nth-child(2) .qdc-kpi-icon{background:linear-gradient(135deg,#256ee3,#5aaffb)!important}
+#screen-dash .qdc-kpi:nth-child(3) .qdc-kpi-icon{background:linear-gradient(135deg,#834ae4,#b37bfa)!important}
+#screen-dash .qdc-kpi:nth-child(4) .qdc-kpi-icon{background:linear-gradient(135deg,#f1a13b,#f7c767)!important}
+#screen-dash .qdc-kpi-value{color:#103e35!important}
+#screen-dash .qdc-kpi-name{color:#426b58!important}
+#screen-dash .qdc-analytics-card,#screen-dash .qdc-v3-actions{
+ border-color:#d9eade!important;background:#fff!important;
+}
+#screen-dash .qdc-analytics-card h3,#screen-dash .qdc-v3-actions h3{color:#185b42!important}
+#screen-dash .qdc-v3-action{color:#2c6552!important;background:#f4fbf6!important;border-color:#e0eee4!important}
+#screen-dash .qdc-v3-action:hover{background:#e7f7ed!important}
+#screen-dash .qdc-v3-action b{background:#0a9466!important}
+#screen-dash .qdc-v3-action:nth-of-type(2) b{background:#1784c1!important}
+#screen-dash .qdc-v3-action:nth-of-type(3) b{background:#8d61d9!important}
+#screen-dash .qdc-v3-action:nth-of-type(4) b{background:#e99e45!important}
+#screen-dash .qdc-track{background:#e9f4ed!important}
+#screen-dash .qdc-track i{background:linear-gradient(90deg,#0a8257,#3dcc96)!important}
+#screen-dash #btn-addemp:not(.hidden){
+ background:linear-gradient(110deg,#078456,#12ab78)!important;border-color:#058358!important;
+ box-shadow:0 8px 17px #056b4736!important;color:#fff!important;
+}
+#screen-dash #btn-addemp:not(.hidden):hover{background:linear-gradient(110deg,#077044,#14a16f)!important}
+#screen-dash #btn-refresh{background:#ebf8f0!important;border-color:#c3e7ce!important;color:#08744b!important}
+#screen-dash #btn-excel{background:#eaf7ff!important;border-color:#cee6f8!important;color:#215e9c!important}
+#screen-dash .btn.primary{background:linear-gradient(110deg,#0a7f56,#0aaf78)!important;border-color:#058153!important}
+#screen-dash table thead th{background:#edf8f1!important;color:#285943!important;border-color:#d8e7d9!important}
+#screen-dash tbody td{color:#31574b!important}
+#screen-dash tbody tr:hover td{background:#f3faf6!important}
+/* Employee profile: comfortable, clean institutional layout; only CSS skin changed. */
+#screen-record>.card{background:#fff!important;border-color:#d5e9da!important;box-shadow:0 14px 35px #083e2516!important}
+#screen-record .letterhead{background:linear-gradient(110deg,#054633,#087658)!important;border-color:#d6b46b!important}
+#screen-record .qdc-v3-lettertext small{color:#ffe6a7!important}
+#screen-record .recordhead{
+ background:linear-gradient(110deg,#055039,#087a54 70%,#23a276)!important;
+ min-height:140px!important;border:0!important;
+}
+#screen-record .recordhead h2{color:#fff!important}
+#screen-record .recordhead .sub{color:#e2f7ea!important}
+#screen-record .avatar{background:linear-gradient(110deg,#0d9c72,#67bea8)!important}
+#screen-record .ptopbar{background:#fff!important;border-color:#dcebdc!important}
+#screen-record .ptop-tab.active{color:#088557!important;border-bottom-color:#0a895d!important}
+#screen-record .ptop-tab{color:#607e6a!important}
+#screen-record .recside{background:linear-gradient(180deg,#08503c,#044132,#022b28)!important}
+#screen-record .rside-item.active{background:linear-gradient(110deg,#069569,#11a878)!important;border-color:#21ae89!important}
+#screen-record .recmain{background:#f4f9f5!important}
+#screen-record .qdc-editor-banner{
+ background:linear-gradient(105deg,#edf8f0,#fff 65%,#fff9eb)!important;
+ border-color:#cce9d8!important;
+}
+#screen-record .qdc-editor-banner h3{color:#155c42!important}
+#screen-record .qdc-editor-banner p{color:#5e846c!important}
+#screen-record .qdc-field-section{border-color:#d9ebdd!important}
+#screen-record .qdc-field-section b{color:#115c42!important}
+#screen-record .fields .field{border-color:#dce9dd!important;box-shadow:0 4px 14px #0b432015!important}
+#screen-record .fields .field:hover,#screen-record .fields .field:focus-within{border-color:#92ccb0!important;box-shadow:0 9px 24px #1a6c3730!important}
+#screen-record .field .k{color:#648272!important}
+#screen-record .field .v{color:#164638!important}
+#screen-record .field .ficon{background:#e7f6ed!important;color:#068455!important}
+#screen-record .qdc-v4-guidance-bar{
+ background:linear-gradient(120deg,#e5f8ed,#fff 58%,#fff8e7)!important;border-color:#bfe9ce!important;
+}
+#screen-record .qdc-v4-guidance-bar b{color:#086a48!important}
+#screen-record .qdc-v4-guidance-bar .qdc-v4-orb{background:linear-gradient(130deg,#067e56,#25bb83)!important}
+#screen-record .qdc-v4-completion{border-color:#cfe7d7!important}
+#screen-record .qdc-v4-track{background:#e6f5eb!important}
+#screen-record .qdc-v4-track i{background:linear-gradient(90deg,#0a8b5c,#35c08b)!important}
+#screen-record .qdc-v4-section-pill.selected{background:linear-gradient(110deg,#068f60,#068257)!important;border-color:#078358!important}
+#screen-record .qdc-v4-section-pill{border-color:#d2e6d6;color:#497d63}
+#screen-record .qdc-v4-section-pill:hover{border-color:#a4d7b7!important;background:#f2fbf5!important}
+#screen-record #btn-inline-edit,#screen-record #btn-inline-submit{
+ background:linear-gradient(105deg,#0a8c60,#11aa77)!important;color:#fff!important;
+ border-color:#0a855a!important;box-shadow:0 7px 18px #0b795328!important;
+}
+#screen-record #btn-inline-save{background:#edf9f0!important;color:#067f55!important;border-color:#bfe7ca!important}
+#screen-record #btn-ralert.ralertbtn{background:linear-gradient(135deg,#0a8b5d,#076a4e)!important;border-color:#66c6a5!important}
+#screen-record #ralert-panel{border-color:#cfe2d5!important}
+#screen-record #ralert-panel .notif-head b{color:#13593e!important}
+#screen-record .notifrow.qdc-v4-notice.unseen{
+ border-color:#c4e4d1!important;background:linear-gradient(115deg,#ecf9f0,#fff 85%)!important;
+ box-shadow:inset 3px 0 #13a573!important;
+}
+#screen-record .qdc-v4-field-action{background:linear-gradient(110deg,#0a8d61,#10a779)!important;border-color:#0a8d61!important}
+@media(prefers-reduced-motion:reduce){#screen-dash button,#screen-record button{transition:none!important}}
