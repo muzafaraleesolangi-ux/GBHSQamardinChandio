@@ -5106,7 +5106,11 @@ $("#ralert-list").addEventListener("click",ev=>{
  }
  const stats=list.querySelector(".qdc-v4-alert-stats");
  if(stats)stats.insertAdjacentElement("afterend",detail);else list.prepend(detail);
- detail.scrollIntoView({behavior:"smooth",block:"nearest"});positionRAlertPanel();
+ // Scroll only the notification list; never scroll the page just to reveal the expanded item.
+  const listTop=list.getBoundingClientRect().top;
+  const detailTop=detail.getBoundingClientRect().top;
+  list.scrollTo({top:Math.max(0,list.scrollTop+detailTop-listTop-8),behavior:"smooth"});
+  positionRAlertPanel();
 });
 $("#btn-ralert-fix").addEventListener("click",()=>{
  $("#ralert-panel").classList.remove("show");enterInlineEdit();
@@ -7941,5 +7945,5 @@ body .support-wa-link{min-height:40px;border-radius:12px!important;background:li
 <link rel="stylesheet" href="./premium-workspaces-v3.css?v=20261014">
 <script src="./premium-workspaces-v3.js?v=20261014" defer></script>
 
-<link rel="stylesheet" href="./profile-experience-v4.css?v=20261014">
-<script src="./profile-experience-v4.js?v=20261014" defer></script>
+<link rel="stylesheet" href="./profile-experience-v4.css?v=20261014-popupfix">
+<script src="./profile-experience-v4.js?v=20261014-popupfix" defer></script>
