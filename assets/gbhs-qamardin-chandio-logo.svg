@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+<title id="title">GBHS Qamardin Chandio premium emblem</title><desc id="desc">Blue and gold academy crest with book, star, torch and laurels</desc>
+<defs>
+ <linearGradient id="midnight" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#052954"/><stop offset=".55" stop-color="#0d4e8d"/><stop offset="1" stop-color="#091b40"/></linearGradient>
+ <linearGradient id="gold" x1="0" x2=".8" y1="0" y2="1"><stop stop-color="#fff2b0"/><stop offset=".43" stop-color="#eec96f"/><stop offset="1" stop-color="#ad742e"/></linearGradient>
+ <linearGradient id="paper" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#ffffff"/><stop offset="1" stop-color="#bbdbed"/></linearGradient>
+ <linearGradient id="cyan" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#71f5ed"/><stop offset="1" stop-color="#1ea7d8"/></linearGradient>
+ <filter id="shadow"><feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#00122b" flood-opacity=".4"/></filter>
+</defs>
+<circle cx="256" cy="262" r="205" fill="url(#gold)" filter="url(#shadow)"/>
+<circle cx="256" cy="262" r="194" fill="url(#midnight)" stroke="#f9d68a" stroke-width="5"/>
+<circle cx="256" cy="262" r="172" fill="none" stroke="#67bed8" stroke-opacity=".6" stroke-width="4"/>
+<path d="M256 21l12 28 31 3-24 20 8 31-27-17-27 17 8-31-24-20 31-3z" fill="url(#gold)"/>
+<g fill="none" stroke="url(#gold)" stroke-width="9" stroke-linecap="round">
+ <path d="M153 148C90 177 81 295 152 362"/><path d="M359 148c63 29 72 147 1 214"/>
+</g>
+<g fill="url(#gold)">
+ <ellipse cx="128" cy="171" rx="10" ry="24" transform="rotate(-39 128 171)"/><ellipse cx="109" cy="208" rx="11" ry="25" transform="rotate(-20 109 208)"/><ellipse cx="106" cy="253" rx="11" ry="24" transform="rotate(-2 106 253)"/><ellipse cx="119" cy="299" rx="12" ry="25" transform="rotate(19 119 299)"/><ellipse cx="143" cy="338" rx="11" ry="24" transform="rotate(39 143 338)"/>
+ <ellipse cx="384" cy="171" rx="10" ry="24" transform="rotate(39 384 171)"/><ellipse cx="403" cy="208" rx="11" ry="25" transform="rotate(20 403 208)"/><ellipse cx="406" cy="253" rx="11" ry="24" transform="rotate(2 406 253)"/><ellipse cx="393" cy="299" rx="12" ry="25" transform="rotate(-19 393 299)"/><ellipse cx="369" cy="338" rx="11" ry="24" transform="rotate(-39 369 338)"/>
+</g>
+<g transform="translate(0 4)">
+ <path d="M159 261q46-25 94 1v100q-43-24-94-6z" fill="url(#paper)" stroke="url(#gold)" stroke-width="6" stroke-linejoin="round"/>
+ <path d="M353 261q-46-25-94 1v100q43-24 94-6z" fill="url(#paper)" stroke="url(#gold)" stroke-width="6" stroke-linejoin="round"/>
+ <path d="M256 268v98m-81-80q37-14 64 3m-64 20q37-14 64 3m34-23q28-17 64-3m-64 26q28-17 64-3" fill="none" stroke="#5891b8" stroke-width="5" stroke-linecap="round"/>
+ <path d="M250 182h12l13 138-19 22-19-22z" fill="url(#gold)" stroke="#112d4c" stroke-width="5"/>
+ <path d="M256 172c-19-22 3-33-1-54 25 24 27 44 1 54z" fill="url(#cyan)"/>
+ <path d="M251 183l5 135 5-135z" fill="#fff6ce" opacity=".8"/>
+</g>
+<path d="M102 391q154 62 308 0l-14 54q-140 49-280 0z" fill="url(#gold)" stroke="#143054" stroke-width="6" stroke-linejoin="round"/>
+<text x="256" y="431" text-anchor="middle" font-family="Arial,sans-serif" font-size="42" font-weight="900" fill="#092955" letter-spacing="1.5">GBHSQC</text>
+<text x="256" y="466" text-anchor="middle" font-family="Arial,sans-serif" font-size="15" fill="#f3dd95" font-weight="700" letter-spacing="2.5">EDUCATION • PROGRESS</text>
+</svg>
