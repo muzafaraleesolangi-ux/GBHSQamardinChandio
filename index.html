@@ -5034,6 +5034,7 @@ function profileNotices(){
   }
  });
  for(const h of (CUR_HISTORY||[])){
+  if(h.kind==="VERIFIED")break; // retain existing cutoff at last employee certification
   if(h.kind!=="EDIT"&&h.kind!=="APPROVED")continue;
   const chs=Array.isArray(h.changes)?h.changes:[],keys=chs.map(c=>c.field).filter(Boolean);
   const labels=chs.map(c=>c.label||c.field).filter(Boolean);
@@ -5112,7 +5113,12 @@ $("#btn-ralert-fix").addEventListener("click",()=>{
 });
 setInterval(()=>{
  const screen=$("#screen-record");if(screen&&!screen.classList.contains("hidden")&&CUR){
-  if($("#ralert-panel").classList.contains("show"))renderAlertPanel();
+  if($("#ralert-panel").classList.contains("show")){
+    const openList=$("#ralert-list");
+    const live=profileNotices();
+    const current=Array.from(openList.querySelectorAll(".qdc-v4-notice")).map(x=>x.dataset.rsig).join("|");
+    if(current!==live.map(x=>x.sig).join("|"))renderAlertPanel();
+  }
   else{const notices=profileNotices(),count=notices.filter(n=>!n.readAt).length;
     const b=$("#ralert-badge");if(b){b.classList.toggle("hidden",!count);if(count)b.textContent=count>99?"99+":String(count);}
   }
