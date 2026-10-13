@@ -144,8 +144,120 @@
   }
   close();
  }
+
+ /* V5: move the notification panel outside the clipped .recordhead/.card.
+    Preserve the original rows, read receipts, badge and event handlers. */
+ function setupNotificationOverlay(){
+  const screen=q("#screen-record"),wrap=q("#ralertwrap"),panel=q("#ralert-panel"),bell=q("#btn-ralert");
+  if(!screen||!wrap||!panel||!bell||panel.dataset.overlayV5)return;
+  panel.dataset.overlayV5="1";
+  screen.append(panel); // panel is a sibling of the clipped card, but still within #screen-record CSS scope
+  panel.setAttribute("role","dialog");
+  panel.setAttribute("aria-label","Employee profile notifications");
+  panel.setAttribute("aria-hidden","true");
+  bell.setAttribute("aria-expanded","false");
+  bell.setAttribute("aria-controls","ralert-panel");
+  const scrim=make("div","qdc-v5-alert-scrim");
+  scrim.setAttribute("aria-hidden","true");
+  screen.insertBefore(scrim,panel);
+  const head=q(".notif-head",panel);
+  let closeButton=q(".qdc-v5-alert-close",panel);
+  if(head&&!closeButton){
+   closeButton=make("button","qdc-v5-alert-close","×");
+   closeButton.type="button";closeButton.setAttribute("aria-label","Close notifications");
+   head.append(closeButton);
+  }
+  let lastKnownOpen=false;
+  const isOpen=()=>panel.classList.contains("show");
+  const close=(restoreFocus=false)=>{
+   if(!isOpen())return;
+   panel.classList.remove("show");
+   panel.setAttribute("aria-hidden","true");
+   bell.setAttribute("aria-expanded","false");
+   scrim.classList.remove("open");
+   if(restoreFocus&&document.activeElement!==bell)bell.focus({preventScroll:true});
+  };
+  const position=()=>{
+   if(!isOpen())return;
+   const a=bell.getBoundingClientRect(), vw=window.innerWidth, vh=window.innerHeight, pad=12;
+   const narrow=vw<=640;
+   const width=Math.max(240,Math.min(narrow?vw-20:410,vw-2*pad));
+   panel.style.position="fixed";
+   panel.style.width=width+"px";
+   panel.style.right="auto";
+   panel.style.maxHeight=Math.max(210,vh-2*pad)+"px";
+   if(narrow){
+    panel.style.left=Math.max(10,(vw-width)/2)+"px";
+    panel.style.top="auto";
+    panel.style.bottom="max(10px, env(safe-area-inset-bottom))";
+    return;
+   }
+   panel.style.bottom="auto";
+   const left=Math.min(Math.max(pad,a.right-width),vw-width-pad);
+   panel.style.left=left+"px";
+   const panelHeight=Math.min(panel.getBoundingClientRect().height||420,vh-2*pad);
+   const below=vh-(a.bottom+12)-pad;
+   const above=a.top-12-pad;
+   let top;
+   if(below>=Math.min(270,panelHeight)||below>=above){
+    top=Math.min(a.bottom+12,Math.max(pad,vh-panelHeight-pad));
+   }else{
+    top=Math.max(pad,a.top-12-panelHeight);
+   }
+   panel.style.top=top+"px";
+  };
+  const onPageScroll=e=>{
+   if(!isOpen())return;
+   const origin=e&&e.target;
+   // Scrolling notices within the panel must not dismiss it.
+   if(origin&&origin.nodeType&&panel.contains(origin))return;
+   close();
+  };
+  // The existing document outside-click listener treats the relocated panel
+  // as "outside"; stop its bubbling while retaining the row's own click listeners.
+  panel.addEventListener("click",ev=>{
+   ev.stopPropagation();
+   if(isOpen())requestAnimationFrame(position);
+  });
+  panel.addEventListener("pointerdown",ev=>ev.stopPropagation());
+  closeButton?.addEventListener("click",()=>close(true));
+  scrim.addEventListener("click",()=>close(true));
+  bell.addEventListener("click",()=>{
+   requestAnimationFrame(()=>{
+    const opened=isOpen();
+    scrim.classList.toggle("open",opened);
+    bell.setAttribute("aria-expanded",String(opened));
+    panel.setAttribute("aria-hidden",String(!opened));
+    if(opened)position();
+   });
+  });
+  const panelObserver=new MutationObserver(()=>{
+   const opened=isOpen();
+   if(opened===lastKnownOpen)return;
+   lastKnownOpen=opened;
+   scrim.classList.toggle("open",opened);
+   bell.setAttribute("aria-expanded",String(opened));
+   panel.setAttribute("aria-hidden",String(!opened));
+   if(opened)requestAnimationFrame(position);
+  });
+  panelObserver.observe(panel,{attributes:true,attributeFilter:["class"]});
+  const screenObserver=new MutationObserver(()=>{if(screen.classList.contains("hidden"))close();});
+  screenObserver.observe(screen,{attributes:true,attributeFilter:["class"]});
+  document.addEventListener("scroll",onPageScroll,{capture:true,passive:true});
+  window.addEventListener("scroll",onPageScroll,{passive:true});
+  window.addEventListener("resize",()=>{if(isOpen())requestAnimationFrame(position)},{passive:true});
+  window.addEventListener("orientationchange",()=>{if(isOpen())requestAnimationFrame(position)},{passive:true});
+  document.addEventListener("keydown",ev=>{if(ev.key==="Escape"&&isOpen())close(true);});
+  document.addEventListener("focusin",ev=>{
+   if(!isOpen())return;
+   if(panel.contains(ev.target)||wrap.contains(ev.target))return;
+   close();
+  });
+  panel.style.top="auto";
+ }
  function boot(){
   setUpProfile();
+  setupNotificationOverlay();
   setupSupport();
  }
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot,{once:true});
