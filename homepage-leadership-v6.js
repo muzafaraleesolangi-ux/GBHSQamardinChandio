@@ -257,8 +257,8 @@
     p_keep_photo:!(photo?.keep===false),p_is_published:v.published
    });
    if(!result?.ok)throw Error(result?.status||"Save rejected by the server");
-   notify(form,"Changes saved and published to the homepage.",true);
    await Promise.all([getPublic(),refreshManager()]);
+   notify(form,v.published?"Profile saved. The public homepage has been updated.":"Profile saved as unpublished. It is hidden from the public homepage.",true);
   }catch(err){notify(form,"Update failed: "+(err?.message||"Please try again"),false);}
   finally{button.disabled=false;button.textContent="✓ Save & Update Homepage";}
  }
