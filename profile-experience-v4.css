@@ -166,3 +166,12 @@ body:has(#screen-record:not(.hidden) #inline-edit-bar:not(.hidden)) .support-doc
  body:has(#screen-record:not(.hidden) #inline-edit-bar:not(.hidden)) .support-dock{bottom:120px!important;right:10px!important}
  #screen-record .recordhead #ralert-panel{max-height:65dvh!important}
 }
+
+
+/* Section quick navigation is generated from actual profile field headings. */
+#screen-record .qdc-v4-section-nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:15px 0 0;padding:12px 0 0;border-top:1px solid #e0eaf6}
+#screen-record .qdc-v4-section-pill{min-height:37px;padding:9px 12px;border:1px solid #cfe1f7;border-radius:99px;background:#fff;color:#416b95;font:850 10px Manrope,system-ui,sans-serif;box-shadow:0 3px 10px #1a5ca014;cursor:pointer}
+#screen-record .qdc-v4-section-pill:hover{border-color:#7eb5e9!important;transform:translateY(-2px)!important;background:#f0f8ff!important}
+#screen-record .qdc-v4-section-pill.selected{background:linear-gradient(110deg,#237dd7,#1269b5);color:#fff;border-color:#1873cf;box-shadow:0 7px 16px #1e6bbb34}
+#screen-record .qdc-field-section{scroll-margin-top:36px}
+@media(max-width:620px){#screen-record .qdc-v4-section-nav{flex-wrap:nowrap;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:6px}#screen-record .qdc-v4-section-pill{flex:0 0 auto;white-space:nowrap;scroll-snap-align:start;min-height:33px}}
