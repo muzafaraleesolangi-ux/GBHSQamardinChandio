@@ -96,6 +96,33 @@
   section.append(grid);
   cells.parentNode.insertBefore(section,cells);
   renderLeadership();
+  // The four lower quick-access cards use existing destinations rather than fake features.
+  if(!$("#qdc-v6-links")){
+   const quick=el("div","qdc-v6-links");quick.id="qdc-v6-links";
+   const data=[
+    {title:"Latest Notices",sub:"Portal announcements and information",icon:"📣",target:"#ticker-text"},
+    {title:"Employee Guidelines",sub:"Sign in for profile fields and service records",icon:"📋",target:"#home-auth"},
+    {title:"Help & Support",sub:"Open the existing support panel",icon:"❔",target:"#support-launch"},
+    {title:"Contact Us",sub:"Contact the cluster's portal support",icon:"☎",target:"#support-launch"}
+   ];
+   data.forEach(item=>{
+    const button=el("button","qdc-v6-link");
+    button.type="button";button.append(el("span","qdc-v6-link-icon",item.icon));
+    const content=el("span","qdc-v6-link-content");
+    content.append(el("strong","",item.title),el("small","",item.sub));
+    button.append(content,el("span","qdc-v6-link-arrow","→"));
+    button.addEventListener("click",()=>{
+     const target=$(item.target);
+     if(!target)return;
+     if(item.target==="#support-launch"){target.click();return;}
+     target.scrollIntoView({behavior:"smooth",block:"center"});
+    });
+    quick.append(button);
+   });
+   const footer=$("#screen-login .footer");
+   if(footer)footer.insertAdjacentElement("beforebegin",quick);
+   else cells.insertAdjacentElement("afterend",quick);
+  }
   const nav=$("#screen-login .nav");if(nav && !$("#qdc-v6-cells-link")){
    // Keep the portal's original navigation handlers; existing Cells button remains functional.
    const cellsButton=$('[data-jump="cells"]',nav);
@@ -134,7 +161,7 @@
   const form=el("form","qdc-v6-manager-form");form.dataset.profileKey=key;
   form.innerHTML=
     '<div class="qdc-v6-manager-head"><span class="qdc-v6-manager-marker">★</span><div><small>MASTER ADMIN · HOMEPAGE MANAGEMENT</small><h3></h3></div><span class="qdc-v6-master-chip">MASTER ONLY</span></div>'+
-    '<div class="qdc-v6-edit-layout">'+
+    '<div class="qdc-v6-last-update"></div><div class="qdc-v6-edit-layout">'+
      '<div class="qdc-v6-photo-editor"><div class="qdc-v6-preview-photo"></div><label class="qdc-v6-upload-btn"><span>↑</span> Upload / Replace Photo<input type="file" accept="image/jpeg,image/png,image/webp" class="qdc-v6-photo-file" hidden></label><button type="button" class="qdc-v6-remove-photo">Remove Photo</button><small>JPG / PNG / WebP • Automatically cropped for profile cards. Use the real officer portrait only.</small></div>'+
      '<div class="qdc-v6-inputs"><label>Full Name<input name="full_name" type="text" maxlength="100" required autocomplete="off"></label>'+
      '<label>Designation<input name="designation" type="text" maxlength="160" required></label>'+
@@ -185,6 +212,8 @@
   form.elements.bio.value=p.bio||"";
   form.elements.published.checked=p.published!==false;
   $(".qdc-v6-count",form).textContent=form.elements.bio.value.length+" / 850";
+  const meta=$(".qdc-v6-last-update",form);
+  if(meta){ const d=p.updated_at?new Date(p.updated_at):null; meta.textContent=d&&!isNaN(d.getTime())?"Last updated: "+d.toLocaleString()+" · by "+(p.updated_by||"system"):"Not yet updated by Master Admin"; }
   delete pendingPhotos[key];
   photoPreview(form,p.photo||null,p.name||"");
   $(".qdc-v6-live-preview",form).hidden=true;
