@@ -57,7 +57,7 @@ function buildDashboard(){
    '<span class="qdc7-overview-status" id="qdc7-overview-status">PROFILE</span></div>'+
   '<div class="qdc7-overview-kpis">'+
    '<article class="qdc7-overview-kpi"><span class="qdc7-kpi-icon">◉</span><div><small>PROFILE COMPLETION</small><strong id="qdc7-pct">—</strong><span id="qdc7-completed">Checking fields…</span></div></article>'+
-   '<article class="qdc7-overview-kpi"><span class="qdc7-kpi-icon">✓</span><div><small>FIELDS REVIEWED</small><strong id="qdc7-reviewed">—</strong><span>Filled fields in the current profile</span></div></article>'+
+   '<article class="qdc7-overview-kpi"><span class="qdc7-kpi-icon">✓</span><div><small>FIELDS FILLED</small><strong id="qdc7-reviewed">—</strong><span>Filled fields in the current profile</span></div></article>'+
    '<article class="qdc7-overview-kpi"><span class="qdc7-kpi-icon">▤</span><div><small>FIELDS TO COMPLETE</small><strong id="qdc7-missing">—</strong><span>Use the Guidelines assistant</span></div></article></div>'+
   '<div class="qdc7-overview-actions"><button type="button" id="qdc7-edit" class="qdc7-action qdc7-action-primary"><span>✎</span> Edit / Update Profile <b>→</b></button>'+
    '<button type="button" id="qdc7-help" class="qdc7-action qdc7-action-secondary"><span>ⓘ</span> Live Guidelines</button>'+
