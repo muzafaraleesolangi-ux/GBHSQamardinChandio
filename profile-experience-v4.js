@@ -33,10 +33,26 @@
    detail.textContent=guidanceText(name);
   }
  }
+ function installSectionNavigator(){
+  const root=q("#r-fields"),banner=q("#qdc-editor-banner");if(!root||!banner||q(".qdc-v4-section-nav",banner))return;
+  const sections=Array.from(root.querySelectorAll(":scope > .qdc-field-section"));
+  if(!sections.length)return;
+  const nav=make("nav","qdc-v4-section-nav");
+  nav.setAttribute("aria-label","Employee profile sections");
+  sections.forEach((section,i)=>{
+   const title=(section.querySelector("b")?.textContent||"Section "+(i+1)).trim();
+   const b=make("button","qdc-v4-section-pill"+(i===0?" selected":""),(i+1)+" · "+title);
+   b.type="button";b.dataset.qdcV4Section=String(i);
+   nav.append(b);
+  });
+  const guide=q(".qdc-v4-completion",banner);
+  if(guide)guide.insertAdjacentElement("afterend",nav);else banner.append(nav);
+ }
  function updateProfileProgress(){
   const screen=q("#screen-record");
   if(!screen||screen.classList.contains("hidden"))return;
   const root=q("#r-fields");if(!root)return;
+  installSectionNavigator();
   const all=Array.from(root.querySelectorAll(".field")).filter(el=>el.querySelector(".k"));
   if(!all.length)return;
   const isEmpty=v=>!String(v??"").trim()||/^—+$/.test(String(v).trim())||/^(not recorded|not assigned|missing|n\/a)$/i.test(String(v).trim());
@@ -64,6 +80,14 @@
   fields.addEventListener("pointerenter",ev=>{
    const field=ev.target.closest(".field");if(!field)return;updateLiveFieldGuide(fieldName(field));
   },true);
+  fields.addEventListener("click",ev=>{
+   const b=ev.target.closest(".qdc-v4-section-pill");if(!b)return;
+   const heads=Array.from(fields.querySelectorAll(":scope > .qdc-field-section"));
+   const selected=heads[Number(b.dataset.qdcV4Section)];
+   if(!selected)return;
+   fields.querySelectorAll(".qdc-v4-section-pill").forEach(x=>x.classList.toggle("selected",x===b));
+   selected.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"instant":"smooth",block:"start"});
+  });
   fields.addEventListener("input",()=>requestAnimationFrame(updateProfileProgress));
   fields.addEventListener("change",()=>requestAnimationFrame(updateProfileProgress));
   const observer=new MutationObserver(()=>{
@@ -95,6 +119,7 @@
    trigger.setAttribute("aria-expanded","true");
    trigger.classList.add("qdc-v4-expanded");
   };
+  panel.setAttribute("role","dialog");panel.setAttribute("aria-label","Help and Support");
   trigger.setAttribute("aria-label","Open Help and Support panel");
   trigger.addEventListener("click",ev=>{
    ev.stopPropagation();
