@@ -46,7 +46,7 @@
   const slot=el("div","qdc-v6-photo");
   const valid=typeof profile.photo==="string"&&/^data:image\/(jpeg|png|webp);base64,/.test(profile.photo);
   if(valid){const img=el("img");img.src=profile.photo;img.alt="Portrait of "+(profile.name||"School officer");img.loading="lazy";slot.append(img);}
-  else{slot.classList.add("qdc-v6-photo-placeholder");const svg=el("span","qdc-v6-silhouette","♙");slot.append(svg);}
+  else{slot.classList.add("qdc-v6-photo-placeholder");const monogram=String(profile.name||"Officer").trim().split(/\s+/).slice(0,2).map(part=>part[0]||"").join("").toUpperCase();slot.append(el("span","qdc-v6-silhouette",monogram));}
   return slot;
  }
  function personCard(profile){
