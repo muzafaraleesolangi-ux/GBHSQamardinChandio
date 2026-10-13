@@ -1,0 +1,486 @@
+/* v8 · Compact Premium Institutional Home (GBHS Qamardin Chandio)
+   Purpose: reduce whitespace without hiding login, signup, or Admin form fields.
+   Keeps the established calm emerald / cream / gold theme and all existing IDs. */
+
+/* Full-width home, compact vertical rhythm; applies only when homepage is active. */
+body:has(#screen-login:not(.hidden))>.wrap,
+body:has(#screen-login:not(.hidden)) .wrap{
+ max-width:100%!important;padding:6px clamp(9px,1.25vw,20px) 18px!important;
+}
+#screen-login{background:#f4f8f5!important}
+#screen-login .content{
+ padding:12px clamp(12px,2.1vw,32px) 20px!important;
+ max-width:1550px!important;
+}
+#screen-login .pagehead{
+ margin:2px 0 10px!important;padding:6px 2px 8px!important;
+ border-bottom:1px solid #dce8db!important;align-items:center!important;
+}
+#screen-login .pagehead small{color:#8e7541!important;font-size:9px!important}
+#screen-login .pagehead h1{
+ font-size:clamp(23px,2.15vw,33px)!important;line-height:1.13!important;
+ letter-spacing:-.025em!important;
+}
+#screen-login .pagehead .cluster{
+ font-size:10px!important;color:#1b6650!important;
+ background:#edf8f0;border:1px solid #d6ebdd;border-radius:10px;padding:8px 11px;
+}
+#screen-login .layout{
+ grid-template-columns:minmax(0,1fr) minmax(315px,360px)!important;
+ gap:12px!important;align-items:start!important;
+}
+#screen-login .leftcol{gap:9px!important}
+#screen-login .welcome{
+ min-height:205px!important;
+ padding:19px 24px!important;
+ margin-bottom:0!important;border:1px solid #1d9771!important;
+ border-radius:17px!important;
+ box-shadow:0 12px 27px #08563824,0 0 0 3px #ffffff6b!important;
+}
+#screen-login .welcome:after{opacity:.6}
+#screen-login .welcome #hero-title{
+ font-size:clamp(25px,2.65vw,38px)!important;
+ letter-spacing:-.035em!important;line-height:1.1!important;
+}
+#screen-login .welcome #hero-msg{
+ margin-top:9px!important;margin-bottom:9px!important;
+ font-size:11px!important;line-height:1.52!important;
+}
+#screen-login .welcome .tag{font-size:9px!important}
+#screen-login .welcome .place{margin-top:8px!important}
+#screen-login .welcome .place-item{min-width:0!important}
+#screen-login .stats{
+ gap:9px!important;margin:0!important;
+ grid-template-columns:repeat(3,minmax(0,1fr))!important;
+}
+#screen-login .stats .stat-action{
+ min-height:62px!important;padding:9px 11px!important;
+ background:linear-gradient(155deg,#fff,#f6fbf8)!important;
+ border:1px solid #cfe3d5!important;border-radius:13px!important;
+ box-shadow:0 4px 12px #0e54301a!important;
+}
+#screen-login .stats .stat-action:hover{
+ border-color:#69bc94!important;background:#f2faf5!important;
+ box-shadow:0 9px 22px #0e593326!important;
+}
+#screen-login .stats .stat-action b{font-size:23px!important}
+
+/* Login/signup/admin sign-in: tighter framing without deleting any actual form field. */
+#screen-login #home-auth{
+ position:relative!important;isolation:isolate!important;
+ padding:13px 14px!important;overflow:visible!important;
+ background:linear-gradient(145deg,#ffffff 0%,#fffefd 64%,#f5faf6 100%)!important;
+ border:1px solid #bdd7c7!important;
+ box-shadow:0 11px 29px #0b48301c,0 0 0 3px #ffffffb0!important;
+ border-radius:16px!important;max-width:360px!important;
+}
+#screen-login #home-auth:before{
+ content:"";position:absolute;left:20px;right:20px;top:0;height:3px;
+ border-radius:0 0 99px 99px;background:linear-gradient(90deg,#0a8b66,#cfaa5c,#0a8b66);
+ pointer-events:none;
+}
+#screen-login .logintabs{
+ margin:0 0 9px!important;padding:3px!important;gap:3px!important;
+ background:#edf6f0!important;border:1px solid #dce9df!important;
+ border-radius:10px!important;
+}
+#screen-login .tabbtn{
+ height:33px!important;min-height:33px!important;padding:6px 5px!important;
+ font-size:10px!important;border-radius:8px!important;
+}
+#screen-login .tabbtn.active{box-shadow:0 3px 10px #0d583016!important}
+#screen-login .flipwrap .face.loginside{
+ padding:0!important;margin:0!important;box-shadow:none!important;
+}
+#screen-login .titlerow{margin:0 0 5px!important;gap:8px!important}
+#screen-login .titlerow .title{font-size:19px!important}
+#screen-login .titlerow .ticon{width:31px!important;height:31px!important;min-width:31px!important}
+#screen-login .loginside .lead{
+ font-size:10px!important;line-height:1.48!important;margin:0 0 8px!important;
+ color:#687e70!important;
+}
+#screen-login .finput{margin-bottom:3px!important}
+#screen-login .finput input,#screen-login .finput select{
+ height:39px!important;min-height:39px!important;padding-top:8px!important;padding-bottom:8px!important;
+ font-size:12px!important;
+}
+#screen-login #login-step1>label{margin:6px 0 4px!important;font-size:9.5px!important}
+#screen-login .signin-tip{
+ margin-top:7px!important;margin-bottom:7px!important;
+ padding:6px 8px!important;min-height:auto!important;
+ border-radius:8px!important;font-size:9px!important;
+}
+#screen-login #login-step1 .btn,#screen-login #loginface-back .btn{
+ min-height:37px!important;padding-top:9px!important;padding-bottom:9px!important;
+ font-size:10px!important;border-radius:9px!important;
+}
+#screen-login #login-step1 .small{
+ margin:5px 0!important;font-size:9px!important;line-height:1.42!important;
+}
+#screen-login .loginside .pw-greet{
+ font-size:15px!important;margin:6px 0!important;line-height:1.3!important;
+}
+#screen-login .signup-guide{
+ animation:none!important;margin:6px 0 9px!important;
+ padding:8px 10px!important;border-radius:10px!important;
+ font-size:10px!important;line-height:1.47!important;
+}
+#screen-login #login-step2 .grid2,
+#screen-login #login-step3 .grid2{gap:7px!important}
+#screen-login #login-step2 .grid2>div,
+#screen-login #login-step3 .grid2>div{
+ padding:8px!important;border-radius:10px!important;
+}
+#screen-login #login-step2 .grid2 input,
+#screen-login #login-step3 .grid2 input{
+ min-height:39px!important;height:39px!important;font-size:11px!important;
+}
+#screen-login #login-step2 .small,
+#screen-login #login-step3 .small{font-size:9px!important;line-height:1.4!important}
+#screen-login .foot-note{margin-top:10px!important;padding-top:9px!important;font-size:9px!important}
+#screen-login #howitworks{display:none!important}
+
+/* Sign-in step guide remains fully available on demand, instead of occupying a whole panel. */
+#screen-login .qdc8-guide-toggle{
+ box-sizing:border-box;width:100%;display:flex;align-items:center;gap:8px;
+ padding:7px 9px;margin:4px 0 8px!important;min-height:39px!important;
+ border-radius:10px!important;border:1px solid #d8e7db!important;
+ background:linear-gradient(106deg,#f2f9f3,#fffef8)!important;
+ color:#1a6850!important;text-align:left;cursor:pointer;transition:.2s ease;
+}
+#screen-login .qdc8-guide-toggle:hover,
+#screen-login .qdc8-guide-toggle:focus-visible{
+ border-color:#94ccb2!important;background:#eaf8ee!important;
+ box-shadow:0 4px 14px #14593512!important;
+}
+#screen-login .qdc8-guide-mini-ico{
+ flex:0 0 27px;width:27px;height:27px;display:grid;place-items:center;
+ border-radius:8px;background:#e0f3e7;color:#0c8b61;
+}
+#screen-login .qdc8-guide-mini-ico svg{width:17px;height:17px}
+#screen-login .qdc8-guide-mini-label{flex:1;min-width:0;display:grid;gap:1px}
+#screen-login .qdc8-guide-mini-label strong{
+ font-size:9.5px;font-weight:900;letter-spacing:.04em;color:#185943;
+}
+#screen-login .qdc8-guide-mini-label small{font-size:9px;line-height:1.2;color:#789384}
+#screen-login .qdc8-guide-mini-arrow{
+ flex:0 0 22px;display:grid;place-items:center;width:22px;height:22px;
+ border-radius:7px;background:#edf3ee;color:#0c845d;font:950 18px/1 sans-serif;
+}
+#screen-login .qdc8-guide-toggle.expanded{
+ border-color:#99cdb0!important;background:#eaf6ee!important;
+}
+#screen-login .live-guide-3d.qdc8-collapsed,
+#screen-login .live-guide-3d.qdc8-signin-off,
+#screen-login .qdc8-guide-toggle.qdc8-signin-off{display:none!important}
+#screen-login .live-guide-3d:not(.qdc8-collapsed):not(.qdc8-signin-off){
+ margin:0 0 8px!important;padding:9px!important;
+ border:1px solid #d7e7dc!important;border-radius:10px!important;
+ box-shadow:0 5px 15px #0e492310!important;
+}
+#screen-login .live-guide-head{gap:5px!important}
+#screen-login .live-guide-step{min-height:51px!important}
+
+/* Premium leadership/About cards: real institutional framing, no oversized gaps. */
+#screen-login .qdc-v6-home-section{margin:13px 0 0!important;scroll-margin-top:14px}
+#screen-login .qdc-v6-section-head{
+ align-items:center!important;gap:10px!important;
+ margin:0 0 9px!important;padding:0 2px 7px!important;
+ border-bottom:1px solid #dcebdc!important;
+}
+#screen-login .qdc-v6-section-head small{font-size:9px!important}
+#screen-login .qdc-v6-section-head h2{
+ font-size:clamp(17px,1.8vw,23px)!important;line-height:1.25!important;
+}
+#screen-login .qdc-v6-leadership-grid{
+ gap:11px!important;grid-template-columns:minmax(0,1fr) minmax(0,1.09fr) minmax(0,1fr)!important;
+ align-items:stretch!important;
+}
+#screen-login .qdc-v6-leader,
+#screen-login .qdc-v6-about-card{
+ min-height:168px!important;padding:13px!important;
+ border:1.5px solid #d3e4d4!important;
+ border-radius:15px!important;
+ box-shadow:0 7px 20px #13563313,0 0 0 3px #ffffffad!important;
+ background:linear-gradient(148deg,#fff,#f9fcf9)!important;
+ transition:transform .2s,box-shadow .2s,border-color .2s!important;
+}
+#screen-login .qdc-v6-leader:hover,
+#screen-login .qdc-v6-about-card:hover{
+ transform:translateY(-2px)!important;
+ border-color:#9bceb1!important;
+ box-shadow:0 11px 27px #1151321d!important;
+}
+#screen-login .qdc-v6-leader:after,
+#screen-login .qdc-v6-about-card:after{
+ content:"";position:absolute;left:13px;right:13px;top:0;height:3px;
+ background:linear-gradient(90deg,#0d815e,#d6b36e);border-radius:0 0 99px 99px;
+ pointer-events:none;opacity:.9;
+}
+#screen-login .qdc-v6-leader .qdc-v6-photo{
+ width:89px!important;height:112px!important;flex-basis:89px!important;
+ border-radius:11px!important;border:2px solid #fff!important;
+ box-shadow:0 0 0 1px #c8dfcd,0 5px 12px #15552b24!important;
+}
+#screen-login .qdc-v6-leader h3{
+ margin:7px 0 3px!important;font-size:clamp(15px,1.3vw,19px)!important;
+}
+#screen-login .qdc-v6-leader .qdc-v6-position{
+ font-size:8px!important;padding:5px 8px!important;border-radius:6px!important;
+}
+#screen-login .qdc-v6-leader .qdc-v6-designation{font-size:10px!important}
+#screen-login .qdc-v6-leader .qdc-v6-office{margin:2px 0 4px!important}
+#screen-login .qdc-v6-leader p{font-size:10px!important;line-height:1.48!important}
+#screen-login .qdc-v6-about-card{
+ border-color:#d0e4d5!important;padding:15px 17px!important;
+ background:linear-gradient(127deg,#eaf6f0,#fffefa)!important;
+}
+#screen-login .qdc-v6-about-card h3{font-size:20px!important;margin:7px 0 5px!important}
+#screen-login .qdc-v6-about-card p{margin:7px 0!important;font-size:10.5px!important;line-height:1.53!important}
+#screen-login .qdc-v6-about-tags{margin:7px 0 0!important}
+#screen-login .qdc-v6-about-tags span{padding:5px 7px!important;font-size:8px!important}
+#screen-login .qdc-v6-photo-note{margin-top:5px!important;font-size:8px!important}
+
+/* Five Cells: a centred, clearly framed cluster directory. */
+#screen-login .qdc-cells{
+ box-sizing:border-box;clear:both!important;margin:15px auto 0!important;
+ padding:17px clamp(10px,1.6vw,22px) 17px!important;
+ border:1.5px solid #c7e0cc!important;border-radius:18px!important;
+ background:linear-gradient(145deg,#fff,#f7fbf8)!important;
+ box-shadow:0 10px 29px #124e301a,0 0 0 3px #ffffff9a!important;
+ position:relative!important;overflow:visible!important;
+}
+#screen-login .qdc-cells:before{
+ content:"";display:block;position:absolute;top:0;left:25px;right:25px;height:4px;
+ border-radius:0 0 99px 99px;background:linear-gradient(90deg,#0b7955 0%,#c3a25b 50%,#0b7955 100%);
+}
+#screen-login .qdc-cells .cellshead{
+ margin:0 auto 12px!important;display:flex!important;flex-wrap:wrap!important;
+ align-items:center!important;justify-content:space-between!important;gap:8px!important;
+ max-width:1420px!important;padding-bottom:11px!important;
+ border-bottom:1px solid #e0ebe2!important;
+}
+#screen-login .qdc-cells .cellshead small{
+ font-size:9px!important;letter-spacing:.14em!important;color:#a08146!important;
+ font-weight:900!important;
+}
+#screen-login .qdc-cells .cellshead h2{
+ font-size:clamp(19px,2vw,26px)!important;line-height:1.18!important;
+ color:#174d3a!important;letter-spacing:-.025em!important;
+}
+#screen-login .qdc-cells .cellshead p{font-size:10px!important;color:#718575!important}
+#screen-login #cell-cards{
+ display:grid!important;
+ grid-template-columns:repeat(5,minmax(0,1fr))!important;
+ max-width:1420px!important;width:100%!important;
+ gap:11px!important;margin:0 auto!important;
+ align-items:stretch!important;justify-content:center!important;
+}
+#screen-login #cell-cards .cellcard{
+ position:relative!important;overflow:hidden!important;
+ display:flex!important;flex-direction:column!important;
+ box-sizing:border-box!important;text-align:center!important;
+ height:100%!important;min-width:0!important;
+ padding:14px 11px 12px!important;
+ border:1.5px solid #d1e5d7!important;border-radius:14px!important;
+ background:linear-gradient(155deg,#fff,#f6fbf8 95%)!important;
+ box-shadow:0 5px 16px #0b573016!important;
+ transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease!important;
+}
+#screen-login #cell-cards .cellcard:before{
+ content:"";position:absolute;top:0;left:0;right:0;height:4px;
+ background:linear-gradient(90deg,#0d885d,#bfaa71,#0d885d);
+}
+#screen-login #cell-cards .cellcard.hub{
+ border-color:#b7cc91!important;
+ background:linear-gradient(160deg,#fffaf0,#fff 52%,#f4faf6)!important;
+}
+#screen-login #cell-cards .cellcard.hub:before{background:linear-gradient(90deg,#b9954d,#edcf8b,#b9954d)}
+#screen-login #cell-cards .cellcard:hover,
+#screen-login #cell-cards .cellcard:focus-visible{
+ transform:translateY(-4px)!important;
+ border-color:#7ac29a!important;
+ box-shadow:0 13px 28px #1459382a!important;
+}
+#screen-login #cell-cards .cellcard:focus-visible{outline:3px solid #c6a055!important;outline-offset:3px!important}
+#screen-login #cell-cards .cellcard .celltop{
+ display:flex!important;align-items:center!important;justify-content:center!important;
+ flex-wrap:wrap!important;gap:5px!important;margin:0!important;padding:0 0 8px!important;
+}
+#screen-login #cell-cards .cellcard .cellnum{
+ border:1px solid #b9dfc8!important;background:#e8f6ed!important;color:#146c4c!important;
+ padding:5px 8px!important;border-radius:9px!important;
+ font-size:9px!important;letter-spacing:.065em!important;font-weight:950!important;
+}
+#screen-login #cell-cards .cellcard .celltype{
+ color:#827546!important;background:#fff6de!important;border:1px solid #f0e0b8!important;
+ border-radius:99px!important;padding:4px 7px!important;font-size:8px!important;white-space:nowrap!important;
+}
+#screen-login #cell-cards .cellcard h3{
+ display:flex!important;align-items:center!important;justify-content:center!important;
+ margin:3px 0 10px!important;
+ min-height:43px!important;font-size:clamp(12px,1.05vw,15px)!important;line-height:1.32!important;
+ font-weight:900!important;letter-spacing:-.015em!important;color:#154d39!important;
+ overflow-wrap:anywhere!important;
+}
+#screen-login #cell-cards .cellcard .headprofile{
+ display:flex!important;align-items:center!important;justify-content:center!important;
+ gap:8px!important;width:100%!important;min-width:0!important;text-align:left!important;
+ background:#f1f8f3!important;border:1px solid #dbe9de!important;border-radius:10px!important;
+ padding:9px 7px!important;margin:0 auto!important;
+ box-sizing:border-box!important;
+}
+#screen-login #cell-cards .cellcard .headprofile>span:nth-child(2){min-width:0!important}
+#screen-login #cell-cards .cellcard .headavatar{
+ width:36px!important;height:36px!important;min-width:36px!important;flex:0 0 36px!important;
+ border:2px solid #fff!important;box-shadow:0 0 0 1px #c5dfce!important;
+}
+#screen-login #cell-cards .cellcard .headprofile small{font-size:8px!important;color:#738879!important}
+#screen-login #cell-cards .cellcard .headprofile b{
+ font-size:10px!important;line-height:1.25!important;color:#184d3d!important;
+ white-space:normal!important;overflow-wrap:anywhere!important;
+}
+#screen-login #cell-cards .cellcard .verified{
+ font-size:7px!important;padding:4px!important;white-space:nowrap!important;flex-shrink:0!important;
+}
+#screen-login #cell-cards .cellcard .headcontact{justify-content:center!important;margin:6px 0!important;gap:5px!important}
+#screen-login #cell-cards .cellcard .semis{
+ display:flex!important;flex-direction:column!important;align-items:center!important;
+ justify-content:center!important;gap:2px!important;margin:8px 0 0!important;
+ padding:7px 5px!important;color:#60776a!important;
+ background:#fff!important;border:1px solid #e4eee7!important;border-radius:9px!important;
+}
+#screen-login #cell-cards .cellcard .semis span{font-size:7px!important;letter-spacing:.075em!important}
+#screen-login #cell-cards .cellcard .semis b{font-size:10px!important;color:#1e654b!important}
+#screen-login #cell-cards .cellcard .cell-counts{
+ display:flex!important;justify-content:space-around!important;align-items:center!important;
+ flex-wrap:wrap!important;gap:5px!important;
+ margin-top:auto!important;padding:10px 2px 1px!important;border-top:1px solid #e0e9e1!important;
+ color:#6a8071!important;font-size:9px!important;
+}
+#screen-login #cell-cards .cellcard .cell-counts span{font-size:9px!important;white-space:nowrap!important}
+#screen-login #cell-cards .cellcard .cell-counts b{display:block!important;color:#07664a!important;font-size:15px!important;margin:0 0 3px!important}
+#screen-login #cell-cards .cellcard .cell-ripple{pointer-events:none!important}
+
+/* The lower homepage quick actions also receive matching borders and compact rhythm. */
+#screen-login .qdc-v6-links{gap:10px!important;margin:12px 0 0!important}
+#screen-login .qdc-v6-link{
+ min-height:59px!important;padding:10px 12px!important;
+ border:1.5px solid #d2e5d7!important;border-radius:12px!important;
+ background:linear-gradient(140deg,#fff,#f8fbf8)!important;
+ box-shadow:0 5px 16px #0d512718!important;
+}
+#screen-login .qdc-v6-link:hover{border-color:#91cba7!important}
+#screen-login .qdc-v6-link-icon{width:35px!important;height:35px!important;flex-basis:35px!important}
+#screen-login .content .footer{margin-top:13px!important}
+
+/* Left Employee Guidelines — modern book-check icon, compact accessible floating CTA. */
+body .qdc7-guide-dock .qdc7-guide-trigger{
+ position:relative;display:inline-flex!important;align-items:center!important;gap:9px!important;
+ min-height:49px!important;max-width:calc(100vw - 25px)!important;
+ padding:8px 12px 8px 8px!important;
+ border-radius:14px!important;
+ border:1.5px solid #d3ba77!important;
+ color:#fff!important;
+ background:linear-gradient(115deg,#053d31,#0a7253 68%,#0d8560)!important;
+ box-shadow:0 9px 24px #06472e51,0 2px 0 #ffffff1c inset!important;
+ font:850 11px/1.3 Manrope,"Segoe UI",sans-serif!important;
+ letter-spacing:.01em!important;
+ transition:transform .19s,box-shadow .2s,background .2s!important;
+}
+body .qdc7-guide-dock .qdc7-guide-trigger:hover,
+body .qdc7-guide-dock .qdc7-guide-trigger:focus-visible{
+ background:linear-gradient(115deg,#08614a,#0e936a)!important;
+ transform:translateY(-2px)!important;
+ box-shadow:0 12px 29px #06472e68!important;
+}
+body .qdc7-guide-dock .qdc7-guide-bulb{
+ flex:0 0 35px!important;width:35px!important;height:35px!important;
+ background:linear-gradient(145deg,#fff7de,#f1dfab)!important;
+ color:#075d49!important;border:1px solid #fff8e1!important;
+ border-radius:11px!important;box-shadow:0 3px 9px #012b222b!important;
+ animation:none!important;display:grid!important;place-items:center!important;
+}
+body .qdc7-guide-dock .qdc7-guide-bulb svg{width:22px!important;height:22px!important}
+body .qdc7-guide-dock .qdc8-guidelines-label{
+ white-space:nowrap!important;font-size:11px!important;font-weight:900!important;
+}
+body .qdc7-guide-dock .qdc8-guidelines-status{
+ display:inline-flex;align-items:center;gap:3px!important;
+ padding:5px 6px!important;border-radius:7px!important;
+ background:#ffffff19!important;border:1px solid #ffffff3d!important;
+ color:#e6f6ee!important;font-size:7px!important;font-weight:900!important;letter-spacing:.055em!important;
+}
+body .qdc7-guide-dock .qdc8-guidelines-status:before{
+ content:"";width:5px;height:5px;background:#b8efc9;border-radius:50%;box-shadow:0 0 5px #d7f4da;
+}
+body .qdc7-guide-dock .qdc7-guide-chevron{font-size:13px!important;margin-left:0!important}
+body .qdc7-guide-dock .qdc7-guide-panel{
+ border-color:#b9dec7!important;border-top:3px solid #bb9854!important;
+ border-radius:17px!important;box-shadow:0 21px 50px #053d2a57!important;
+}
+body .qdc7-guide-dock .qdc7-guide-head{
+ background:linear-gradient(115deg,#064b38,#087653)!important;
+}
+body .qdc7-guide-dock .qdc7-guide-head h3{font-size:17px!important}
+
+/* Responsive: five cards stay centered without squeezing long head/school names. */
+@media(max-width:1450px){
+ #screen-login #cell-cards{grid-template-columns:repeat(3,minmax(0,1fr))!important;max-width:1060px!important}
+ #screen-login .qdc-v6-leadership-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #screen-login .qdc-v6-about-card{grid-column:1/-1!important;grid-row:1!important}
+ #screen-login .qdc-v6-leader{grid-row:2!important}
+}
+@media(max-width:1050px){
+ #screen-login .layout{grid-template-columns:minmax(0,1fr) minmax(300px,335px)!important}
+ #screen-login #home-auth{max-width:335px!important}
+ #screen-login .welcome{min-height:225px!important}
+ #screen-login .qdc-v6-leadership-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+}
+@media(max-width:900px){
+ #screen-login .layout{grid-template-columns:1fr!important;gap:11px!important}
+ #screen-login #home-auth{max-width:560px!important;margin:0 auto!important}
+ #screen-login .welcome{min-height:0!important}
+ #screen-login .qdc-v6-leadership-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #screen-login #cell-cards{grid-template-columns:repeat(2,minmax(0,1fr))!important;max-width:730px!important}
+}
+@media(max-width:640px){
+ #screen-login .content{padding:10px 11px 17px!important}
+ #screen-login .pagehead{padding:5px 1px 7px!important;margin-bottom:8px!important}
+ #screen-login .pagehead h1{font-size:22px!important}
+ #screen-login .welcome{padding:16px 15px!important;border-radius:14px!important}
+ #screen-login .welcome #hero-title{font-size:clamp(22px,6.6vw,31px)!important}
+ #screen-login .stats{gap:6px!important}
+ #screen-login .stats .stat-action{padding:8px 6px!important;min-height:60px!important}
+ #screen-login #home-auth{max-width:100%!important;padding:13px 11px!important}
+ #screen-login .qdc-v6-section-head{align-items:flex-start!important;flex-direction:column!important;gap:5px!important}
+ #screen-login .qdc-v6-leadership-grid{grid-template-columns:1fr!important}
+ #screen-login .qdc-v6-about-card{grid-column:auto!important;grid-row:auto!important}
+ #screen-login .qdc-v6-leader{grid-row:auto!important}
+ #screen-login .qdc-cells{padding:13px 10px!important;margin-top:12px!important}
+ #screen-login #cell-cards{grid-template-columns:1fr!important;max-width:490px!important;gap:9px!important}
+ #screen-login #cell-cards .cellcard{padding:12px 10px!important}
+ #screen-login #cell-cards .cellcard h3{min-height:0!important;font-size:15px!important;margin:2px 0 8px!important}
+ #screen-login #cell-cards .cellcard .cell-counts{padding-top:9px!important}
+ #screen-login .qdc-v6-links{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important}
+ #screen-login .qdc-v6-link{padding:9px!important;gap:7px!important}
+ #screen-login .qdc-v6-link-content small{font-size:8px!important}
+ body .qdc7-guide-dock .qdc8-guidelines-status{display:none!important}
+ body .qdc7-guide-dock .qdc7-guide-trigger{padding:7px 10px 7px 7px!important}
+ body .qdc7-guide-dock .qdc7-guide-bulb{height:32px!important;width:32px!important;flex-basis:32px!important}
+}
+@media(max-width:390px){
+ #screen-login .qdc-v6-links{grid-template-columns:1fr!important}
+ #screen-login #home-auth{padding:11px 9px!important}
+ body .qdc7-guide-dock .qdc8-guidelines-label{font-size:10px!important}
+}
+@media print{
+ body .qdc7-guide-dock{display:none!important}
+ #screen-login .qdc-cells{box-shadow:none!important}
+ #screen-login #cell-cards .cellcard{break-inside:avoid!important}
+}
+@media(prefers-reduced-motion:reduce){
+ #screen-login .qdc8-guide-toggle,#screen-login .qdc-v6-leader,
+ #screen-login .qdc-v6-about-card,#screen-login #cell-cards .cellcard,
+ body .qdc7-guide-dock .qdc7-guide-trigger{transition:none!important;animation:none!important}
+}
