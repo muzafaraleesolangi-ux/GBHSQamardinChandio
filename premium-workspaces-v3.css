@@ -180,3 +180,34 @@
 @media(max-width:420px){#screen-dash .stats2{grid-template-columns:1fr!important}#screen-dash .dashhero{min-height:135px!important}#screen-dash .bar .btn.sm{padding:0 7px!important;font-size:9px!important}#screen-record .rh-idboxes{display:none!important}}
 @media(prefers-reduced-motion:reduce){#screen-dash *,#screen-record *,#m-cell *,#m-school *{animation:none!important;transition-duration:.01ms!important}#m-cell:not(.hidden)>.box,#m-school:not(.hidden)>.box{animation:none!important}}
 @media print{#screen-record{background:#fff!important}#screen-record .recside,#screen-record .qdc-v3-field-help{display:none!important}#screen-record .recordhead{background:#fff!important;color:#000!important}#screen-record .recordhead h2{color:#000!important}#screen-record .recmain{background:#fff!important}#screen-record .fields .field{box-shadow:none!important}}
+
+/* School identity hierarchy across existing screens. Brand-only homepage edits. */
+#screen-login .rail .brand{gap:13px}
+#screen-login .rail .brand b{font-size:12px!important;letter-spacing:.01em!important;font-weight:900!important;line-height:1.25!important;color:#fff!important}
+#screen-login .rail .brand small{font-size:8px!important;letter-spacing:.13em!important;color:#d6c28d!important}
+#screen-login .rail .seal{width:52px!important;height:52px!important;border:0!important;border-radius:13px!important;background:transparent!important}
+#screen-login .rail .seal .qdc-v3-crest{display:block;width:52px;height:52px;object-fit:contain;filter:drop-shadow(0 4px 8px #04152670)}
+#screen-login .pagehead .cluster{max-width:230px!important;display:flex;flex-direction:column;gap:4px;align-items:flex-end}
+#screen-login .pagehead .cluster small{font-size:8px!important;letter-spacing:.13em;color:#8c9aab;font-weight:800}
+#screen-login .pagehead .cluster strong{font-size:12px!important;color:#174875;font-weight:900;line-height:1.2}
+#screen-login .qdc-v3-login-brand{display:flex;gap:10px;align-items:center;padding:0 0 12px;margin-bottom:13px;border-bottom:1px solid #e6eee9;position:relative;z-index:2}
+#screen-login .qdc-v3-login-logo{width:41px;height:41px;object-fit:contain}
+#screen-login .qdc-v3-login-brand>div{display:flex;flex-direction:column;gap:3px}
+#screen-login .qdc-v3-login-brand small{font-size:8px;letter-spacing:.15em!important;font-weight:850;color:#859a8e!important}
+#screen-login .qdc-v3-login-brand strong{font-size:13px;letter-spacing:-.02em;font-weight:950;color:#07583f;line-height:1.2}
+#screen-dash .qdc-admin-brand b{font-size:12px!important;line-height:1.32!important;font-weight:950!important}
+#screen-dash .qdc-admin-brand small{font-size:8px!important;letter-spacing:.13em!important;opacity:.86}
+#screen-dash .qdc-admin-brand>span{padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;overflow:visible}
+#screen-dash .qdc-v3-admin-crest{width:49px;height:49px;object-fit:contain;filter:drop-shadow(0 5px 8px #06143266)}
+#screen-dash .qdc-v3-lockup{display:flex;align-items:center;gap:12px;margin-top:14px}
+#screen-dash .qdc-v3-lockup-logo{width:44px;height:44px;object-fit:contain;filter:drop-shadow(0 5px 11px #06152a57)}
+#screen-dash .qdc-v3-lockup-copy{display:flex;flex-direction:column;gap:3px}
+#screen-dash .qdc-v3-lockup-copy strong{color:#fff;font-size:16px;font-weight:900;letter-spacing:.02em}
+#screen-dash .qdc-v3-lockup-copy small{color:#bce6ff;font-size:9px;font-weight:800;letter-spacing:.15em}
+#screen-record .letterhead{height:auto!important;min-height:92px;display:flex;align-items:center;gap:16px;padding:12px 24px;background:linear-gradient(115deg,#092f6c,#1855a0 64%,#148bb4)!important;line-height:1.3;border-bottom:3px solid #d9b76e}
+#screen-record .letterhead #band-img{display:block!important;width:66px!important;height:66px!important;object-fit:contain!important;flex:0 0 66px}
+#screen-record .qdc-v3-lettertext{display:flex;flex-direction:column;gap:3px;min-width:0}
+#screen-record .qdc-v3-lettertext small{font-size:9px;font-weight:900;letter-spacing:.16em;color:#cbe9ff}
+#screen-record .qdc-v3-lettertext strong{font-size:clamp(15px,1.8vw,23px);letter-spacing:.015em;color:#fff;font-weight:950;line-height:1.2}
+#screen-record .qdc-v3-lettertext span{font-size:10px;color:#d9efff;font-weight:650}
+@media(max-width:700px){#screen-login .pagehead .cluster{display:none!important}#screen-login .qdc-v3-login-brand strong{font-size:12px}#screen-dash .qdc-v3-lockup-copy strong{font-size:11px}#screen-dash .qdc-v3-lockup-logo{width:32px;height:32px}#screen-record .letterhead{padding:10px 13px;gap:9px;min-height:76px}#screen-record .letterhead #band-img{width:54px!important;height:54px!important;flex-basis:54px}#screen-record .qdc-v3-lettertext strong{font-size:15px}}
