@@ -229,3 +229,8 @@ body:has(#screen-record:not(.hidden) #inline-edit-bar:not(.hidden)) .qdc7-guide-
  body .qdc7-guide-dock,#screen-record .qdc7-overview{display:none!important}
  #screen-record:not(.hm-tab-dashboard) #r-fields{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 }
+
+/* The live guide is now the left-side assistant, not a duplicated inline panel. */
+#screen-record:not(.hm-tab-dashboard) #r-fields .qdc-v4-guidance-bar{display:none!important}
+#screen-record.hm-tab-dashboard #qdc7-overview{display:none!important}
+body .qdc7-guide-step:focus-visible{outline:2px solid #128b64;outline-offset:2px}
