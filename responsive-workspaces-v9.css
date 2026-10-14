@@ -1,0 +1,106 @@
+/* Responsive layout and support controls. Auth and data workflows stay in their original handlers. */
+:root{--qdc9-dock-height:52px;--qdc9-dock-gap:16px}
+html{scroll-padding-bottom:100px}
+body{padding-bottom:calc(var(--qdc9-dock-height) + 32px + env(safe-area-inset-bottom))}
+#screen-login .shell,#screen-login .rail,#screen-login .main,#screen-login .content,
+#screen-dash .qdc-admin-layout,#screen-dash .qdc-admin-side,#screen-dash .qdc-admin-main,
+#screen-record>.card,#screen-record .recbody,#screen-record .recmain{min-width:0;max-width:100%;box-sizing:border-box}
+#screen-dash .tablewrap{max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+#screen-dash .tablewrap:focus-visible{outline:3px solid #198a64;outline-offset:3px}
+#screen-dash .filters,#screen-dash .qdc-cell-register-head,#screen-dash .qdc-overview-head{min-width:0;flex-wrap:wrap;gap:12px}
+#screen-dash input,#screen-dash select,#screen-record input,#screen-record select,#screen-record textarea{min-width:0;max-width:100%;box-sizing:border-box}
+#screen-record .recordhead h2,#screen-record .recordhead .sub,#screen-record .qdc7-overview-copy,
+#screen-dash .dashhero .who2,#screen-dash .qdc-admin-brand b{overflow-wrap:anywhere}
+/* Hidden drawers previously overrode .hidden and leaked into the accessibility tree. */
+body #m-correct.hidden,body #m-hmdash.hidden{display:none!important}
+body .support-dock{position:fixed!important;right:max(20px,env(safe-area-inset-right))!important;bottom:calc(16px + env(safe-area-inset-bottom))!important;z-index:900!important;width:auto!important;max-width:calc(100vw - 32px);isolation:isolate}
+body #support-launch{height:52px!important;min-height:52px!important;gap:9px!important;padding:8px 16px 8px 9px!important;font:800 12px/1.3 Manrope,system-ui,sans-serif!important;border:1px solid #bbdacb!important;border-radius:14px!important;background:#fff!important;color:#145740!important;box-shadow:0 6px 22px #063e2926!important;white-space:nowrap;transform:none!important}
+body #support-launch:hover{background:#eef8f2!important;transform:none!important}
+body #support-launch .support-wa-icon{width:32px!important;height:32px!important;flex:0 0 32px;border-radius:10px!important;background:#0b895b!important;box-shadow:none!important}
+body #support-launch .support-wa-icon svg{width:19px!important;height:19px!important}
+body #support-launch:focus-visible,body #support-panel a:focus-visible{outline:3px solid #c9ab60!important;outline-offset:3px!important}
+body #support-panel{position:fixed!important;right:max(20px,env(safe-area-inset-right))!important;left:auto!important;top:auto!important;bottom:calc(80px + env(safe-area-inset-bottom))!important;width:min(360px,calc(100vw - 32px))!important;max-height:calc(100dvh - 108px - env(safe-area-inset-bottom))!important;overflow:auto!important;overscroll-behavior:contain;box-sizing:border-box!important;padding:22px 18px 18px!important;border:1px solid #d3e6db!important;border-radius:18px!important;background:#fff!important;box-shadow:0 16px 48px #083a2b38!important;backdrop-filter:none!important;transform:none!important;animation:none!important;transition:opacity .18s,visibility .18s!important}
+body #support-panel.open{transform:none!important;animation:none!important}
+body #support-panel>small{padding-right:46px;color:#48836b!important;font-size:10px!important;line-height:1.5;letter-spacing:.07em!important}
+body #support-panel h3{font-size:21px!important;line-height:1.3!important;margin:12px 0 6px!important;color:#144b38!important;padding-right:30px}
+body #support-panel p{font-size:13px!important;line-height:1.6!important;color:#607c6d!important}
+body #support-panel .support-number{margin-top:16px;background:#f0f8f3!important;color:#215c42!important;font-size:15px!important;border-color:#d8e9df!important;padding:12px!important}
+body #support-panel .support-number a{display:block;color:inherit;text-decoration:none}
+body #support-panel .support-wa-link{display:flex!important;align-items:center!important;justify-content:center!important;gap:9px!important;margin-top:12px;padding:12px!important;min-height:48px!important;box-sizing:border-box;background:#098957!important;border-radius:12px!important;box-shadow:none!important;font:800 13px/1.4 Manrope,system-ui,sans-serif!important;color:#fff!important;transform:none!important}
+body #support-panel .support-wa-mark{display:inline-flex;align-items:center;justify-content:center;flex:0 0 22px;width:22px;height:22px}
+body #support-panel .support-wa-mark svg{display:block;width:22px!important;height:22px!important;max-width:22px;flex:0 0 22px}
+body #support-panel .qdc-v4-help-close{right:10px!important;top:10px!important;width:44px!important;height:44px!important;border-radius:12px!important;font-size:23px!important;background:#f1f7f3!important;color:#29644b!important;border-color:#d4e5da!important}
+body .qdc7-guide-dock{left:max(20px,env(safe-area-inset-left))!important;bottom:calc(16px + env(safe-area-inset-bottom))!important;width:min(360px,calc(100vw - 32px))!important}
+body .qdc7-guide-dock .qdc7-guide-trigger{height:52px!important;min-height:52px!important;border-radius:14px!important;font-size:12px!important;transform:none!important}
+body #qdc7-guide-close{width:44px!important;height:44px!important;flex-basis:44px!important}
+body .qdc7-guide-panel{max-height:calc(100dvh - 108px - env(safe-area-inset-bottom))!important;transform:none!important}
+body:has(.modal.show) .support-dock{display:none!important}
+body.qdc9-keyboard-open .support-dock,body.qdc9-keyboard-open .qdc7-guide-dock{display:none!important}
+#screen-record:not(.hm-tab-dashboard) #inline-edit-bar{bottom:calc(82px + env(safe-area-inset-bottom))!important}
+@media(max-width:900px){
+ #screen-dash .qdc-admin-layout{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}
+ #screen-dash .qdc-admin-side{position:relative!important;top:0!important;min-height:0!important;padding:14px!important}
+ #screen-dash .qdc-admin-brand{padding-bottom:12px!important}
+ #screen-dash .qdc-admin-nav-label,#screen-dash .qdc-admin-side-foot{display:none!important}
+ #screen-dash .qdc-admin-side .tabs{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:7px!important;overflow:visible!important}
+ #screen-dash .qdc-admin-side .tabs .tab{width:100%!important;min-width:0!important;min-height:44px!important;white-space:normal!important;justify-content:flex-start!important;font-size:11px!important;padding:10px!important;transform:none!important}
+ #screen-dash .bar{flex-wrap:wrap!important}
+ #screen-dash .dashsearch{flex:1 1 100%!important;min-width:0!important;max-width:100%!important}
+ #screen-dash .bar>div:last-child{display:flex;flex-wrap:wrap;gap:8px!important}
+}
+@media(max-width:760px){
+ #screen-login .rail{padding:14px 12px!important;overflow:visible!important}
+ #screen-login .rail:after{display:none!important}
+ #screen-login .rail .nav{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px!important;width:100%!important;min-width:0!important;overflow:visible!important;flex-wrap:wrap!important}
+ #screen-login .rail .nav button{display:flex!important;width:100%!important;min-width:0!important;min-height:44px!important;justify-content:flex-start!important;gap:8px!important;padding:10px!important;font-size:11px!important;white-space:normal!important;box-sizing:border-box}
+ #screen-login .rail .nav button svg{width:17px!important;height:17px!important;flex:0 0 17px}
+ #screen-login .topbar{height:auto!important;min-height:54px;gap:10px!important;padding:10px 12px!important}
+ #screen-login .topbar .crumb{min-width:0;font-size:10px!important;line-height:1.5}
+ #screen-login .status{flex-shrink:0;white-space:nowrap;font-size:10px!important}
+ #screen-login .guidance p,#screen-login .auth p{font-size:12px!important;line-height:1.6!important}
+ #screen-login label{font-size:11px!important}
+ #screen-login .finput input,#screen-login .finput select{font-size:16px!important;min-height:46px!important}
+ #screen-login #home-auth .btn{min-height:44px!important;font-size:11px!important;white-space:normal!important}
+ #screen-login .qdc8-guide-toggle{min-height:48px!important}
+ #screen-login .qdc-v6-links{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #screen-login .qdc-v6-link-content small{font-size:10px!important;line-height:1.5}
+ #screen-dash .qdc-admin-side .tabs{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #screen-dash .dashhero-text{max-width:100%!important}
+ #screen-dash .dashribbon{height:auto!important;white-space:normal!important;line-height:1.5!important;flex-wrap:wrap!important}
+ #screen-dash .bar .btn.sm{min-height:44px!important;height:auto!important;padding:10px!important;font-size:10px!important}
+ #screen-dash .filters{display:flex!important;flex-wrap:wrap!important;gap:9px!important}
+ #screen-dash .filters>input,#screen-dash .filters>select{flex:1 1 150px!important;min-height:44px;font-size:16px!important;min-width:0!important}
+ #screen-record .recside{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:5px!important;width:100%!important;overflow:visible!important;box-sizing:border-box!important}
+ #screen-record .recside .rside-item{width:100%!important;min-width:0!important;min-height:44px!important;white-space:normal!important;justify-content:center!important;font-size:10px!important;padding:9px 6px!important;gap:5px!important}
+ #screen-record .recordhead>div:first-child{flex-basis:100%!important;max-width:100%!important;padding-right:44px!important;box-sizing:border-box}
+ #screen-record .recordhead h2{font-size:21px!important;line-height:1.25!important}
+ #screen-record .recmain .field input,#screen-record .recmain .field select,#screen-record .recmain .field textarea{font-size:16px!important;min-height:44px!important}
+ #screen-record .qdc7-overview-actions{grid-template-columns:minmax(0,1fr)!important}
+ #screen-record .qdc7-overview-actions .qdc7-action{min-height:46px;grid-column:auto!important;font-size:12px}
+ #screen-record:not(.hm-tab-dashboard) .qdc7-overview-kpi small{font-size:9px!important;line-height:1.5}
+ #screen-record:not(.hm-tab-dashboard) .qdc7-overview-kpi span:last-child{font-size:10px!important;line-height:1.5}
+ #screen-record .inline-edit-actions{display:flex!important;flex-wrap:wrap!important;gap:7px!important}
+ #screen-record .inline-edit-actions .btn{flex:1 1 110px!important;min-height:44px!important;white-space:normal!important;line-height:1.4!important}
+ body .support-dock{right:max(12px,env(safe-area-inset-right))!important;bottom:calc(12px + env(safe-area-inset-bottom))!important}
+ body #support-launch{height:48px!important;min-height:48px!important;padding:8px 12px!important;font-size:12px!important}
+ body #support-panel{right:max(12px,env(safe-area-inset-right))!important;bottom:calc(72px + env(safe-area-inset-bottom))!important;width:min(380px,calc(100vw - 24px))!important;max-height:calc(100dvh - 96px - env(safe-area-inset-bottom))!important}
+ body .qdc7-guide-dock{left:max(12px,env(safe-area-inset-left))!important;bottom:calc(12px + env(safe-area-inset-bottom))!important;width:calc(50vw - 18px)!important}
+ body .qdc7-guide-dock .qdc7-guide-trigger{width:100%!important;min-width:0!important;height:48px!important;min-height:48px!important;padding:7px!important;gap:6px!important;font-size:11px!important;box-sizing:border-box}
+ body .qdc7-guide-dock .qdc8-guidelines-status,body .qdc7-guide-chevron{display:none!important}
+ body .qdc7-guide-dock .qdc7-guide-bulb{width:26px!important;height:26px!important;flex:0 0 26px!important}
+ body .qdc7-guide-dock .qdc8-guidelines-label{font-size:11px!important}
+ body .qdc7-guide-panel{position:fixed!important;left:max(12px,env(safe-area-inset-left))!important;right:auto!important;bottom:calc(72px + env(safe-area-inset-bottom))!important;width:min(380px,calc(100vw - 24px))!important;max-height:calc(100dvh - 96px - env(safe-area-inset-bottom))!important}
+ body:has(.qdc7-guide-dock.available) .support-dock{width:calc(50vw - 18px)!important;max-width:none!important}
+ body:has(.qdc7-guide-dock.available) #support-launch{width:100%!important;justify-content:center!important;gap:6px!important;padding:7px!important;font-size:11px!important}
+ body:has(.qdc7-guide-dock.available) #support-launch .support-wa-icon{height:26px!important;width:26px!important;flex-basis:26px!important}
+}
+@media(max-width:360px){
+ #screen-login .rail .nav button{font-size:10px!important;gap:5px!important}
+ #screen-record .recside{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ #screen-record .qdc7-overview-kpis{grid-template-columns:1fr!important}
+ #screen-record .qdc7-overview-kpi{display:flex!important;padding:11px!important}
+ body:has(.qdc7-guide-dock.available) #support-launch{font-size:10px!important}
+ body .qdc7-guide-dock .qdc8-guidelines-label{font-size:10px!important}
+}
+@media(prefers-reduced-motion:reduce){body #support-panel,body .qdc7-guide-panel{transition:none!important}}
+@media print{body{padding-bottom:0!important}.support-dock,.qdc7-guide-dock{display:none!important}}
