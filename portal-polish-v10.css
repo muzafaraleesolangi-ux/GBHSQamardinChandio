@@ -1,0 +1,211 @@
+/* Portal polish v10 — focused mobile support fix + premium public leadership cards.
+   Does not alter dashboard/authentication/employee data handlers. */
+
+/* Leadership presentation: upgraded visual treatment for HUB Head and DEO cards only. */
+#screen-login .qdc-v6-leader.qdc10-leader {
+  --qdc10-accent:#087e5c;
+  --qdc10-accent-soft:rgba(18,163,118,.20);
+  isolation:isolate;
+  border:1.5px solid rgba(21,134,93,.34)!important;
+  border-radius:21px!important;
+  background:linear-gradient(118deg,#fff 0%,#f1fcf6 42%,#fffdf6 80%,#f7fffa 100%)!important;
+  background-size:190% 190%!important;
+  box-shadow:0 12px 30px rgba(9,61,43,.13),inset 0 1px 0 #fff!important;
+  overflow:hidden!important;
+  transition:transform .45s cubic-bezier(.2,.85,.2,1),box-shadow .45s ease,border-color .45s ease!important;
+  animation:qdc10-enter .75s cubic-bezier(.2,.75,.2,1) both,qdc10-ambience 7.2s ease-in-out .75s infinite;
+}
+#screen-login .qdc-v6-leader.qdc10-leader[data-profile-key="district_officer"]{
+  --qdc10-accent:#a07730;
+  --qdc10-accent-soft:rgba(218,178,93,.28);
+  border-color:rgba(177,139,64,.45)!important;
+  background:linear-gradient(120deg,#fffefb 0%,#fff6e7 41%,#f8faf8 75%,#fffdf7 100%)!important;
+  background-size:190% 190%!important;
+  animation-delay:.16s,.91s;
+}
+#screen-login .qdc-v6-leader.qdc10-leader::before{
+  content:""!important;
+  position:absolute!important;
+  inset:-35% -45% auto auto!important;
+  right:-45%!important;top:-55%!important;
+  width:85%!important;height:160%!important;
+  background:radial-gradient(ellipse, var(--qdc10-accent-soft), transparent 64%)!important;
+  font:inherit!important;
+  pointer-events:none!important;
+  z-index:0;
+  opacity:.85!important;
+  animation:qdc10-halo 6s ease-in-out infinite;
+}
+#screen-login .qdc-v6-leader.qdc10-leader::after{
+  content:""!important;position:absolute!important;
+  top:0!important;left:0!important;right:0!important;
+  width:auto!important;height:4px!important;
+  opacity:1!important;border-radius:0!important;
+  background:linear-gradient(90deg,var(--qdc10-accent),#f0ca77,#fff8d9,var(--qdc10-accent))!important;
+  background-size:230% 100%!important;
+  animation:qdc10-accent-line 5.5s linear infinite!important;
+  pointer-events:none!important;z-index:3;
+}
+#screen-login .qdc-v6-leader.qdc10-leader .qdc-v6-photo,
+#screen-login .qdc-v6-leader.qdc10-leader .qdc-v6-leader-info{
+  position:relative;z-index:2;
+}
+#screen-login .qdc-v6-leader.qdc10-leader .qdc-v6-photo{
+  border:2px solid rgba(255,255,255,.98)!important;
+  box-shadow:0 0 0 2px var(--qdc10-accent-soft),0 10px 22px rgba(13,59,44,.19)!important;
+  transition:box-shadow .4s ease,transform .4s ease!important;
+  animation:qdc10-photo-float 5.6s ease-in-out infinite;
+}
+#screen-login .qdc-v6-leader.qdc10-leader .qdc-v6-photo img{
+  transition:transform .55s cubic-bezier(.22,.8,.2,1),filter .55s ease;
+}
+#screen-login .qdc-v6-leader.qdc10-leader .qdc-v6-position{
+  background:linear-gradient(100deg,var(--qdc10-accent),#153f42)!important;
+  box-shadow:0 3px 10px var(--qdc10-accent-soft)!important;
+  color:#fff!important;
+  letter-spacing:.055em!important;
+}
+#screen-login .qdc-v6-leader.qdc10-leader[data-profile-key="district_officer"] .qdc-v6-position{
+  background:linear-gradient(110deg,#7f5a26,#b99449)!important;
+}
+#screen-login .qdc-v6-leader.qdc10-leader h3{
+  color:#173d36!important;
+  text-shadow:0 1px 0 rgba(255,255,255,.7);
+}
+#screen-login .qdc-v6-leader.qdc10-leader[data-profile-key="district_officer"] h3{
+  color:#453722!important;
+}
+#screen-login .qdc10-light-sweep{
+  position:absolute;inset:0 auto 0 -85%;
+  width:34%;height:100%;z-index:3;
+  pointer-events:none;opacity:.55;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);
+  transform:skewX(-22deg);
+  animation:qdc10-sweep 8.5s ease-in-out 1.4s infinite;
+}
+#screen-login .qdc10-corner-spark{
+  position:absolute;right:12px;bottom:9px;
+  font-size:16px;line-height:1;color:var(--qdc10-accent);
+  opacity:.55;z-index:2;pointer-events:none;
+  animation:qdc10-spark 3.8s ease-in-out infinite;
+}
+@media (hover:hover) and (pointer:fine){
+  #screen-login .qdc-v6-leader.qdc10-leader:hover{
+    transform:translateY(-8px)!important;
+    border-color:var(--qdc10-accent)!important;
+    box-shadow:0 23px 45px rgba(12,59,43,.23),0 0 0 1px rgba(255,255,255,.85) inset!important;
+  }
+  #screen-login .qdc-v6-leader.qdc10-leader:hover .qdc-v6-photo{
+    transform:translateY(-3px) rotate(-1deg)!important;
+  }
+  #screen-login .qdc-v6-leader.qdc10-leader:hover .qdc-v6-photo img{
+    transform:scale(1.075);filter:saturate(1.06);
+  }
+}
+@keyframes qdc10-enter {
+  from{opacity:.7;transform:translateY(14px) scale(.99)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes qdc10-ambience {
+  0%,100%{background-position:0% 50%;box-shadow:0 12px 30px rgba(9,61,43,.13),inset 0 1px 0 #fff}
+  50%{background-position:100% 50%;box-shadow:0 16px 37px rgba(9,61,43,.18),inset 0 1px 0 #fff}
+}
+@keyframes qdc10-halo{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.1)}}
+@keyframes qdc10-photo-float{0%,100%{translate:0 0}50%{translate:0 -3px}}
+@keyframes qdc10-accent-line{from{background-position:110% 0}to{background-position:-110% 0}}
+@keyframes qdc10-sweep{0%,22%{left:-85%}48%,100%{left:175%}}
+@keyframes qdc10-spark{0%,100%{opacity:.35;scale:1}50%{opacity:.9;scale:1.2}}
+
+/* Prevent floating controls colliding, shrinking or clipping on phones. */
+@media (max-width:760px){
+  body .support-dock{
+    box-sizing:border-box!important;
+    left:auto!important;
+    right:calc(12px + env(safe-area-inset-right,0px))!important;
+    bottom:calc(12px + env(safe-area-inset-bottom,0px))!important;
+    width:auto!important;min-width:0!important;
+    max-width:calc(100vw - 24px - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px))!important;
+    display:flex!important;align-items:flex-end!important;z-index:1500!important;
+    overflow:visible!important;
+  }
+  body #support-launch{
+    display:flex!important;align-items:center!important;justify-content:center!important;
+    box-sizing:border-box!important;
+    height:50px!important;min-height:50px!important;
+    width:100%!important;min-width:0!important;
+    padding:7px 10px!important;gap:7px!important;
+    font:800 clamp(10px,2.7vw,12px)/1.2 Manrope,system-ui,sans-serif!important;
+    white-space:nowrap!important;overflow:hidden!important;
+    border-radius:15px!important;
+    touch-action:manipulation;
+    -webkit-tap-highlight-color:transparent;
+  }
+  body #support-launch .support-wa-icon{
+    flex:0 0 27px!important;
+    width:27px!important;height:27px!important;
+    min-width:27px!important;border-radius:9px!important;
+  }
+  body #support-launch > span:last-child{
+    display:block!important;flex:0 1 auto!important;min-width:0!important;
+    overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;
+    line-height:1.3!important;
+  }
+  body:has(.qdc7-guide-dock.available) .support-dock{
+    width:calc((100vw - 36px - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px))/2)!important;
+    max-width:none!important;
+  }
+  body .qdc7-guide-dock{
+    left:calc(12px + env(safe-area-inset-left,0px))!important;
+    bottom:calc(12px + env(safe-area-inset-bottom,0px))!important;
+    width:calc((100vw - 36px - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px))/2)!important;
+    min-width:0!important;
+    z-index:1499!important;
+  }
+  body .qdc7-guide-dock .qdc7-guide-trigger{
+    height:50px!important;min-height:50px!important;
+    box-sizing:border-box!important;gap:6px!important;
+    overflow:hidden!important;
+  }
+  body .qdc7-guide-dock .qdc8-guidelines-label{
+    display:block!important;min-width:0!important;
+    overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;
+  }
+  body #support-panel{
+    position:fixed!important;
+    left:auto!important;
+    right:calc(12px + env(safe-area-inset-right,0px))!important;
+    bottom:calc(75px + env(safe-area-inset-bottom,0px))!important;
+    width:min(380px,calc(100vw - 24px - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px)))!important;
+    max-height:calc(100dvh - 100px - env(safe-area-inset-bottom,0px))!important;
+    overflow-y:auto!important;box-sizing:border-box!important;
+    z-index:1502!important;
+  }
+}
+@media (max-width:370px){
+  body #support-launch > span:last-child{
+    font-size:0!important;letter-spacing:0!important;
+  }
+  body #support-launch > span:last-child::after{
+    content:"Help";font-size:12px!important;
+  }
+  body .qdc7-guide-dock .qdc8-guidelines-label{font-size:10px!important}
+}
+@media (max-width:760px){
+  #screen-login .qdc-v6-leader.qdc10-leader{
+    border-radius:18px!important;
+    box-shadow:0 9px 25px rgba(9,61,43,.14)!important;
+    animation:qdc10-enter .7s ease-out both,qdc10-ambience 9s ease-in-out .7s infinite;
+  }
+  #screen-login .qdc-v6-leader.qdc10-leader .qdc-v6-photo{animation-duration:7s}
+}
+@media (prefers-reduced-motion:reduce){
+  #screen-login .qdc-v6-leader.qdc10-leader,
+  #screen-login .qdc-v6-leader.qdc10-leader::before,
+  #screen-login .qdc-v6-leader.qdc10-leader::after,
+  #screen-login .qdc-v6-leader.qdc10-leader .qdc-v6-photo,
+  #screen-login .qdc10-light-sweep,
+  #screen-login .qdc10-corner-spark{
+    animation:none!important;transition:none!important;transform:none!important;
+    translate:none!important;opacity:1!important;
+  }
+}
